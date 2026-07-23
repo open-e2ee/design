@@ -1,0 +1,63 @@
+/*
+ * Generated Tailwind CSS v4 adapter. Import after "tailwindcss".
+ */
+
+@import "./tokens.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme static {
+  --color-oe-white: #ffffff;
+  --color-oe-ink: #070b13;
+  --color-oe-slate-50: #f6f8fc;
+  --color-oe-slate-100: #eef2f7;
+  --color-oe-slate-200: #d8e2f5;
+  --color-oe-slate-300: #a8b5c8;
+  --color-oe-slate-500: #5d6f87;
+  --color-oe-blue-200: #b9caf0;
+  --color-oe-blue-300: #8aa7e5;
+  --color-oe-blue-400: #5c82d4;
+  --color-oe-blue-500: #4c78d0;
+  --color-oe-blue-600: #466fc3;
+  --color-oe-blue-700: #284d79;
+  --color-oe-blue-800: #19365f;
+  --color-oe-blue-900: #142d52;
+  --color-oe-blue-950: #0b1d36;
+  --color-oe-green-400: #5dd6a5;
+  --color-oe-green-700: #176b4d;
+  --color-oe-amber-300: #f0c36a;
+  --color-oe-amber-700: #8a5700;
+  --color-oe-red-300: #ff8495;
+  --color-oe-red-700: #b42336;
+  --font-brand-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand-mono: "JetBrains Mono Variable", "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --radius-brand-sm: 0.5rem;
+  --radius-brand-md: 0.75rem;
+  --radius-brand-lg: 1rem;
+  --radius-brand-xl: 1.5rem;
+  --radius-brand-full: 9999px;
+}
+
+@theme inline {
+  --color-canvas: var(--oe-canvas);
+  --color-surface: var(--oe-surface);
+  --color-surface-subtle: var(--oe-surface-subtle);
+  --color-surface-inverse: var(--oe-surface-inverse);
+  --color-foreground: var(--oe-foreground);
+  --color-muted: var(--oe-muted);
+  --color-border: var(--oe-border);
+  --color-primary: var(--oe-primary);
+  --color-primary-hover: var(--oe-primary-hover);
+  --color-primary-foreground: var(--oe-primary-foreground);
+  --color-accent: var(--oe-accent);
+  --color-accent-hover: var(--oe-accent-hover);
+  --color-accent-soft: var(--oe-accent-soft);
+  --color-focus: var(--oe-focus);
+  --color-code: var(--oe-code);
+  --color-code-foreground: var(--oe-code-foreground);
+  --color-success: var(--oe-success);
+  --color-warning: var(--oe-warning);
+  --color-danger: var(--oe-danger);
+  --shadow-brand-sm: var(--oe-shadow-sm);
+  --shadow-brand-md: var(--oe-shadow-md);
+}

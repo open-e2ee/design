@@ -1,0 +1,55 @@
+{
+  "name": "@open-e2ee/design",
+  "version": "0.1.0",
+  "description": "OpenE2EE brand assets, design tokens, theming, and design guidance.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "DESIGN.md",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "brand/third-party/",
+    "docs/",
+    "packages/design/bin/",
+    "packages/design/dist/"
+  ],
+  "exports": {
+    ".": {
+      "types": "./packages/design/dist/index.d.ts",
+      "default": "./packages/design/dist/index.mjs"
+    },
+    "./tokens": "./packages/design/dist/tokens.json",
+    "./tokens.css": "./packages/design/dist/css/tokens.css",
+    "./fonts.css": "./packages/design/dist/css/fonts.css",
+    "./tailwind.css": "./packages/design/dist/css/tailwind.css",
+    "./theme": {
+      "types": "./packages/design/dist/theme.d.ts",
+      "default": "./packages/design/dist/theme.mjs"
+    },
+    "./assets/*": "./packages/design/dist/assets/*"
+  },
+  "bin": {
+    "oe-design": "./packages/design/bin/oe-design.mjs"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/test.mjs",
+    "check": "npm run build && npm test && git diff --exit-code -- brand/generated/*.svg brand/generated/svg packages/design/dist/assets/*.svg packages/design/dist/assets/svg packages/design/dist/css packages/design/dist/index.d.ts packages/design/dist/index.mjs packages/design/dist/theme.d.ts packages/design/dist/theme.mjs packages/design/dist/tokens.json",
+    "pack:check": "npm pack --dry-run --json",
+    "prepack": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "color": {
+    "white": "#ffffff",
+    "ink": "#070b13",
+    "slate": {
+      "50": "#f6f8fc",
+      "100": "#eef2f7",
+      "200": "#d8e2f5",
+      "300": "#a8b5c8",
+      "500": "#5d6f87"
+    },
+    "blue": {
+      "200": "#b9caf0",
+      "300": "#8aa7e5",
+      "400": "#5c82d4",
+      "500": "#4c78d0",
+      "600": "#466fc3",
+      "700": "#284d79",
+      "800": "#19365f",
+      "900": "#142d52",
+      "950": "#0b1d36"
+    },
+    "green": {
+      "400": "#5dd6a5",
+      "700": "#176b4d"
+    },
+    "amber": {
+      "300": "#f0c36a",
+      "700": "#8a5700"
+    },
+    "red": {
+      "300": "#ff8495",
+      "700": "#b42336"
+    }
+  },
+  "font": {
+    "sans": "\"Inter Variable\", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "mono": "\"JetBrains Mono Variable\", \"JetBrains Mono\", \"SFMono-Regular\", Consolas, \"Liberation Mono\", monospace"
+  },
+  "space": {
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "12": "3rem",
+    "16": "4rem",
+    "24": "6rem"
+  },
+  "radius": {
+    "sm": "0.5rem",
+    "md": "0.75rem",
+    "lg": "1rem",
+    "xl": "1.5rem",
+    "full": "9999px"
+  },
+  "shadow": {
+    "light-sm": "0 1px 2px rgb(7 11 19 / 0.08)",
+    "light-md": "0 18px 44px rgb(7 11 19 / 0.11)",
+    "dark-sm": "0 1px 2px rgb(0 0 0 / 0.24)",
+    "dark-md": "0 18px 44px rgb(0 0 0 / 0.3)"
+  },
+  "duration": {
+    "fast": "120ms",
+    "normal": "180ms",
+    "slow": "280ms"
+  }
+}
