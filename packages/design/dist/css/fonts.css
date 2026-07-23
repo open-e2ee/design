@@ -1,0 +1,7 @@
+/*
+ * Optional self-hosted OpenE2EE typefaces.
+ * Imported from package dependencies; no third-party font request is made.
+ */
+
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";

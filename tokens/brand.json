@@ -1,0 +1,21 @@
+{
+  "light": {
+    "background": "{color.slate.50}",
+    "shield-left": "{color.blue.700}",
+    "shield-right": "{color.blue.800}",
+    "outline": "{color.blue.950}",
+    "accent": "{color.blue.500}",
+    "ink": "{color.white}",
+    "label": "#10233f"
+  },
+  "dark": {
+    "background": "{color.ink}",
+    "shield-left": "{color.white}",
+    "shield-right": "{color.slate.100}",
+    "outline": "{color.slate.200}",
+    "accent": "{color.blue.400}",
+    "ink": "{color.blue.900}",
+    "label": "#f7f9fc"
+  }
+}
+

@@ -1,0 +1,11 @@
+{
+  "viewBox": "0 0 512 512",
+  "shieldPath": "M256 36C305 61 355 74 420 79V238C420 340 355 418 256 470C157 418 92 340 92 238V79C157 74 207 61 256 36Z",
+  "oGlyphPath": "M148 174H244V338H148ZM174 199V313H218V199Z",
+  "eGlyphPath": "M270 174H370V199H298V240H360V265H298V313H370V338H270Z",
+  "opticalCenterOffset": "-8px",
+  "clearSpaceRatio": 0.125,
+  "minimumSize": 16,
+  "smallMaximumSize": 63
+}
+
