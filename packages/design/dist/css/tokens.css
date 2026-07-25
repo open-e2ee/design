@@ -87,7 +87,7 @@
   --oe-canvas: #faf7f3;
   --oe-surface: #f4f1eb;
   --oe-surface-raised: #fdfdfd;
-  --oe-surface-sunken: #f4f1eb;
+  --oe-surface-sunken: #ebe7e1;
   --oe-foreground: #090806;
   --oe-muted: #615d57;
   --oe-subtle: #807b74;
@@ -175,7 +175,7 @@
   --oe-canvas: #090806;
   --oe-surface: #0f0e0b;
   --oe-surface-raised: #151310;
-  --oe-surface-sunken: #0f0e0b;
+  --oe-surface-sunken: #090806;
   --oe-foreground: #f4f1eb;
   --oe-muted: #a19c95;
   --oe-subtle: #807b74;
