@@ -1,21 +1,20 @@
 {
-  "light": {
-    "background": "{color.slate.50}",
-    "shield-left": "{color.blue.700}",
-    "shield-right": "{color.blue.800}",
-    "outline": "{color.blue.950}",
-    "accent": "{color.blue.500}",
-    "ink": "{color.white}",
-    "label": "#10233f"
+  "modes": {
+    "light": {
+      "background": "{color.paper.50}",
+      "mark": "{color.paper.1000}",
+      "label": "{color.paper.1000}"
+    },
+    "dark": {
+      "background": "{color.paper.1000}",
+      "mark": "{color.paper.100}",
+      "label": "{color.paper.100}"
+    }
   },
-  "dark": {
-    "background": "{color.ink}",
-    "shield-left": "{color.white}",
-    "shield-right": "{color.slate.100}",
-    "outline": "{color.slate.200}",
-    "accent": "{color.blue.400}",
-    "ink": "{color.blue.900}",
-    "label": "#f7f9fc"
+  "sheet": {
+    "background": "{color.paper.100}",
+    "label": "{color.paper.1000}",
+    "annotation": "{color.paper.500}",
+    "hairline": "{color.paper.200}"
   }
 }
-

@@ -3,6 +3,11 @@
 The shared source of truth for OpenE2EE brand identity, design tokens,
 theming, product-surface guidance, and reusable assets.
 
+The identity is **The Opaque Carrier**: a carrier that cannot read what it
+carries. Open forms are outlined, opaque forms are filled, and that one rule
+governs the mark, the diagrams, and the imagery alike. Read
+[`DESIGN.md`](./DESIGN.md) before changing anything visual.
+
 The repository publishes the framework-neutral `@open-e2ee/design` package.
 Marketing, documentation, console, SDK, social, and presentation surfaces
 should consume a pinned package release rather than copy values from another
@@ -39,15 +44,29 @@ npm run dev --prefix site
 
 ## Consumer setup
 
+**`@open-e2ee/design` is not on npm yet — npm publication is pending.** Install
+from a GitHub release tag and pin it:
+
 ```sh
-npm install @open-e2ee/design
+npm install github:open-e2ee/design#v0.2.0
 ```
+
+or, equivalently, from the tag tarball:
+
+```sh
+npm install https://github.com/open-e2ee/design/archive/refs/tags/v0.2.0.tar.gz
+```
+
+Pin an exact tag rather than a branch. The generated distribution is committed,
+so a tag install needs no build step and no `rsvg-convert` on the consumer's
+machine — you get exactly the artifacts CI verified.
 
 Framework-neutral CSS:
 
 ```css
 @import "@open-e2ee/design/fonts.css";
 @import "@open-e2ee/design/tokens.css";
+@import "@open-e2ee/design/wordmark.css";
 ```
 
 Tailwind CSS v4:

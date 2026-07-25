@@ -1,6 +1,6 @@
 {
   "name": "@open-e2ee/design",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "OpenE2EE brand assets, design tokens, theming, and design guidance.",
   "type": "module",
   "license": "UNLICENSED",
@@ -24,6 +24,7 @@
     "./tokens": "./packages/design/dist/tokens.json",
     "./tokens.css": "./packages/design/dist/css/tokens.css",
     "./fonts.css": "./packages/design/dist/css/fonts.css",
+    "./wordmark.css": "./packages/design/dist/css/wordmark.css",
     "./tailwind.css": "./packages/design/dist/css/tailwind.css",
     "./theme": {
       "types": "./packages/design/dist/theme.d.ts",
@@ -42,8 +43,9 @@
     "prepack": "npm run build && npm test"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "5.3.0",
-    "@fontsource-variable/jetbrains-mono": "5.3.0"
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/newsreader": "5.3.0",
+    "@fontsource-variable/public-sans": "5.3.0"
   },
   "engines": {
     "node": ">=22"

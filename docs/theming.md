@@ -25,9 +25,13 @@ the storage key and root-class contract.
 @import "@open-e2ee/design/tokens.css";
 ```
 
-This provides primitive variables such as `--oe-color-blue-800`, semantic
+This provides primitive variables such as `--oe-color-paper-800`, semantic
 variables such as `--oe-canvas`, and component variables such as
 `--oe-control-height-md`.
+
+Add `@open-e2ee/design/wordmark.css` on any surface that sets the wordmark; it
+carries the weight contrast between `Open` and `E2EE` that the identity depends
+on.
 
 Applications should use semantic variables:
 

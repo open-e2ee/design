@@ -29,11 +29,27 @@ test("server-renders the OpenE2EE design reference", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>OpenE2EE Design<\/title>/i);
-  assert.match(html, /Technical clarity/);
-  assert.match(html, /Security without theater/);
-  assert.match(html, /npm install @open-e2ee\/design/);
-  assert.match(html, /Semantic tokens/);
+  assert.match(html, /The Opaque Carrier/);
+  assert.match(html, /Opaque to the relay/);
+  assert.match(html, /Open to inspection/);
+  assert.match(html, /Diagram grammar/);
   assert.match(html, /Surface profiles/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
+
+  /*
+   * The taglines are not approved yet. If the annotation ever falls off the
+   * page, unapproved copy is silently presenting itself as final.
+   */
+  assert.match(html, /pending founder sign-off/);
+
+  /* The package is not on npm; showing that command would send readers to a 404. */
+  assert.doesNotMatch(html, /npm install @open-e2ee\/design/);
+  assert.match(html, /npm install github:open-e2ee\/design/);
+
+  /* Retired copy must not come back through a copy-paste. */
+  assert.doesNotMatch(html, /Security without theater/);
+
+  /* The old shield assets no longer exist; a stale reference would 404. */
+  assert.doesNotMatch(html, /open-e2ee-shield/);
 });
 
