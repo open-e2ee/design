@@ -309,8 +309,10 @@ Adopted alongside the identity and expected on the surfaces named:
   failures developers actually hit.
 - **Forward-only lifecycle stepper** — evaluating, licensed, active, renewal
   due. Rendered as a linear stepper in the console; it never moves backward.
-- **Opacity Ledger** — a four-column table (stays local / crosses the wire /
-  the relay stores / visible to the relay) that appears on every Build page.
+- **Opacity Ledger** — a four-column table (Stays on device / Sent to relay /
+  In object store / Visible as metadata) that appears on every Build page. The
+  object-store column is load-bearing: attachment and blob pages have a fourth
+  place things live, and the ledger must name it.
   It is the honesty line in tabular form.
 
 ## Token model
