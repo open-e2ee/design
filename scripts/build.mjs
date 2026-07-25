@@ -274,7 +274,7 @@ await writeText(
  *
  * Two hollow carrier brackets hold one solid payload that touches neither of
  * them. Everything is a single fill color: no strokes, no radii, no gradients,
- * no second tone. The full mark carries the shear; the optical variant drops it
+ * no second tone. The payload is square at every size; the two variants differ
  * so the silhouette survives at favicon sizes.
  */
 
@@ -294,11 +294,11 @@ function markPaths(variant) {
 
 const markDescription = {
   full:
-    'Two open carrier brackets holding a solid sheared payload. The payload ' +
+    'Two open carrier brackets holding a solid square payload. The payload ' +
     'touches neither bracket.',
   optical:
     'Two open carrier brackets holding a solid square payload. Small-size ' +
-    'optical variant, drawn without the shear.',
+    'optical variant, drawn with thicker stems for favicon scale.',
 };
 
 function markMarkup(fill, variant, indent = '  ') {
