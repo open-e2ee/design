@@ -10,7 +10,17 @@ Every design-system change must preserve:
 - reduced-motion behavior;
 - structure in forced-colors mode.
 
-The automated token check covers the intended foreground/background pairs.
+The automated token check covers the intended foreground/background pairs, and
+it asserts each published ratio to two decimal places rather than only checking
+the minimum. A palette edit that leaves a pair technically passing but visibly
+worse still fails the build, and the fix is to update the expected value
+deliberately rather than to relax the assertion.
+
+A second lint keeps the neutral ramp warm: every `paper` step stays under
+`0.014` OKLCH chroma in the yellow band. Warmth is an identity decision, but it
+is also why light mode is comfortable enough to be the default rather than an
+inverted afterthought.
+
 Application visual tests remain responsible for typography size, layered
 surfaces, opacity, images, focus clipping, interaction, and responsive layout.
 
