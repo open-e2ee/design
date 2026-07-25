@@ -4,7 +4,7 @@ This document is the governing design contract for OpenE2EE. It defines the
 parts of the identity that stay constant across every surface, and the parts
 products are expected to adapt to their context.
 
-The identity is called **The Opaque Carrier**. One idea runs through the mark,
+The identity is called **the Carrier**. One idea runs through the mark,
 the palette, the diagrams, and the words: *a carrier that cannot read what it
 carries*. Everything below is an application of that idea, and a change that
 weakens it is a change to reject regardless of how good it looks.

@@ -3,7 +3,7 @@
 `source/geometry.json` and the token files are the only production sources.
 `generated/` is replaced by `npm run build` and must not be edited manually.
 
-The mark is **The Opaque Carrier**: two open brackets holding a filled payload
+The mark is **the Carrier**: two open brackets holding a filled payload
 that never touches them. `DESIGN.md` is the governing contract; this file is the
 operational index.
 

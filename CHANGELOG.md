@@ -5,7 +5,7 @@
 Breaking. This release replaces the identity, the palette, and the typeface
 stack. There are no aliases for the old token names — update call sites.
 
-- Adopt the Opaque Carrier mark: two open brackets around a payload that is
+- Adopt the Carrier mark: two open brackets around a payload that is
   sealed shut, in a full and an optical variant. The build picks the variant
   by size (optical from 16 to 31 px, the full mark from 32 px) and publishes
   that rule in the asset manifest. The shield is gone.
