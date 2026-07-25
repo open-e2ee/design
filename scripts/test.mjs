@@ -10,6 +10,10 @@ const semantic = resolveReferences(
   await readJson(join(root, 'tokens', 'semantic.json')),
   primitives,
 );
+const components = resolveReferences(
+  await readJson(join(root, 'tokens', 'components.json')),
+  primitives,
+);
 const geometry = await readJson(join(root, 'brand', 'source', 'geometry.json'));
 
 function channels(hex) {
@@ -315,6 +319,7 @@ for (const rule of ['rotation', 'mirroring', 'animation', 'payload-contact']) {
 const requiredFiles = [
   'packages/design/dist/css/tokens.css',
   'packages/design/dist/css/fonts.css',
+  'packages/design/dist/css/wordmark.css',
   'packages/design/dist/css/tailwind.css',
   'packages/design/dist/index.d.ts',
   'packages/design/dist/theme.mjs',
@@ -397,6 +402,51 @@ const tailwindCss = await readFile(
 assert.match(tailwindCss, /--color-canvas: var\(--oe-canvas\);/);
 assert.match(tailwindCss, /--color-sealed: var\(--oe-sealed\);/);
 assert.match(tailwindCss, /@custom-variant dark/);
+
+/*
+ * Typography. The wordmark's weight contrast is the concept, so a build that
+ * flattens it or that loses a family from the self-hosted set is a failure
+ * even though every colour still passes.
+ */
+const packageJson = await readJson(join(root, 'package.json'));
+for (const family of ['public-sans', 'newsreader', 'jetbrains-mono']) {
+  assert.ok(
+    packageJson.dependencies[`@fontsource-variable/${family}`],
+    `${family} is no longer a dependency`,
+  );
+}
+assert.ok(
+  !JSON.stringify(packageJson.dependencies).includes('inter'),
+  'Inter is still a dependency',
+);
+
+const fontsCss = await readFile(
+  join(root, 'packages/design/dist/css/fonts.css'),
+  'utf8',
+);
+for (const family of ['public-sans', 'newsreader', 'jetbrains-mono']) {
+  assert.match(fontsCss, new RegExp(`@fontsource-variable/${family}`));
+}
+
+assert.match(tokenCss, /--oe-font-sans: "Public Sans Variable"/);
+assert.match(tokenCss, /--oe-font-serif: "Newsreader Variable"/);
+assert.match(tokenCss, /--oe-font-mono: "JetBrains Mono Variable"/);
+assert.match(tailwindCss, /--font-brand-serif: "Newsreader Variable"/);
+
+const wordmarkCss = await readFile(
+  join(root, 'packages/design/dist/css/wordmark.css'),
+  'utf8',
+);
+assert.match(wordmarkCss, /--oe-wordmark-open-weight/);
+assert.match(wordmarkCss, /--oe-wordmark-e2ee-weight/);
+assert.match(wordmarkCss, /oe-wordmark-small/);
+assert.notEqual(
+  components.wordmark['open-weight'],
+  components.wordmark['e2ee-weight'],
+  'The wordmark lost its weight contrast',
+);
+assert.equal(components.prose['font-family'], primitives.font.serif);
+assert.equal(components.metadata['font-family'], primitives.font.mono);
 
 process.stdout.write(
   `Verified ${contrastPairs.length} contrast pairs, both mark variants, and ${requiredFiles.length} package artifacts.\n`,

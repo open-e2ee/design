@@ -20,8 +20,45 @@
   },
   "content": {
     "measure": "68ch",
-    "prose": "72ch",
     "wide": "73.75rem"
+  },
+  "wordmark": {
+    "font-family": "{font.sans}",
+    "open-weight": "500",
+    "open-tracking": "-0.01em",
+    "e2ee-weight": "800",
+    "e2ee-tracking": "-0.015em",
+    "small-weight": "600",
+    "small-tracking": "-0.01em",
+    "small-maximum-size": "13px"
+  },
+  "heading": {
+    "font-family": "{font.sans}",
+    "weight": "700",
+    "tracking-display": "-0.015em",
+    "tracking-text": "0",
+    "display-minimum-size": "24px"
+  },
+  "prose": {
+    "font-family": "{font.serif}",
+    "weight": "400",
+    "line-height": "1.7",
+    "measure": "68ch",
+    "pull-quote-weight": "500",
+    "pull-quote-optical-size": "36"
+  },
+  "code": {
+    "font-family": "{font.mono}",
+    "weight": "400",
+    "size": "0.84375rem",
+    "line-height": "1.65",
+    "inline-size": "0.92em"
+  },
+  "metadata": {
+    "font-family": "{font.mono}",
+    "weight": "500",
+    "size": "0.75rem",
+    "tracking": "0.02em"
   },
   "diagram": {
     "open-stroke-width": "4px",

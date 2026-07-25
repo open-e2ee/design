@@ -1,16 +1,26 @@
 # Third-party notices
 
-## Inter
+All three OpenE2EE typefaces are licensed under the SIL Open Font License 1.1
+and are self-hosted from package dependencies. No third-party font request is
+made at runtime.
 
-The optional interface font dependency `@fontsource-variable/inter` packages
-Inter under the SIL Open Font License 1.1.
+## Public Sans
+
+`@fontsource-variable/public-sans` packages Public Sans, published by the
+United States Web Design System, under the SIL Open Font License 1.1.
+
+## Newsreader
+
+`@fontsource-variable/newsreader` packages Newsreader, by Production Type,
+under the SIL Open Font License 1.1.
 
 ## JetBrains Mono
 
-The optional developer font dependency `@fontsource-variable/jetbrains-mono`
-packages JetBrains Mono under the SIL Open Font License 1.1.
+`@fontsource-variable/jetbrains-mono` packages JetBrains Mono under the SIL
+Open Font License 1.1. A copy of the license is included at
+`brand/third-party/JetBrainsMono-OFL.txt`.
 
-The geometric `O` and `E` forms in the OpenE2EE shield originated from a
-JetBrains Mono-based exploration. A copy of the applicable license is included
-at `brand/third-party/JetBrainsMono-OFL.txt`.
+## Marks
 
+The OpenE2EE mark is original geometry constructed on a 32-unit grid. It is not
+derived from, and contains no outlines from, any licensed typeface.

@@ -60,7 +60,8 @@
   --color-oe-alert-600: #c5312e;
   --color-oe-alert-700: #a32321;
   --color-oe-alert-800: #7e1a18;
-  --font-brand-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand-sans: "Public Sans Variable", "Public Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-brand-serif: "Newsreader Variable", Newsreader, ui-serif, Georgia, "Times New Roman", serif;
   --font-brand-mono: "JetBrains Mono Variable", "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --radius-brand-none: 0;
   --radius-brand-sm: 0.125rem;
