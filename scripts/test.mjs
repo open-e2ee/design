@@ -229,7 +229,7 @@ function mirroredBracketPath({ x, y, width, arm, thickness, height }) {
   return `M${right} ${y} H${right - arm} V${y + thickness} H${right - thickness} V${y + height - thickness} H${right - arm} V${y + height} H${right} Z`;
 }
 
-const expectedDiagonalEdges = { full: 2, optical: 0 };
+const expectedDiagonalEdges = { full: 0, optical: 0 };
 
 for (const variant of ['full', 'optical']) {
   const shape = geometry[variant];
@@ -298,11 +298,7 @@ for (const variant of ['full', 'optical']) {
     256,
     `${variant} payload is not centered on the canvas`,
   );
-  assert.equal(
-    shear,
-    variant === 'full' ? 24 : 0,
-    `${variant} shear has changed`,
-  );
+  assert.equal(shear, 0, `${variant} payload must be square (shear 0)`);
 }
 
 assert.equal(geometry.clearSpaceRatio, 0.125);
@@ -375,9 +371,15 @@ for (const [file, variant] of [
     markup.includes(geometry[variant].payloadPath),
     `${file} should carry the ${variant} payload`,
   );
+  if (geometry[other].payloadPath !== geometry[variant].payloadPath) {
+    assert.ok(
+      !markup.includes(geometry[other].payloadPath),
+      `${file} carries the ${other} payload as well`,
+    );
+  }
   assert.ok(
-    !markup.includes(geometry[other].payloadPath),
-    `${file} carries the ${other} payload as well`,
+    !markup.includes(geometry[other].carrierLeftPath),
+    `${file} carries the ${other} carrier as well`,
   );
   assert.ok(
     !/gradient|filter|stroke=|opacity/.test(markup),

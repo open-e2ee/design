@@ -103,8 +103,8 @@ Geometry lives in `brand/source/geometry.json` on a 512-unit grid with a
 
 | Size | Variant | Why |
 |---|---|---|
-| 16–31 px | `optical` | Stems thickened to 56 units, payload squared, shear removed — the shear and the thin stems both disintegrate at favicon scale |
-| 32 px and up | `full` | Payload sheared 24 units: the cargo is in transit |
+| 16–31 px | `optical` | Stems thickened to 56 units so they survive favicon scale |
+| 32 px and up | `full` | Square payload with 40-unit clearance on all sides |
 | Below 16 px | none | Do not reproduce the mark |
 
 Variant selection by size is a rule, not a judgement call. The build encodes it,
@@ -140,7 +140,7 @@ flush.
 
 Do not fill the brackets' interior; outline the payload; make the payload
 semi-transparent or gradient-filled; let the payload touch or overlap a bracket;
-rotate or mirror the mark; change the shear angle; recolor payload and carrier
+rotate or mirror the mark; shear or skew the payload; recolor payload and carrier
 differently; add a second payload; place the mark on a photograph; apply a
 shadow, bevel, or glow; use the full mark below 32 px; use the optical variant
 above 31 px; or set the wordmark in a single uniform weight above 14 px.

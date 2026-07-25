@@ -3,20 +3,35 @@
   "viewBox": "0 0 512 512",
   "full": {
     "construction": {
-      "artwork": { "x": 64, "y": 64, "width": 384, "height": 384 },
+      "artwork": {
+        "x": 64,
+        "y": 64,
+        "width": 384,
+        "height": 384
+      },
       "module": 32,
       "thickness": 48,
       "arm": 144,
-      "shear": 24
+      "shear": 0
     },
     "carrierLeftPath": "M64 64 H208 V112 H112 V400 H208 V448 H64 Z",
     "carrierRightPath": "M448 64 H304 V112 H400 V400 H304 V448 H448 Z",
-    "payloadPath": "M196 152 L364 152 L316 360 L148 360 Z",
-    "payloadClearance": { "left": 36, "right": 36, "top": 40, "bottom": 40 }
+    "payloadPath": "M152 152 H360 V360 H152 Z",
+    "payloadClearance": {
+      "left": 40,
+      "right": 40,
+      "top": 40,
+      "bottom": 40
+    }
   },
   "optical": {
     "construction": {
-      "artwork": { "x": 56, "y": 56, "width": 400, "height": 400 },
+      "artwork": {
+        "x": 56,
+        "y": 56,
+        "width": 400,
+        "height": 400
+      },
       "module": 32,
       "thickness": 56,
       "arm": 144,
@@ -25,7 +40,12 @@
     "carrierLeftPath": "M56 56 H200 V112 H112 V400 H200 V456 H56 Z",
     "carrierRightPath": "M456 56 H312 V112 H400 V400 H312 V456 H456 Z",
     "payloadPath": "M152 152 H360 V360 H152 Z",
-    "payloadClearance": { "left": 40, "right": 40, "top": 40, "bottom": 40 }
+    "payloadClearance": {
+      "left": 40,
+      "right": 40,
+      "top": 40,
+      "bottom": 40
+    }
   },
   "opticalCenterOffset": "0px",
   "clearSpaceRatio": 0.125,
