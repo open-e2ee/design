@@ -70,7 +70,7 @@ export default function Home() {
 
       <main id="top">
         <section className="hero">
-          <p className="eyebrow">The Opaque Carrier</p>
+          <p className="eyebrow">The Carrier</p>
           <h1>
             Opaque to the relay.
             <br />

@@ -348,7 +348,7 @@ for (const file of requiredFiles) await access(join(root, file));
  * wrong size is the failure this repository is most likely to have.
  */
 const manifest = await readJson(join(root, 'brand/generated/manifest.json'));
-assert.equal(manifest.mark, 'opaque-carrier');
+assert.equal(manifest.mark, 'carrier');
 for (const [size, variant] of Object.entries(manifest.variants.png)) {
   const expected = Number(size) <= geometry.smallMaximumSize ? 'optical' : 'full';
   assert.equal(

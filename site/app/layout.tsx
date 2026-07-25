@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const description =
-  "The Opaque Carrier: OpenE2EE brand identity, design tokens, theming, and diagram grammar.";
+  "The Carrier: OpenE2EE brand identity, design tokens, theming, and diagram grammar.";
 
 const noFlashTheme = `
   (() => {

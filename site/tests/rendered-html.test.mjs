@@ -29,7 +29,7 @@ test("server-renders the OpenE2EE design reference", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>OpenE2EE Design<\/title>/i);
-  assert.match(html, /The Opaque Carrier/);
+  assert.match(html, /The Carrier/);
   assert.match(html, /Opaque to the relay/);
   assert.match(html, /Open to inspection/);
   assert.match(html, /Diagram grammar/);

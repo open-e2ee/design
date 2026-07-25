@@ -3,7 +3,7 @@
 The shared source of truth for OpenE2EE brand identity, design tokens,
 theming, product-surface guidance, and reusable assets.
 
-The identity is **The Opaque Carrier**: a carrier that cannot read what it
+The identity is **the Carrier**: a carrier that cannot read what it
 carries. Open forms are outlined, opaque forms are filled, and that one rule
 governs the mark, the diagrams, and the imagery alike. Read
 [`DESIGN.md`](./DESIGN.md) before changing anything visual.
