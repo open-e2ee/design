@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const description =
-  "OpenE2EE brand identity, semantic themes, design tokens, and product-surface guidance.";
+  "The Opaque Carrier: OpenE2EE brand identity, design tokens, theming, and diagram grammar.";
 
 const noFlashTheme = `
   (() => {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description,
   metadataBase: new URL("https://design.open-e2ee.dev"),
   icons: {
-    icon: "/brand/open-e2ee-shield-adaptive-small.svg",
+    icon: "/brand/open-e2ee-favicon.svg",
   },
   openGraph: {
     type: "website",

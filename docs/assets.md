@@ -25,21 +25,54 @@ snapshot from silently passing after a dependency update.
 
 ## Current inventory
 
-- Full and small-size light SVG marks
-- Full and small-size dark SVG marks
-- Adaptive full and small-size SVG marks
-- Transparent PNG exports at 32, 64, 128, 512, and 1024 px
-- Light/dark presentation sheet
-- 1200×630 OpenE2EE Design social card
+- Light, dark, and monochrome SVG marks in both silhouettes
+- Adaptive SVG marks that follow `prefers-color-scheme`, in both silhouettes
+- An SVG favicon
+- Transparent PNG exports at 16, 24, 32, 48, 64, 128, 256, 512, and 1024 px in
+  both modes
+- Light/dark presentation sheet, which also shows the variant rule at size
+- 1280×640 social card, generated in the diagram grammar
+
+## Choosing a variant
+
+`manifest.json` publishes the rule and the per-size decision:
+
+```json
+"variants": {
+  "rule": "optical from 16 to 31 px, full from 32 px",
+  "minimumSize": 16,
+  "smallMaximumSize": 31,
+  "png": { "16": "optical", "32": "full", "…": "…" }
+}
+```
+
+Consumers picking an SVG by hand use the `-small` files below 32 px and the
+plain files at or above it. Nothing renders below 16 px.
+
+## The social card is generated, not drawn
+
+`social/open-e2ee-design-og.svg` is built from the same primitives as
+everything else: the mark, the wordmark, and a manifest plate whose annotation
+rows count the files this package actually ships. Repository cards vary only the
+description line and the plate contents.
+
+Its annotations must stay true. A plate that labels a slab with a number nobody
+checked is worse than a plate with no annotation, because the whole point of the
+imagery system is that it is a legible technical object rather than decoration.
+
+The rasterized PNG is produced by `rsvg-convert`, which cannot load webfonts, so
+its text renders in whatever system fonts are available on the build host. The
+SVG is the source of truth; treat the PNG as a fallback for renderers that
+cannot take SVG.
 
 ## Planned identity work
 
-- Horizontal and stacked wordmark lockups
-- True monochrome and print-safe marks
-- SDK, Docs, and Console descriptor lockups
+- Outlined `wordmark.svg` with the four craft corrections recorded in
+  `DESIGN.md`
+- Horizontal, stacked, and product lockup assets
 - GitHub organization and npm avatar exports
-- Mask icon, touch icon, and favicon set
-- Additional product and announcement social-card templates
+- Mask icon and touch icon set
+- Manifest plates for the editorial program
 - Presentation and README header templates
 
 Planned assets should be reviewed as an identity family rather than added as

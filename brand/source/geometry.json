@@ -1,11 +1,56 @@
 {
+  "mark": "opaque-carrier",
   "viewBox": "0 0 512 512",
-  "shieldPath": "M256 36C305 61 355 74 420 79V238C420 340 355 418 256 470C157 418 92 340 92 238V79C157 74 207 61 256 36Z",
-  "oGlyphPath": "M148 174H244V338H148ZM174 199V313H218V199Z",
-  "eGlyphPath": "M270 174H370V199H298V240H360V265H298V313H370V338H270Z",
-  "opticalCenterOffset": "-8px",
+  "full": {
+    "construction": {
+      "artwork": { "x": 64, "y": 64, "width": 384, "height": 384 },
+      "module": 32,
+      "thickness": 48,
+      "arm": 144,
+      "shear": 24
+    },
+    "carrierLeftPath": "M64 64 H208 V112 H112 V400 H208 V448 H64 Z",
+    "carrierRightPath": "M448 64 H304 V112 H400 V400 H304 V448 H448 Z",
+    "payloadPath": "M196 152 L364 152 L316 360 L148 360 Z",
+    "payloadClearance": { "left": 36, "right": 36, "top": 40, "bottom": 40 }
+  },
+  "optical": {
+    "construction": {
+      "artwork": { "x": 56, "y": 56, "width": 400, "height": 400 },
+      "module": 32,
+      "thickness": 56,
+      "arm": 144,
+      "shear": 0
+    },
+    "carrierLeftPath": "M56 56 H200 V112 H112 V400 H200 V456 H56 Z",
+    "carrierRightPath": "M456 56 H312 V112 H400 V400 H312 V456 H456 Z",
+    "payloadPath": "M152 152 H360 V360 H152 Z",
+    "payloadClearance": { "left": 40, "right": 40, "top": 40, "bottom": 40 }
+  },
+  "opticalCenterOffset": "0px",
   "clearSpaceRatio": 0.125,
   "minimumSize": 16,
-  "smallMaximumSize": 63
+  "smallMaximumSize": 31,
+  "rules": {
+    "variantBySize": "Use the optical variant from 16 to 31 px and the full mark from 32 px. Do not reproduce the mark below 16 px.",
+    "clearSpace": "One bracket stem of air on every side: 0.125 of the artwork width.",
+    "payloadContact": "The payload never touches a bracket. That clearance is the trust boundary and may never be tightened.",
+    "forbidden": [
+      "rotation",
+      "mirroring",
+      "animation",
+      "payload-contact",
+      "payload-outline",
+      "carrier-fill",
+      "part-recolor",
+      "gradient",
+      "shadow",
+      "bevel",
+      "glow",
+      "second-payload",
+      "photographic-background",
+      "full-mark-below-32px",
+      "optical-variant-above-31px"
+    ]
+  }
 }
-

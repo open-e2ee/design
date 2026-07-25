@@ -1,7 +1,12 @@
 /*
  * Optional self-hosted OpenE2EE typefaces.
  * Imported from package dependencies; no third-party font request is made.
+ *
+ * Public Sans is the only family on the critical path. Newsreader (editorial
+ * prose) and JetBrains Mono (code, identifiers, metadata) are worth preloading
+ * per route rather than globally.
  */
 
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/public-sans";
+@import "@fontsource-variable/newsreader";
 @import "@fontsource-variable/jetbrains-mono";
