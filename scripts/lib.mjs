@@ -85,3 +85,37 @@ export async function digestDirectory(directory) {
 export function cssDeclarations(entries, prefix = '--oe-') {
   return entries.map(([name, value]) => `  ${prefix}${name}: ${value};`).join('\n');
 }
+
+/*
+ * Text measurement.
+ *
+ * Generated SVG has no layout engine behind it. The build measures every string
+ * it draws against the box drawn for it, and the test suite re-measures the
+ * generated files to check nothing collides — both from here, so a card cannot
+ * pass its test by being measured with a different ruler than it was laid out
+ * with.
+ */
+
+/* JetBrains Mono is monospaced at 600/1000 em across the Latin set. */
+export const MONO_ADVANCE = 0.6;
+
+export const monoWidth = (text, size) => text.length * MONO_ADVANCE * size;
+
+export function textWidth(metrics, text, { size, weight = 500, tracking = 0 }) {
+  const advances = metrics.advances[String(weight)];
+  if (!advances) {
+    throw new Error(`No ${metrics.family} metrics for weight ${weight}.`);
+  }
+  let units = 0;
+  for (const character of text) {
+    const advance = advances[character];
+    if (advance === undefined) {
+      throw new Error(
+        `No advance for ${JSON.stringify(character)} in brand copy ${JSON.stringify(text)}. Re-run scripts/extract-font-metrics.py with the character added.`,
+      );
+    }
+    units += advance;
+  }
+  /* Tracking is applied after every character, matching CSS letter-spacing. */
+  return (units / metrics.unitsPerEm + text.length * tracking) * size;
+}

@@ -134,7 +134,15 @@ With symbol height `S`: wordmark cap height `0.62 S`; symbol-to-wordmark gap
 `0.375 S`; symbol and wordmark centered on each other vertically, never
 baseline-aligned. Stacked gap `0.31 S`. The product line sets at `0.62` of the
 wordmark cap height, baseline `1.55` cap heights below the wordmark, left edges
-flush.
+flush with the mark's left edge.
+
+Both ratios are of `S`, the symbol height — not of the font size. Public Sans
+has a cap height of 0.723 em, so a lockup built by setting the wordmark to
+`0.62em` is about a sixth too large. All four lockups are generated into
+`brand/generated/lockup/` in light, dark, and mono from
+`brand/source/lockups.json` and real font metrics; use those rather than
+rebuilding the proportions by hand, and if you must rebuild them in CSS, read
+the computed numbers out of `manifest.json` under `lockups`.
 
 ### Misuse
 
@@ -241,13 +249,25 @@ The diagram grammar and the logo are the same construction, so every diagram
 reinforces the mark and the mark explains every diagram. This is the brand's
 workhorse.
 
+**The grammar is published as code.** `@open-e2ee/design` exports the
+primitives — slabs, notched slabs, carrier brackets, metadata ticks, content
+bars, device outlines, boundary lines, the ratchet ramp — and the assets in this
+repository are drawn with the same functions a consumer imports, so an asset
+here and a diagram in an app cannot drift apart. Do not reimplement a primitive
+privately; if the grammar lacks a shape, add one. See
+[`docs/diagram-grammar.md`](./docs/diagram-grammar.md).
+
 ### The five rules
 
 1. **Open forms are outlined; opaque forms are filled.** 4 px stroke with a
    transparent interior means readable. Flat fill with no interior detail means
    not readable.
 2. **Overlap occludes.** Never multiply, never alpha, never a visible
-   intersection.
+   intersection. Where a diagram needs a lighter mark than the plaintext
+   stroke — content bars, ratchet steps — it uses the solid
+   `--oe-diagram-content-bar` and `--oe-diagram-ratchet-1…4` tokens. Alpha is
+   not a lighter colour, it is a claim that something is partly readable, and
+   the test suite fails any primitive that emits one.
 3. **Diagonal means in transit.** Sheared forms are moving; orthogonal forms are
    at rest. Arrows are thin (2 px), straight, orthogonal, and unremarkable — the
    cargo carries the motion, not the arrows.
@@ -271,7 +291,7 @@ workhorse.
 | Private key | A small solid notched slab drawn inside a device outline. Never a key shape. Never outside a device |
 | Public key / prekey bundle | A small outlined notched slab. It travels and it is readable; the shape rhyme with the private key is the point |
 | Trust boundary | Vertical gutter of canvas, dotted brass rule, label |
-| Session / ratchet state | A short run of small upright slabs at even intervals, each slightly darker than the last — sequence without cartoon gears |
+| Session / ratchet state | A short run of small upright slabs at even intervals, each a discrete solid step toward the ciphertext fill (`--oe-diagram-ratchet-1…4`) — sequence without cartoon gears, and without an opacity ramp |
 | Metadata | Thin brass ticks along the outside top edge of a slab. Always drawn |
 
 ### The signature diagram
@@ -367,6 +387,8 @@ Full canon lives with the verbal identity; the binding summary:
   to inspection."* Homepage hero: *"Your relay carries it. Your relay can't read
   it."* Product hero: *"The Signal Protocol, where your app actually runs."*
   Until sign-off lands, any surface using these must annotate them as proposed.
+  `oe-design taglines <built-html-dir>` enforces that against built output, and
+  `checkTaglineAnnotation` from `@open-e2ee/design/taglines` does it in process.
 - **Evidence over adjectives.** A quote, a number, a spec citation, or real code
   beats any intensifier.
 - **State the limit next to the claim.** Every capability statement that could
@@ -440,3 +462,17 @@ a proposed component is genuinely shared. For identity work specifically, the
 enforceable review items are: binary opacity, occlusion never blending, metadata
 ticks always drawn, private key never outside a device, correct mark variant for
 size, and at most one signature device per viewport.
+
+## Licensing
+
+The code in this repository — tokens, CSS, theme module, diagram grammar, CLI,
+build scripts, tests, docs — is Apache-2.0 (`LICENSE`). The visual identity is
+**reserved, not open source** (`LICENSE-BRAND.md`): `brand/source/`,
+`brand/generated/`, the published copies under `packages/design/dist/assets/`,
+and the names, mark, and wordmark. Reproducing them unmodified to refer to
+OpenE2EE is permitted; redrawing them, or using them as your own identity, is
+not.
+
+The reservation exists because the trademark and visual-similarity search noted
+at the top of this document has not been run. It is a position while that
+resolves, not a permanent one.
