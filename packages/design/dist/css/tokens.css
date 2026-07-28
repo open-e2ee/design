@@ -12,9 +12,11 @@
   --oe-color-paper-150: #ebe7e1;
   --oe-color-paper-200: #ded9d3;
   --oe-color-paper-300: #c4c0b8;
+  --oe-color-paper-350: #b8b4ac;
   --oe-color-paper-400: #a19c95;
   --oe-color-paper-500: #807b74;
   --oe-color-paper-600: #615d57;
+  --oe-color-paper-650: #504c46;
   --oe-color-paper-700: #48443f;
   --oe-color-paper-800: #34312d;
   --oe-color-paper-850: #282622;
@@ -112,10 +114,19 @@
   --oe-danger: #a32321;
   --oe-danger-surface: #ffe6e2;
   --oe-offline: #807b74;
+  --oe-sync: #26317e;
+  --oe-sync-surface: #dbe5ff;
+  --oe-device: #48443f;
+  --oe-device-surface: #ebe7e1;
   --oe-diagram-plaintext-stroke: #090806;
   --oe-diagram-ciphertext-fill: #34312d;
   --oe-diagram-carrier-stroke: #090806;
   --oe-diagram-boundary: #a5700d;
+  --oe-diagram-content-bar: #b8b4ac;
+  --oe-diagram-ratchet-1: #a19c95;
+  --oe-diagram-ratchet-2: #807b74;
+  --oe-diagram-ratchet-3: #615d57;
+  --oe-diagram-ratchet-4: #34312d;
   --oe-shadow-sm: 0 1px 2px rgb(9 8 6 / 0.08);
   --oe-shadow-md: 0 18px 44px rgb(9 8 6 / 0.1);
 
@@ -172,14 +183,14 @@
 
 :root.dark {
   color-scheme: dark;
-  --oe-canvas: #090806;
-  --oe-surface: #0f0e0b;
-  --oe-surface-raised: #151310;
+  --oe-canvas: #0f0e0b;
+  --oe-surface: #151310;
+  --oe-surface-raised: #1e1c18;
   --oe-surface-sunken: #090806;
   --oe-foreground: #f4f1eb;
   --oe-muted: #a19c95;
   --oe-subtle: #807b74;
-  --oe-border: #282622;
+  --oe-border: #34312d;
   --oe-border-control: #807b74;
   --oe-accent: #95acff;
   --oe-accent-hover: #bdcdff;
@@ -189,7 +200,7 @@
   --oe-link-hover: #bdcdff;
   --oe-focus: #95acff;
   --oe-selection: #1a235b;
-  --oe-code: #0f0e0b;
+  --oe-code: #151310;
   --oe-code-foreground: #ded9d3;
   --oe-verified: #7ed5a4;
   --oe-verified-surface: #165335;
@@ -200,10 +211,19 @@
   --oe-danger: #f79c92;
   --oe-danger-surface: #7e1a18;
   --oe-offline: #807b74;
+  --oe-sync: #bdcdff;
+  --oe-sync-surface: #1a235b;
+  --oe-device: #c4c0b8;
+  --oe-device-surface: #282622;
   --oe-diagram-plaintext-stroke: #f4f1eb;
   --oe-diagram-ciphertext-fill: #ded9d3;
   --oe-diagram-carrier-stroke: #f4f1eb;
   --oe-diagram-boundary: #d99c3e;
+  --oe-diagram-content-bar: #504c46;
+  --oe-diagram-ratchet-1: #615d57;
+  --oe-diagram-ratchet-2: #807b74;
+  --oe-diagram-ratchet-3: #a19c95;
+  --oe-diagram-ratchet-4: #ded9d3;
   --oe-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.28);
   --oe-shadow-md: 0 18px 44px rgb(0 0 0 / 0.36);
 }
