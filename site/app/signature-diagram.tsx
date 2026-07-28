@@ -1,48 +1,66 @@
+import {
+  ARROW_STROKE_WIDTH,
+  BOUNDARY_STROKE,
+  CARRIER_STROKE,
+  CIPHERTEXT_FILL,
+  CONTENT_BAR_FILL,
+  PLAINTEXT_STROKE,
+  STROKE_WIDTH,
+  contentBarRects,
+  metadataTickRects,
+  notchedSlabPath,
+  slabPath,
+} from "@open-e2ee/design";
+
 import { geometry } from "./tokens";
 
 /*
- * The signature diagram, drawn to the grammar in DESIGN.md: outlined forms are
- * readable, filled forms are not, sheared forms are moving, and the trust
- * boundary is a gutter of empty canvas rather than a fence. The relay is the
- * org mark itself, read straight out of the published geometry so the diagram
- * cannot drift away from the logo.
+ * The signature diagram, drawn with the published primitives rather than with
+ * a private copy of them. Outlined forms are readable, filled forms are not,
+ * sheared forms are moving, and the trust boundary is a gutter of empty canvas
+ * rather than a fence. The relay is the org mark itself, read straight out of
+ * the published geometry so the diagram cannot drift away from the logo.
+ *
+ * Geometry functions, not the markup ones: those emit `stroke-width` and React
+ * wants `strokeWidth`.
  */
 
 const RELAY_SIZE = 140;
 const RELAY_X = 478;
 const RELAY_Y = 92;
 
+const DEVICE = { y: 96, width: 200, height: 133, padding: 20 };
+const ENVELOPE = { y: 112, width: 80, height: 100, shear: 14, ticks: 5 };
+
 function Device({ x, label }: { x: number; label: string }) {
-  const bars = [
-    { y: 118, width: 150 },
-    { y: 140, width: 170 },
-    { y: 162, width: 120 },
-  ];
   return (
     <g>
       <rect
         x={x}
-        y={96}
-        width={200}
-        height={133}
+        y={DEVICE.y}
+        width={DEVICE.width}
+        height={DEVICE.height}
         fill="none"
-        stroke="var(--oe-diagram-plaintext-stroke)"
-        strokeWidth={4}
+        stroke={PLAINTEXT_STROKE}
+        strokeWidth={STROKE_WIDTH}
       />
-      {bars.map((bar) => (
-        <rect
-          key={bar.y}
-          x={x + 20}
-          y={bar.y}
-          width={bar.width}
-          height={9}
-          fill="var(--oe-diagram-plaintext-stroke)"
-          opacity={0.28}
-        />
+      {contentBarRects({
+        x: x + DEVICE.padding,
+        y: DEVICE.y + 22,
+        width: DEVICE.width - DEVICE.padding * 2,
+      }).map((bar) => (
+        <rect key={bar.y} {...bar} fill={CONTENT_BAR_FILL} />
       ))}
+      {/* Filled notched slab: a private key, and it never leaves this outline. */}
       <path
-        d={`M${x + 20} 190 H${x + 52} L${x + 60} 198 V214 H${x + 20} Z`}
-        fill="var(--oe-diagram-plaintext-stroke)"
+        d={notchedSlabPath({
+          x: x + DEVICE.padding,
+          y: 190,
+          width: 40,
+          height: 24,
+          notch: 8,
+        })}
+        fill={PLAINTEXT_STROKE}
       />
       <text x={x} y={262} className="diagram-label">
         {label}
@@ -52,18 +70,14 @@ function Device({ x, label }: { x: number; label: string }) {
 }
 
 function Envelope({ x, ticks }: { x: number; ticks?: string }) {
-  const shear = 14;
   return (
     <g>
-      {Array.from({ length: 5 }, (_, index) => (
-        <rect
-          key={index}
-          x={x + 16 + index * 14}
-          y={98}
-          width={2}
-          height={10}
-          fill="var(--oe-diagram-boundary)"
-        />
+      {metadataTickRects({
+        x: x + 16,
+        y: ENVELOPE.y,
+        count: ENVELOPE.ticks,
+      }).map((tick) => (
+        <rect key={tick.x} {...tick} fill={BOUNDARY_STROKE} />
       ))}
       {ticks ? (
         <text x={x + 14} y={88} className="diagram-tick-label">
@@ -71,8 +85,14 @@ function Envelope({ x, ticks }: { x: number; ticks?: string }) {
         </text>
       ) : null}
       <path
-        d={`M${x + shear} 112 L${x + 80 + shear} 112 L${x + 80} 212 L${x} 212 Z`}
-        fill="var(--oe-diagram-ciphertext-fill)"
+        d={slabPath({
+          x,
+          y: ENVELOPE.y,
+          width: ENVELOPE.width,
+          height: ENVELOPE.height,
+          shear: ENVELOPE.shear,
+        })}
+        fill={CIPHERTEXT_FILL}
       />
       <text x={x} y={262} className="diagram-label">
         sealed
@@ -92,8 +112,8 @@ function Boundary({ x, label }: { x: number; label: string }) {
         y1={76}
         x2={x}
         y2={248}
-        stroke="var(--oe-diagram-boundary)"
-        strokeWidth={2}
+        stroke={BOUNDARY_STROKE}
+        strokeWidth={ARROW_STROKE_WIDTH}
         strokeDasharray="2 6"
       />
     </g>
@@ -102,8 +122,8 @@ function Boundary({ x, label }: { x: number; label: string }) {
 
 function Arrow({ x }: { x: number }) {
   return (
-    <g fill="var(--oe-diagram-carrier-stroke)">
-      <rect x={x} y={161} width={30} height={2} />
+    <g fill={CARRIER_STROKE}>
+      <rect x={x} y={161} width={30} height={ARROW_STROKE_WIDTH} />
       <path d={`M${x + 30} 155 L${x + 40} 162 L${x + 30} 169 Z`} />
     </g>
   );
@@ -134,7 +154,7 @@ export function SignatureDiagram() {
       <Arrow x={432} />
       <g
         transform={`translate(${RELAY_X} ${RELAY_Y}) scale(${RELAY_SIZE / 512})`}
-        fill="var(--oe-diagram-carrier-stroke)"
+        fill={CARRIER_STROKE}
       >
         <path d={geometry.full.carrierLeftPath} />
         <path d={geometry.full.carrierRightPath} />
