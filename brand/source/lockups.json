@@ -1,0 +1,26 @@
+{
+  "wordmark": {
+    "open": "Open",
+    "e2ee": "E2EE",
+    "openWeight": 500,
+    "e2eeWeight": 800,
+    "openTracking": -0.01,
+    "e2eeTracking": -0.015
+  },
+  "product": "Signal Protocol SDK",
+  "productWeight": 500,
+  "symbolSize": 128,
+  "proportions": {
+    "wordmarkCapHeight": 0.62,
+    "symbolGap": 0.375,
+    "stackedGap": 0.31,
+    "productCapHeight": 0.62,
+    "productBaseline": 1.55
+  },
+  "notes": {
+    "proportions": "Every ratio here is DESIGN.md's lockup table, not a fresh decision. wordmarkCapHeight, symbolGap, and stackedGap are multiples of the symbol height S; productCapHeight is a multiple of the wordmark cap height and productBaseline is that cap height again, measured down from the wordmark baseline.",
+    "typeMetrics": "Cap height, descender, and per-character advances come from brand/source/public-sans-metrics.json, extracted from the pinned font by scripts/extract-font-metrics.py. Advances exclude kerning, so a generated canvas reserves marginally more width than the text needs.",
+    "productLeftEdge": "Flush with the mark's left edge, not the wordmark's. DESIGN.md says 'left edges flush' for the second line of the product lockup; this is the reading consumers already derived by hand.",
+    "productTracking": "Not specified by DESIGN.md, so the product line sets untracked."
+  }
+}

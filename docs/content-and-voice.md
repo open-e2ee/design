@@ -85,3 +85,49 @@ as an internal design principle only; see `DESIGN.md`.
 
 Current taglines are **pending founder sign-off** and any surface using them
 must say so.
+
+## Enforcing the tagline annotation
+
+Three strings are proposed rather than approved:
+
+| Role | Copy |
+|---|---|
+| Primary | Opaque to the relay. Open to inspection. |
+| Homepage hero | Your relay carries it. Your relay can't read it. |
+| Product hero | The Signal Protocol, where your app actually runs. |
+
+A surface may use them. It may not present them as settled. Because "we'll
+remember to remove the annotation once it's approved" is a promise nobody keeps
+in the other direction either, the rule ships as a check consumers run against
+their own build:
+
+```sh
+oe-design taglines dist          # or: oe-design check --taglines dist
+```
+
+It scans every `.html` file in the directory, and fails if a page contains one
+of the taglines without also containing a word that marks the copy as
+unfinished — `proposed`, `provisional`, `pending sign-off`, `not approved`,
+`draft copy`. A page that uses no tagline passes. Wire it into CI beside the
+build; a check that only runs by hand is not a gate.
+
+The same rule is available as a function for surfaces that render HTML without
+writing it to disk:
+
+```js
+import { checkTaglineAnnotation, findTaglines, TAGLINES } from '@open-e2ee/design/taglines';
+
+const result = checkTaglineAnnotation(html, { source: '/pricing' });
+if (!result.ok) throw new Error(result.message);
+```
+
+`checkTaglineAnnotation` returns a result rather than throwing, so a caller can
+report every page in one pass instead of stopping at the first. The match is on
+the reader's text, not the source: tags become spaces, entities are decoded,
+curly quotes are flattened, and whitespace is discarded entirely — so
+`Opaque to the <em>relay</em>.` is caught, which is exactly the styling the
+tagline is most likely to be wearing.
+
+When sign-off lands, delete the annotations, delete the check from consumer CI,
+and delete this section. Until it does, the check is the only thing standing
+between unapproved copy and a launch page.

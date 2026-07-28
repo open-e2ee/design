@@ -55,12 +55,32 @@ should not need to choose by eye.
 The full misuse list, the lockup proportions, and the wordmark treatment are in
 `DESIGN.md`.
 
+## Lockups
+
+`generated/lockup/` holds the four lockups `DESIGN.md` specifies — symbol,
+horizontal, stacked, and the product lockup for Signal Protocol SDK — each in
+light, dark, and `currentColor` mono. They are built from
+`source/lockups.json` and the Public Sans metrics in
+`source/public-sans-metrics.json`, so the proportions are computed rather than
+eyeballed and `generated/manifest.json` publishes the resulting numbers under
+`lockups`.
+
+SVG only. `rsvg-convert` cannot load webfonts, so a rasterized lockup would set
+the wordmark in a fallback face; a consumer that needs a PNG should render the
+SVG in a browser with the package fonts loaded.
+
+## Licensing
+
+The visual identity is **reserved, not open source** — see `LICENSE-BRAND.md`
+at the repository root. `source/`, `generated/`, and the published copies under
+`packages/design/dist/assets/` are all covered by that reservation. The code
+that builds them is Apache-2.0.
+
 ## Open items
 
 - A **trademark and visual-similarity search** on the bracket-and-payload
   silhouette must clear before the mark appears on a public launch surface.
-- The repository still needs an explicit asset and trademark licensing decision
-  before third parties are granted reuse rights.
+  This is the reason the assets are reserved rather than released.
 
 The mark is original geometry on a 32-unit grid: no runtime font dependency and
 no outlines from any licensed typeface. See `THIRD_PARTY_NOTICES.md`.

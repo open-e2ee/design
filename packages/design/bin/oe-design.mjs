@@ -6,6 +6,7 @@ import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { readdir } from 'node:fs/promises';
+import { checkTaglineAnnotation } from '../dist/taglines.mjs';
 
 const binDirectory = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(binDirectory, '..', '..', '..');
@@ -110,13 +111,54 @@ async function checkAssets(target) {
   process.stdout.write(`Verified ${packageJson.name} ${packageJson.version} in ${target}\n`);
 }
 
-const [command, targetArgument] = process.argv.slice(2);
-const target = targetFromArgument(targetArgument);
+/*
+ * Read-only, so it does not carry the export guards. Those exist because
+ * `export` deletes its target; refusing to *read* a directory outside the
+ * working tree would only stop someone pointing the checker at a build output
+ * that lives beside the repository.
+ */
+async function checkTaglines(target) {
+  const pages = (await filesIn(target)).filter((file) => /\.html?$/i.test(file));
+  if (pages.length === 0) {
+    throw new Error(
+      `No HTML found in ${target}. Point this at built output, not source.`,
+    );
+  }
+  const results = [];
+  for (const page of pages) {
+    const html = await readFile(resolve(target, page), 'utf8');
+    results.push(checkTaglineAnnotation(html, { source: page }));
+  }
+  const failures = results.filter((result) => !result.ok);
+  const using = results.filter((result) => result.taglines.length > 0);
+  for (const failure of failures) process.stderr.write(`${failure.message}\n`);
+  if (failures.length > 0) {
+    throw new Error(
+      `${failures.length} of ${pages.length} page(s) use a tagline with no annotation.`,
+    );
+  }
+  process.stdout.write(
+    `Checked ${pages.length} page(s) in ${target}: ${using.length} use a tagline, all annotated.\n`,
+  );
+}
 
-if (command === 'export') {
-  await exportAssets(target);
+const USAGE =
+  'Usage: oe-design <export|check> <target-directory>\n' +
+  '       oe-design taglines <built-html-directory>\n' +
+  '       oe-design check --taglines <built-html-directory>';
+
+const argv = process.argv.slice(2);
+const taglineFlag = argv.indexOf('--taglines');
+if (taglineFlag !== -1) argv.splice(taglineFlag, 1);
+const [command, targetArgument] = argv;
+
+if (command === 'taglines' || (command === 'check' && taglineFlag !== -1)) {
+  if (!targetArgument) throw new Error(USAGE);
+  await checkTaglines(resolve(targetArgument));
+} else if (command === 'export') {
+  await exportAssets(targetFromArgument(targetArgument));
 } else if (command === 'check') {
-  await checkAssets(target);
+  await checkAssets(targetFromArgument(targetArgument));
 } else {
-  throw new Error('Usage: oe-design <export|check> <target-directory>');
+  throw new Error(USAGE);
 }

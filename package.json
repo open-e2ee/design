@@ -1,14 +1,16 @@
 {
   "name": "@open-e2ee/design",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "OpenE2EE brand assets, design tokens, theming, and design guidance.",
   "type": "module",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "sideEffects": [
     "**/*.css"
   ],
   "files": [
     "DESIGN.md",
+    "LICENSE",
+    "LICENSE-BRAND.md",
     "README.md",
     "THIRD_PARTY_NOTICES.md",
     "brand/third-party/",
@@ -30,7 +32,15 @@
       "types": "./packages/design/dist/theme.d.ts",
       "default": "./packages/design/dist/theme.mjs"
     },
-    "./assets/*": "./packages/design/dist/assets/*"
+    "./assets/*": "./packages/design/dist/assets/*",
+    "./diagram": {
+      "types": "./packages/design/dist/diagram.d.ts",
+      "default": "./packages/design/dist/diagram.mjs"
+    },
+    "./taglines": {
+      "types": "./packages/design/dist/taglines.d.ts",
+      "default": "./packages/design/dist/taglines.mjs"
+    }
   },
   "bin": {
     "oe-design": "./packages/design/bin/oe-design.mjs"
@@ -38,7 +48,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node scripts/test.mjs",
-    "check": "npm run build && npm test && git diff --exit-code -- brand/generated/*.svg brand/generated/svg packages/design/dist/assets/*.svg packages/design/dist/assets/svg packages/design/dist/css packages/design/dist/index.d.ts packages/design/dist/index.mjs packages/design/dist/theme.d.ts packages/design/dist/theme.mjs packages/design/dist/tokens.json",
+    "check": "npm run build && npm test && git diff --exit-code -- brand/generated/*.svg brand/generated/svg brand/generated/social/*.svg brand/generated/lockup packages/design/dist/assets/*.svg packages/design/dist/assets/svg packages/design/dist/assets/social/*.svg packages/design/dist/assets/lockup packages/design/dist/css packages/design/dist/index.d.ts packages/design/dist/index.mjs packages/design/dist/theme.d.ts packages/design/dist/theme.mjs packages/design/dist/diagram.d.ts packages/design/dist/diagram.mjs packages/design/dist/taglines.d.ts packages/design/dist/taglines.mjs packages/design/dist/tokens.json",
     "pack:check": "npm pack --dry-run --json",
     "prepack": "npm run build && npm test"
   },

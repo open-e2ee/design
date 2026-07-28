@@ -1,0 +1,73 @@
+{
+  "note": "One card per repository. Every plate row is an annotation on a drawn parcel, and DESIGN.md requires every one of them to be true of the repository the card describes. Rows are copy, reviewed like copy. The only substitutions are {version}, {package}, {svgFiles}, and {pngFiles}, which the build fills from this repository.",
+  "fields": {
+    "slug": "Output filename stem, under brand/generated/social/.",
+    "subject": "The repository the card describes. Recorded in the manifest so a card cannot be reused for the wrong repository by accident.",
+    "title": "The card's accessible name and og:title. Not drawn.",
+    "product": "Optional. Drawn under the wordmark, to the product lockup's proportions. Omit for cards that speak for the org rather than a product.",
+    "description": "One line per array entry. Two is the practical maximum.",
+    "plateRows": "One annotation per drawn parcel; exactly three.",
+    "footer": "The mono line at the foot of the card."
+  },
+  "cards": [
+    {
+      "slug": "open-e2ee-design-og",
+      "subject": "@open-e2ee/design",
+      "title": "OpenE2EE Design",
+      "product": "Design System",
+      "description": ["Brand identity, design tokens, and theming."],
+      "plateRows": [
+        "svg/ · {svgFiles} files",
+        "png/ · {pngFiles} files",
+        "css/ · tokens · tailwind · fonts"
+      ],
+      "footer": "{package} · {version}"
+    },
+    {
+      "slug": "open-e2ee-signal-protocol-sdk-og",
+      "subject": "open-e2ee/signal-protocol-js",
+      "title": "OpenE2EE Signal Protocol SDK",
+      "product": "Signal Protocol SDK",
+      "description": [
+        "Pure-TypeScript Signal Protocol E2EE SDK for Expo,",
+        "React Native, browsers, and Node."
+      ],
+      "plateRows": [
+        "PQXDH · Double Ratchet · ML-KEM",
+        "multi-device · groups · sealed sender",
+        "AGPL-3.0-or-later · commercial"
+      ],
+      "footer": "@open-e2ee/signal-protocol-sdk"
+    },
+    {
+      "slug": "open-e2ee-website-og",
+      "subject": "open-e2ee/website",
+      "title": "OpenE2EE",
+      "description": [
+        "Open-source, protocol-level end-to-end encryption",
+        "SDKs for TypeScript developers."
+      ],
+      "plateRows": [
+        "expo · react native · browser · node",
+        "PQXDH · Double Ratchet · ML-KEM",
+        "AGPL-3.0-or-later · commercial"
+      ],
+      "footer": "open-e2ee.dev"
+    },
+    {
+      "slug": "open-e2ee-org-og",
+      "subject": "github.com/open-e2ee",
+      "title": "OpenE2EE",
+      "description": [
+        "A family of open-source end-to-end encryption",
+        "SDKs for TypeScript."
+      ],
+      "plateRows": [
+        "signal-protocol-sdk",
+        "design · brand · tokens",
+        "open source · commercial licensing"
+      ],
+      "footer": "github.com/open-e2ee"
+    }
+  ]
+}

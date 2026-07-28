@@ -14,9 +14,11 @@
   --color-oe-paper-150: #ebe7e1;
   --color-oe-paper-200: #ded9d3;
   --color-oe-paper-300: #c4c0b8;
+  --color-oe-paper-350: #b8b4ac;
   --color-oe-paper-400: #a19c95;
   --color-oe-paper-500: #807b74;
   --color-oe-paper-600: #615d57;
+  --color-oe-paper-650: #504c46;
   --color-oe-paper-700: #48443f;
   --color-oe-paper-800: #34312d;
   --color-oe-paper-850: #282622;
@@ -100,10 +102,19 @@
   --color-danger: var(--oe-danger);
   --color-danger-surface: var(--oe-danger-surface);
   --color-offline: var(--oe-offline);
+  --color-sync: var(--oe-sync);
+  --color-sync-surface: var(--oe-sync-surface);
+  --color-device: var(--oe-device);
+  --color-device-surface: var(--oe-device-surface);
   --color-diagram-plaintext-stroke: var(--oe-diagram-plaintext-stroke);
   --color-diagram-ciphertext-fill: var(--oe-diagram-ciphertext-fill);
   --color-diagram-carrier-stroke: var(--oe-diagram-carrier-stroke);
   --color-diagram-boundary: var(--oe-diagram-boundary);
+  --color-diagram-content-bar: var(--oe-diagram-content-bar);
+  --color-diagram-ratchet-1: var(--oe-diagram-ratchet-1);
+  --color-diagram-ratchet-2: var(--oe-diagram-ratchet-2);
+  --color-diagram-ratchet-3: var(--oe-diagram-ratchet-3);
+  --color-diagram-ratchet-4: var(--oe-diagram-ratchet-4);
   --shadow-brand-sm: var(--oe-shadow-sm);
   --shadow-brand-md: var(--oe-shadow-md);
 }

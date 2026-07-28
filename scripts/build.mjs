@@ -7,10 +7,25 @@ import {
   digestDirectory,
   filesIn,
   flatten,
+  monoWidth,
   readJson,
   resolveReferences,
+  textWidth,
   writeText,
 } from './lib.mjs';
+/*
+ * The diagram grammar comes from the published package, not from private
+ * copies here: the social card is drawn with the same functions a consumer
+ * gets, so a change to the grammar cannot silently diverge from the assets
+ * this repository ships.
+ */
+import {
+  TICK_GAP,
+  TICK_LENGTH,
+  carrierBrackets,
+  metadataTicks,
+  slabPath,
+} from '../packages/design/src/diagram.mjs';
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDirectory, '..');
@@ -23,6 +38,13 @@ const semanticSource = await readJson(join(root, 'tokens', 'semantic.json'));
 const componentSource = await readJson(join(root, 'tokens', 'components.json'));
 const brandSource = await readJson(join(root, 'tokens', 'brand.json'));
 const geometry = await readJson(join(root, 'brand', 'source', 'geometry.json'));
+const lockupSource = await readJson(join(root, 'brand', 'source', 'lockups.json'));
+const typeMetrics = await readJson(
+  join(root, 'brand', 'source', 'public-sans-metrics.json'),
+);
+const socialCardSource = await readJson(
+  join(root, 'brand', 'source', 'social-cards.json'),
+);
 const packageJson = await readJson(join(root, 'package.json'));
 
 const semantic = resolveReferences(semanticSource, primitives);
@@ -232,9 +254,28 @@ await writeText(join(distribution, 'css', 'tailwind.css'), tailwindCss());
 await writeText(join(distribution, 'css', 'fonts.css'), fontsCss);
 await writeText(join(distribution, 'css', 'wordmark.css'), wordmarkCss);
 await writeText(join(distribution, 'theme.mjs'), themeModule);
+/*
+ * `diagram` and `taglines` are authored by hand under packages/design/src and
+ * copied verbatim; only the CSS and the theme module are generated from tokens.
+ * Copying rather than generating keeps them readable, reviewable, and directly
+ * importable by scripts/ — one implementation, not a template of one.
+ */
+const copiedModules = ['diagram', 'taglines'];
+for (const name of copiedModules) {
+  for (const extension of ['mjs', 'd.ts']) {
+    await cp(
+      join(root, 'packages', 'design', 'src', `${name}.${extension}`),
+      join(distribution, `${name}.${extension}`),
+    );
+  }
+}
+
 await writeText(
   join(distribution, 'index.mjs'),
-  `export * from './theme.mjs';\n`,
+  `export * from './theme.mjs';
+export * from './diagram.mjs';
+export * from './taglines.mjs';
+`,
 );
 await writeText(
   join(distribution, 'theme.d.ts'),
@@ -262,7 +303,10 @@ export declare const THEMES: ReadonlySet<ThemePreference>;
 );
 await writeText(
   join(distribution, 'index.d.ts'),
-  `export * from './theme.js';\n`,
+  `export * from './theme.js';
+export * from './diagram.js';
+export * from './taglines.js';
+`,
 );
 await writeText(
   join(distribution, 'tokens.json'),
@@ -454,69 +498,173 @@ execFileSync('rsvg-convert', [
   join(generatedBrand, 'open-e2ee-mark-sheet.svg'),
 ]);
 
+const escapeXml = (value) =>
+  String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+
+const round2 = (value) => Number(value.toFixed(2));
+const capRatio = typeMetrics.capHeight / typeMetrics.unitsPerEm;
+const descenderRatio = typeMetrics.descender / typeMetrics.unitsPerEm;
+
+const measure = (text, options) =>
+  options.mono === true
+    ? monoWidth(text, options.size)
+    : textWidth(typeMetrics, text, options);
+
 /*
- * Social preview (1280x640): canvas, mark, wordmark, one description line, and
- * a manifest plate bleeding off the right edge. The plate is an object store
- * drawn in the diagram grammar — outlined carrier, opaque parcels, brass
- * metadata ticks on every parcel — annotated with what this package actually
- * ships.
+ * Generated SVG has no layout engine behind it, so every string this build
+ * draws is measured against the box drawn for it. A description that would run
+ * under the plate fails the build instead of shipping.
  */
-function slabPath({ x, y, width, height, shear = 0 }) {
-  return `M${x + shear} ${y} L${x + width + shear} ${y} L${x + width} ${y + height} L${x} ${y + height} Z`;
+function fitText(text, options, limit, context) {
+  const width = measure(text, options);
+  if (width > limit) {
+    throw new Error(
+      `${context}: ${JSON.stringify(text)} measures ${width.toFixed(1)} px, ${(width - limit).toFixed(1)} px past its ${limit} px box.`,
+    );
+  }
+  return width;
 }
 
-function metadataTicks({ x, y, count, fill, spacing = 16, length = 10 }) {
-  return Array.from(
-    { length: count },
-    (_, index) =>
-      `<rect x="${x + index * spacing}" y="${y - length - 4}" width="2" height="${length}" fill="${fill}"/>`,
-  ).join('');
-}
+/*
+ * Social preview (1280x640): canvas, mark, wordmark, a description block, and a
+ * manifest plate on the right. The plate is an object store drawn in the
+ * diagram grammar — an outlined carrier holding opaque parcels, brass metadata
+ * ticks on every one — annotated with rows that are true of the repository the
+ * card describes.
+ *
+ * The carrier is drawn whole: both brackets stand on the canvas, because the
+ * form is a pair and one bracket is a different mark. The plate column is
+ * therefore bounded by the right bracket's inner face, and the left column is
+ * bounded by the left bracket.
+ */
+const CARD = {
+  width: 1280,
+  height: 640,
+  /* Carrier: 800..1240, so the right bracket sits 40 px inside the canvas. */
+  carrier: { x: 800, y: 104, width: 440, height: 432, thickness: 24, arm: 88 },
+  parcelX: 856,
+  /* Interior clearance to the bracket stems is the trust boundary; it holds. */
+  parcelMaxWidth: 330,
+  /* The left column ends where the carrier begins, less a gutter. */
+  columnX: 88,
+  columnWidth: 692,
+  parcels: [
+    { y: 150, width: 264, height: 64, ticks: 7 },
+    { y: 268, width: 330, height: 88, ticks: 9 },
+    { y: 412, width: 215, height: 56, ticks: 6 },
+  ],
+  /*
+   * An in-transit envelope, sheared, clear of the carrier's left bracket. It
+   * sits low enough that its metadata ticks stay below the description block
+   * and its foot lands on the footer baseline.
+   */
+  transit: { x: 692, y: 440, width: 76, height: 116, shear: 12, ticks: 4 },
+  /* Labels stop a gutter short of the right bracket's inner face. */
+  labelGutter: 16,
+  labelBaselineOffset: 24,
+  labelSize: 15,
+  wordmarkBaseline: 166,
+  wordmarkSize: 85,
+  descriptionSize: 28,
+  descriptionLeading: 40,
+  footerBaseline: 556,
+};
 
-function carrierBrackets({ x, y, width, height, thickness, arm, fill }) {
-  const right = x + width;
-  return [
-    `M${x} ${y} H${x + arm} V${y + thickness} H${x + thickness} V${y + height - thickness} H${x + arm} V${y + height} H${x} Z`,
-    `M${right} ${y} H${right - arm} V${y + thickness} H${right - thickness} V${y + height - thickness} H${right - arm} V${y + height} H${right} Z`,
-  ]
-    .map((path) => `<path d="${path}" fill="${fill}"/>`)
-    .join('\n    ');
-}
-
-function socialSvg({ description, plateRows }) {
+function socialSvg({ title, product, description, plateRows, footer }) {
   const light = semantic.light;
-  const parcels = [
-    { y: 168, width: 320, height: 64, ticks: 7 },
-    { y: 272, width: 400, height: 88, ticks: 9 },
-    { y: 400, width: 260, height: 56, ticks: 6 },
-  ];
-  const plate = parcels
-    .map(
-      (parcel, index) => `
-    <path d="${slabPath({ x: 880, y: parcel.y, width: parcel.width, height: parcel.height })}" fill="${light['diagram-ciphertext-fill']}"/>
-    ${metadataTicks({ x: 884, y: parcel.y, count: parcel.ticks, fill: light['diagram-boundary'] })}
-    <text x="880" y="${parcel.y + parcel.height + 26}" fill="${light.subtle}" font-family="${monoStack}" font-size="15">${plateRows[index]}</text>`,
-    )
+  const labelLimit =
+    CARD.carrier.x +
+    CARD.carrier.width -
+    CARD.carrier.thickness -
+    CARD.labelGutter -
+    CARD.parcelX;
+
+  const plate = CARD.parcels
+    .map((parcel, index) => {
+      const row = plateRows[index];
+      fitText(
+        row,
+        { size: CARD.labelSize, mono: true },
+        labelLimit,
+        `${title} plate row ${index + 1}`,
+      );
+      return `
+    <path d="${slabPath({ x: CARD.parcelX, y: parcel.y, width: parcel.width, height: parcel.height })}" fill="${light['diagram-ciphertext-fill']}"/>
+    ${metadataTicks({ x: CARD.parcelX + 4, y: parcel.y, count: parcel.ticks, fill: light['diagram-boundary'] })}
+    <text x="${CARD.parcelX}" y="${parcel.y + parcel.height + CARD.labelBaselineOffset}" fill="${light.subtle}" font-family="${monoStack}" font-size="${CARD.labelSize}">${escapeXml(row)}</text>`;
+    })
     .join('');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
-  <title id="title">OpenE2EE Design</title>
-  <desc id="desc">The OpenE2EE mark and wordmark beside a manifest plate: an outlined carrier holding three opaque parcels, each marked with brass metadata ticks.</desc>
-  <rect width="1280" height="640" fill="${light.canvas}"/>
+  /*
+   * A card for a product names the product, on a second line built to the same
+   * proportions as the product lockup. Cards for the org set the wordmark
+   * alone, and everything below simply moves up.
+   */
+  const cardCap = CARD.wordmarkSize * capRatio;
+  const productSizeOnCard =
+    (cardCap * lockupSource.proportions.productCapHeight) / capRatio;
+  const productBaseline =
+    CARD.wordmarkBaseline + cardCap * lockupSource.proportions.productBaseline;
+  const ruleY = product ? productBaseline + 40 : 240;
+  const descriptionTop = ruleY + 60;
+
+  if (product) {
+    fitText(
+      product,
+      { size: productSizeOnCard, weight: lockupSource.productWeight },
+      CARD.columnWidth,
+      `${title} product line`,
+    );
+  }
+  const productLine = product
+    ? `
+  <text x="${CARD.columnX}" y="${round2(productBaseline)}" fill="${light.muted}" font-family="${sansStack}" font-size="${round2(productSizeOnCard)}" font-weight="${lockupSource.productWeight}">${escapeXml(product)}</text>`
+    : '';
+
+  const descriptionLines = description
+    .map((line, index) => {
+      fitText(
+        line,
+        { size: CARD.descriptionSize },
+        CARD.columnWidth,
+        `${title} description line ${index + 1}`,
+      );
+      return `
+  <text x="${CARD.columnX}" y="${descriptionTop + index * CARD.descriptionLeading}" fill="${light.muted}" font-family="${sansStack}" font-size="${CARD.descriptionSize}" font-weight="500">${escapeXml(line)}</text>`;
+    })
+    .join('');
+
+  const descriptionBottom =
+    descriptionTop +
+    (description.length - 1) * CARD.descriptionLeading +
+    descenderRatio * CARD.descriptionSize;
+  const transitTickTop = CARD.transit.y - TICK_LENGTH - TICK_GAP;
+  if (descriptionBottom > transitTickTop) {
+    throw new Error(
+      `${title}: the description block reaches ${descriptionBottom.toFixed(1)} px, into the in-transit envelope's metadata ticks at ${transitTickTop} px.`,
+    );
+  }
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD.width}" height="${CARD.height}" viewBox="0 0 ${CARD.width} ${CARD.height}" role="img" aria-labelledby="title desc">
+  <title id="title">${escapeXml(title)}</title>
+  <desc id="desc">The OpenE2EE mark and wordmark beside a manifest plate: two open carrier brackets holding three opaque parcels, each marked with brass metadata ticks, with a fourth parcel in transit outside the carrier.</desc>
+  <rect width="${CARD.width}" height="${CARD.height}" fill="${light.canvas}"/>
   <g>
-    ${carrierBrackets({ x: 800, y: 104, width: 600, height: 432, thickness: 24, arm: 88, fill: light['diagram-carrier-stroke'] })}
-    <path d="${slabPath({ x: 692, y: 424, width: 76, height: 132, shear: 12 })}" fill="${light['diagram-ciphertext-fill']}"/>
-    ${metadataTicks({ x: 708, y: 424, count: 4, fill: light['diagram-boundary'] })}${plate}
+    ${carrierBrackets({ ...CARD.carrier, fill: light['diagram-carrier-stroke'] }).replaceAll('\n', '\n    ')}
+    <path d="${slabPath(CARD.transit)}" fill="${light['diagram-ciphertext-fill']}"/>
+    ${metadataTicks({ x: CARD.transit.x + 16, y: CARD.transit.y, count: CARD.transit.ticks, fill: light['diagram-boundary'] })}${plate}
   </g>
   <g transform="translate(88 88) scale(0.1875)">
 ${markMarkup(light.foreground, 'full', '    ')}
   </g>
-  <text x="220" y="166" fill="${light.foreground}" font-family="${sansStack}" font-size="85">
+  <text x="220" y="${CARD.wordmarkBaseline}" fill="${light.foreground}" font-family="${sansStack}" font-size="${CARD.wordmarkSize}">
     <tspan font-weight="500" letter-spacing="-0.85">Open</tspan><tspan font-weight="800" letter-spacing="-1.28">E2EE</tspan>
-  </text>
-  <rect x="88" y="240" width="616" height="1" fill="${light.border}"/>
-  <text x="88" y="300" fill="${light.muted}" font-family="${sansStack}" font-size="28" font-weight="500">${description}</text>
-  <text x="88" y="556" fill="${light.subtle}" font-family="${monoStack}" font-size="19">${packageJson.name} · ${packageJson.version}</text>
+  </text>${productLine}
+  <rect x="${CARD.columnX}" y="${round2(ruleY)}" width="${CARD.columnWidth}" height="1" fill="${light.border}"/>${descriptionLines}
+  <text x="${CARD.columnX}" y="${CARD.footerBaseline}" fill="${light.subtle}" font-family="${monoStack}" font-size="19">${escapeXml(footer)}</text>
 </svg>
 `;
 }
@@ -525,27 +673,214 @@ const generatedSoFar = await filesIn(generatedBrand);
 const countIn = (prefix) =>
   generatedSoFar.filter((file) => file.startsWith(prefix)).length;
 
-await mkdir(join(generatedBrand, 'social'), { recursive: true });
-await writeText(
-  join(generatedBrand, 'social', 'open-e2ee-design-og.svg'),
-  socialSvg({
-    description: 'Brand identity, design tokens, and theming.',
-    plateRows: [
-      `svg/ · ${countIn('svg/')} files`,
-      `png/ · ${countIn('png/')} files`,
-      `css/ · tokens · tailwind · fonts`,
-    ],
-  }),
-);
-execFileSync('rsvg-convert', [
-  '--width',
-  '1280',
-  '--height',
-  '640',
-  '--output',
-  join(generatedBrand, 'social', 'open-e2ee-design-og.png'),
-  join(generatedBrand, 'social', 'open-e2ee-design-og.svg'),
-]);
+/*
+ * Only these substitutions exist, and they are all facts about this repository.
+ * A card describing another repository states that repository's facts as
+ * literal copy, reviewed as copy — the build has no way to verify a claim about
+ * a repository it cannot see, so it must not look like it did.
+ */
+const cardSubstitutions = {
+  '{version}': packageJson.version,
+  '{package}': packageJson.name,
+  '{svgFiles}': String(countIn('svg/')),
+  '{pngFiles}': String(countIn('png/')),
+};
+
+const fillCard = (value) =>
+  Object.entries(cardSubstitutions).reduce(
+    (text, [token, replacement]) => text.replaceAll(token, replacement),
+    value,
+  );
+
+const socialDirectory = join(generatedBrand, 'social');
+await mkdir(socialDirectory, { recursive: true });
+
+const socialCards = [];
+for (const card of socialCardSource.cards) {
+  const svgPath = join(socialDirectory, `${card.slug}.svg`);
+  const pngPath = join(socialDirectory, `${card.slug}.png`);
+  await writeText(
+    svgPath,
+    socialSvg({
+      title: card.title,
+      product: card.product,
+      description: card.description.map(fillCard),
+      plateRows: card.plateRows.map(fillCard),
+      footer: fillCard(card.footer),
+    }),
+  );
+  execFileSync('rsvg-convert', [
+    '--width',
+    String(CARD.width),
+    '--height',
+    String(CARD.height),
+    '--output',
+    pngPath,
+    svgPath,
+  ]);
+  socialCards.push({
+    slug: card.slug,
+    subject: card.subject,
+    title: card.title,
+    svg: `social/${card.slug}.svg`,
+    png: `social/${card.slug}.png`,
+  });
+}
+
+/*
+ * Lockups.
+ *
+ * DESIGN.md's lockup table is a set of ratios, not a set of files; until now
+ * every consumer re-derived them by hand in CSS and got a different answer.
+ * These are the ratios executed once, against real font metrics.
+ *
+ * SVG only: rsvg-convert cannot load a webfont, so a rasterized lockup would
+ * silently set the wordmark in whatever the host machine had lying around.
+ */
+const lockupDirectory = join(generatedBrand, 'lockup');
+await mkdir(lockupDirectory, { recursive: true });
+
+const symbol = lockupSource.symbolSize;
+const lockupPad = symbol * geometry.clearSpaceRatio;
+const wordmarkCap = symbol * lockupSource.proportions.wordmarkCapHeight;
+const wordmarkSize = wordmarkCap / capRatio;
+const symbolGap = symbol * lockupSource.proportions.symbolGap;
+const stackedGap = symbol * lockupSource.proportions.stackedGap;
+const productCap = wordmarkCap * lockupSource.proportions.productCapHeight;
+const productSize = productCap / capRatio;
+const productDrop = wordmarkCap * lockupSource.proportions.productBaseline;
+const wordmarkWidth =
+  textWidth(typeMetrics, lockupSource.wordmark.open, {
+    size: wordmarkSize,
+    weight: lockupSource.wordmark.openWeight,
+    tracking: lockupSource.wordmark.openTracking,
+  }) +
+  textWidth(typeMetrics, lockupSource.wordmark.e2ee, {
+    size: wordmarkSize,
+    weight: lockupSource.wordmark.e2eeWeight,
+    tracking: lockupSource.wordmark.e2eeTracking,
+  });
+const productWidth = textWidth(typeMetrics, lockupSource.product, {
+  size: productSize,
+  weight: lockupSource.productWeight,
+});
+
+function wordmarkText({ x, y, fill, size }) {
+  const { open, e2ee, openWeight, e2eeWeight, openTracking, e2eeTracking } =
+    lockupSource.wordmark;
+  return `<text x="${round2(x)}" y="${round2(y)}" fill="${fill}" font-family="${sansStack}" font-size="${round2(size)}">
+    <tspan font-weight="${openWeight}" letter-spacing="${round2(openTracking * size)}">${open}</tspan><tspan font-weight="${e2eeWeight}" letter-spacing="${round2(e2eeTracking * size)}">${e2ee}</tspan>
+  </text>`;
+}
+
+function lockupSvg({ name, mode, colors, width, height, description, body }) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${round2(width)}" height="${round2(height)}" viewBox="0 0 ${round2(width)} ${round2(height)}" role="img" aria-labelledby="title desc">
+  <title id="title">OpenE2EE ${name} lockup — ${mode}</title>
+  <desc id="desc">${description}</desc>
+  <metadata>Lockup: ${name}; mode: ${mode}; symbol height ${symbol}; wordmark cap height ${round2(wordmarkCap)}; generated by @open-e2ee/design ${packageJson.version}. Set in Public Sans; the wordmark is live text and needs the family available.</metadata>
+${body(colors)}
+</svg>
+`;
+}
+
+/* Symbol height S is fixed, so every lockup places the mark at the same scale. */
+const symbolAt = (x, y, fill) =>
+  `  <g transform="translate(${round2(x)} ${round2(y)}) scale(${round2(symbol / 512)})">
+${markMarkup(fill, variantForSize(symbol), '    ')}
+  </g>`;
+
+const lockupModes = {
+  ...brand.modes,
+  mono: { mark: 'currentColor', label: 'currentColor', product: 'currentColor' },
+};
+
+const lockupGeometry = {
+  symbol: {
+    width: symbol + lockupPad * 2,
+    height: symbol + lockupPad * 2,
+    description:
+      'The OpenE2EE symbol alone, with one bracket stem of clear space on every side.',
+    body: (colors) => symbolAt(lockupPad, lockupPad, colors.mark),
+  },
+  horizontal: {
+    width: lockupPad * 2 + symbol + symbolGap + wordmarkWidth,
+    height: symbol + lockupPad * 2,
+    description:
+      'The OpenE2EE symbol beside the wordmark, centered on each other vertically.',
+    body: (colors) =>
+      `${symbolAt(lockupPad, lockupPad, colors.mark)}
+  ${wordmarkText({
+    x: lockupPad + symbol + symbolGap,
+    /* Centered on the symbol, never baseline-aligned. */
+    y: lockupPad + symbol / 2 + wordmarkCap / 2,
+    fill: colors.label,
+    size: wordmarkSize,
+  })}`,
+  },
+  stacked: {
+    width: Math.max(symbol, wordmarkWidth) + lockupPad * 2,
+    height:
+      lockupPad * 2 +
+      symbol +
+      stackedGap +
+      wordmarkCap +
+      descenderRatio * wordmarkSize,
+    description: 'The OpenE2EE symbol above the wordmark, centered on each other.',
+    body: (colors) => {
+      const width = Math.max(symbol, wordmarkWidth) + lockupPad * 2;
+      return `${symbolAt((width - symbol) / 2, lockupPad, colors.mark)}
+  ${wordmarkText({
+    x: (width - wordmarkWidth) / 2,
+    y: lockupPad + symbol + stackedGap + wordmarkCap,
+    fill: colors.label,
+    size: wordmarkSize,
+  })}`;
+    },
+  },
+  product: {
+    width: Math.max(
+      lockupPad * 2 + symbol + symbolGap + wordmarkWidth,
+      lockupPad * 2 + productWidth,
+    ),
+    height:
+      lockupPad * 2 +
+      symbol / 2 +
+      wordmarkCap / 2 +
+      productDrop +
+      descenderRatio * productSize,
+    description:
+      'The horizontal OpenE2EE lockup with the product name on a second line, flush with the left edge of the symbol.',
+    body: (colors) => {
+      const wordmarkBaseline = lockupPad + symbol / 2 + wordmarkCap / 2;
+      return `${symbolAt(lockupPad, lockupPad, colors.mark)}
+  ${wordmarkText({
+    x: lockupPad + symbol + symbolGap,
+    y: wordmarkBaseline,
+    fill: colors.label,
+    size: wordmarkSize,
+  })}
+  <text x="${round2(lockupPad)}" y="${round2(wordmarkBaseline + productDrop)}" fill="${colors.product}" font-family="${sansStack}" font-size="${round2(productSize)}" font-weight="${lockupSource.productWeight}">${escapeXml(lockupSource.product)}</text>`;
+    },
+  },
+};
+
+const lockups = [];
+for (const [name, definition] of Object.entries(lockupGeometry)) {
+  for (const [mode, colors] of Object.entries(lockupModes)) {
+    const file = `open-e2ee-lockup-${name}-${mode}.svg`;
+    await writeText(
+      join(lockupDirectory, file),
+      lockupSvg({ name, mode, colors, ...definition }),
+    );
+    lockups.push({
+      lockup: name,
+      mode,
+      svg: `lockup/${file}`,
+      width: round2(definition.width),
+      height: round2(definition.height),
+    });
+  }
+}
 
 await cp(generatedBrand, assetDistribution, { recursive: true });
 
@@ -560,6 +895,23 @@ const manifest = {
     minimumSize: geometry.minimumSize,
     smallMaximumSize: geometry.smallMaximumSize,
     png: pngVariants,
+  },
+  lockups: {
+    rule: 'Lockup proportions are derived from the symbol height S and the Public Sans cap height; see DESIGN.md.',
+    symbolSize: symbol,
+    wordmarkCapHeight: round2(wordmarkCap),
+    wordmarkFontSize: round2(wordmarkSize),
+    symbolGap: round2(symbolGap),
+    stackedGap: round2(stackedGap),
+    productFontSize: round2(productSize),
+    productBaselineDrop: round2(productDrop),
+    note: 'SVG only, and the wordmark is live text: a lockup needs Public Sans available to render as drawn.',
+    assets: lockups,
+  },
+  social: {
+    rule: 'One card per repository, generated from brand/source/social-cards.json. Plate rows are copy about the repository named in `subject`.',
+    size: { width: CARD.width, height: CARD.height },
+    assets: socialCards,
   },
   sha256: assetDigest,
   files: assetFiles,
