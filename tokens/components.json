@@ -12,7 +12,14 @@
     "padding-inline-md": "{space.4}",
     "padding-inline-lg": "{space.6}",
     "font-family": "{font.sans}",
-    "font-weight": "600"
+    "font-weight": "600",
+    "font-size-sm": "0.875rem",
+    "font-size-md": "0.9375rem",
+    "gap": "{space.2}",
+    "disabled-opacity": "0.55"
+  },
+  "icon": {
+    "size": "1em"
   },
   "panel": {
     "padding": "{space.6}",
