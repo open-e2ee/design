@@ -16,6 +16,12 @@ import {
   checkTaglineAnnotation,
   findTaglines,
 } from '../packages/design/src/taglines.mjs';
+import {
+  ICON_VIEW_BOX,
+  iconNames,
+  iconPaths,
+  themeIcons,
+} from '../packages/design/src/icons.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const primitives = await readJson(join(root, 'tokens', 'primitives.json'));
@@ -692,7 +698,10 @@ const requiredFiles = [
   'packages/design/dist/css/tokens.css',
   'packages/design/dist/css/fonts.css',
   'packages/design/dist/css/wordmark.css',
+  'packages/design/dist/css/components.css',
   'packages/design/dist/css/tailwind.css',
+  'packages/design/dist/icons.mjs',
+  'packages/design/dist/icons.d.ts',
   'packages/design/dist/index.d.ts',
   'packages/design/dist/theme.mjs',
   'packages/design/dist/theme.d.ts',
@@ -1145,6 +1154,75 @@ assert.notEqual(
 assert.equal(components.prose['font-family'], primitives.font.serif);
 assert.equal(components.metadata['font-family'], primitives.font.mono);
 
+const componentsCss = await readFile(
+  join(root, 'packages/design/dist/css/components.css'),
+  'utf8',
+);
+
+/*
+ * Every control is a token reference. A literal colour, length, or duration
+ * here is the same drift the file exists to end: it would render correctly on
+ * the surface it was written for and wrongly in the other theme.
+ */
+for (const name of [
+  'oe-button',
+  'oe-button-secondary',
+  'oe-button-small',
+  'oe-button-full',
+  'oe-theme-toggle',
+  'oe-icon',
+  'oe-icon-link',
+  'oe-visually-hidden',
+]) {
+  assert.match(
+    componentsCss,
+    new RegExp(`\\.${name}[\\s:{,]`),
+    `components.css no longer ships .${name}`,
+  );
+}
+assert.match(componentsCss, /:focus-visible \{/);
+assert.doesNotMatch(
+  componentsCss,
+  /:\s*#[0-9a-fA-F]{3,8}\b/,
+  'A literal colour in components.css cannot follow the theme',
+);
+
+/*
+ * The icons are geometry, not markup. Two products render two different
+ * elements from them, so a name that resolves to nothing is a blank square on
+ * one surface and a build error on neither.
+ */
+for (const name of iconNames) {
+  const subpaths = iconPaths[name];
+  assert.ok(
+    Array.isArray(subpaths) && subpaths.length > 0,
+    `Icon ${name} has no path data`,
+  );
+  for (const d of subpaths) {
+    assert.match(d, /^M/, `Icon ${name} has a subpath that does not start with a move`);
+  }
+}
+for (const [preference, icon] of Object.entries(themeIcons)) {
+  assert.ok(
+    iconNames.includes(icon),
+    `The ${preference} theme maps to ${icon}, which this package does not ship`,
+  );
+}
+assert.equal(ICON_VIEW_BOX, '0 0 16 16');
+
+/*
+ * Redistributing MIT-licensed paths requires shipping the license, and `files`
+ * decides what a consumer actually receives.
+ */
+assert.match(
+  await readFile(join(root, 'THIRD_PARTY_NOTICES.md'), 'utf8'),
+  /Octicons/,
+);
+assert.ok(
+  packageJson.files.some((entry) => 'brand/third-party/'.startsWith(entry)),
+  'The Octicons license text is not in the published files',
+);
+
 process.stdout.write(
-  `Verified ${contrastPairs.length} contrast pairs, both mark variants, and ${requiredFiles.length} package artifacts.\n`,
+  `Verified ${contrastPairs.length} contrast pairs, both mark variants, ${iconNames.length} icons, and ${requiredFiles.length} package artifacts.\n`,
 );

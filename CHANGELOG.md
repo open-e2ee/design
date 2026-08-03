@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.4.0
+
+Adds the shared interface controls and the chrome icon set. Purely additive:
+every 0.3.0 token name and export is unchanged, and no existing value moved.
+
+### Added
+
+- **`@open-e2ee/design/components.css`.** The controls both products had been
+  writing out separately: `oe-button` with its secondary, small, and full
+  variants, `oe-theme-toggle`, `oe-icon`, `oe-icon-link`, `oe-visually-hidden`,
+  and the focus ring. Every rule is a token reference, and a test rejects a
+  literal colour in the file — a hex here renders correctly in the theme it was
+  written for and wrongly in the other.
+- **`@open-e2ee/design/icons`.** Six Octicons paths (`github`, `sun`, `moon`,
+  `desktop`, `copy`, `check`) as geometry, plus `themeIcons` mapping the three
+  theme preferences to their glyphs. Geometry only: an Astro consumer emits
+  markup at build time and a React consumer returns a node, so the element
+  stays theirs and the path data becomes ours. The MIT license text ships at
+  `brand/third-party/Octicons-MIT.txt`, and a test asserts it is in `files` —
+  naming a license without shipping it does not satisfy it.
+- Button tokens for what the two copies had disagreed on: `font-size-sm`,
+  `font-size-md`, `gap`, and `disabled-opacity`, plus `icon.size`.
+
+### Why
+
+The two implementations had already drifted. Buttons were 15px on the website
+and 13.6px in the console; secondary buttons filled on hover in one and darkened
+their border in the other; and the theme toggle showed an icon on the website
+and the word "system" in the console — under a console comment calling it "the
+same three-state cycling control the website uses". Two copies of a control are
+two controls, and the comment claiming otherwise is the reason to move them here
+rather than reconcile them in place again.
+
+Consumers adopting this will see those differences resolve. The website's
+values win, because they are the ones reviewed into the current site.
+
 ## 0.3.0
 
 Adds the diagram grammar as published code, the lockup assets, a license, and
