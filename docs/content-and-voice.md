@@ -37,7 +37,7 @@ a competent adult holding production responsibilities.
 - `@open-e2ee/signal-protocol-sdk` — the package
 - `OpenE2EE Docs` — documentation surface
 - `OpenE2EE Console` — licensing and account surface
-- `Open E2EE LLC` — legal entity only
+- `OpenE2EE LLC` — legal entity only
 - `open-e2ee` — slugs, domains, and repository names only
 
 Use `end-to-end encrypted` in prose when describing a property. Use `E2EE` when

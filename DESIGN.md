@@ -81,7 +81,7 @@ distinctive.
   organization identity. It never gets its own symbol, never gets its own color,
   and never appears on a first-impression surface without `OpenE2EE`.
 - **Surfaces:** OpenE2EE Docs, OpenE2EE Console.
-- **Legal entity:** Open E2EE LLC, used only where legal identification is
+- **Legal entity:** OpenE2EE LLC, used only where legal identification is
   required.
 
 A future protocol package (MLS, for instance) slots into the same second line
@@ -170,7 +170,8 @@ Import `@open-e2ee/design/wordmark.css` and use:
 <span class="oe-wordmark"><span>Open</span><span>E2EE</span></span>
 ```
 
-Casing is fixed. Never `Open E2EE` (reserved for the legal entity), never
+Casing is fixed. Never `Open E2EE` — the spaced form is not the entity name and
+is reserved only as a brand asset in `LICENSE-BRAND.md` — never
 `OPENE2EE`, never `openE2EE`, and never `open-e2ee` outside package names, npm
 scopes, domains, and repository slugs.
 
