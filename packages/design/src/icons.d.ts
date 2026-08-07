@@ -1,4 +1,13 @@
-export type IconName = 'github' | 'sun' | 'moon' | 'desktop' | 'copy' | 'check';
+export type IconName =
+  | 'github'
+  | 'sun'
+  | 'moon'
+  | 'desktop'
+  | 'copy'
+  | 'check'
+  | 'external'
+  | 'menu'
+  | 'close';
 export type ThemePreference = 'light' | 'dark' | 'system';
 
 export declare const ICON_VIEW_BOX: string;
