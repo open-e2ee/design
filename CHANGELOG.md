@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0
+
+Adds three chrome icons. Purely additive: every 0.4.0 export is unchanged.
+
+### Added
+
+- **`external`, `menu`, and `close` in `@open-e2ee/design/icons`.** Octicons
+  19.32.0 geometry (`link-external`, `three-bars`, `x`), copied unmodified
+  like the rest of the set. The console needs them for external-link
+  indicators, the small-viewport navigation menu, and the account menu.
+
 ## 0.4.0
 
 Adds the shared interface controls and the chrome icon set. Purely additive:
