@@ -73,8 +73,11 @@ E2EE is not TLS, is not anonymity, and is not compliance.
 - Any FIPS implication — pure-JS crypto is not FIPS 140-validated, and the
   honest answer when asked is to say so
 - Any implication of Signal Messenger affiliation or wire compatibility
-- "audited" until an audit exists. The truthful line is "not yet audited;
-  independent review is planned"
+- "audited" unqualified, "independently audited," "third-party audited," or any
+  promise of a future firm engagement. The fixed line is "Reviewed continuously
+  by adversarial AI agents; not audited by any independent firm," used verbatim,
+  and its two halves never separate — the AI review stated without the limit is
+  itself a banned claim
 - "production-ready" for anything whose own documentation does not say so
 
 ## Retired copy
