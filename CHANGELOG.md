@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.6.0
+
+Records the founder's 2026-08-09 tagline review in the registry. Breaking for
+`@open-e2ee/design/taglines` consumers: the registry shrinks to two entries
+and each gains a field.
+
+### Changed
+
+- **`TAGLINES` carries sign-off status.** Each entry gains
+  `status: 'approved' | 'proposed'`. The product hero (*"The Signal Protocol,
+  where your app actually runs."*) is approved; the primary (*"Opaque to the
+  relay. Open to inspection."*) remains proposed.
+- **`checkTaglineAnnotation` requires the annotation only for proposed
+  taglines.** A page using only approved taglines passes with no annotation.
+  The result shape is unchanged.
+
+### Removed
+
+- **The homepage-hero entry.** *"Your relay carries it. Your relay can't read
+  it."* was retired unshipped — the website homepage leads with its job
+  statement instead.
+
 ## 0.5.0
 
 Adds three chrome icons. Purely additive: every 0.4.0 export is unchanged.

@@ -1,11 +1,17 @@
 /*
- * Tagline annotation enforcement.
+ * Tagline registry and annotation enforcement.
  *
- * The three taglines are proposed, not approved. DESIGN.md requires that any
- * surface using one annotates it as proposed until founder sign-off lands. The
- * design site asserts that on itself in its own test suite; this module is the
- * same rule packaged so every other surface can run it against its built HTML
- * instead of reimplementing the check or forgetting it exists.
+ * Each tagline carries its sign-off status. A surface using a *proposed*
+ * tagline must annotate it as proposed until founder sign-off lands; an
+ * *approved* tagline needs no annotation. The design site asserts this on
+ * itself in its own test suite; this module is the same rule packaged so
+ * every other surface can run it against its built HTML instead of
+ * reimplementing the check or forgetting it exists.
+ *
+ * Founder review, 2026-08-09: the product hero was approved as shipped; the
+ * homepage-hero line ("Your relay carries it. Your relay can't read it.")
+ * was retired unshipped — the website homepage leads with its job statement
+ * instead; the primary remains proposed.
  *
  * Text-level, not DOM-level: a tagline broken across a <br> or a <span> is
  * still the tagline, and a checker that only matched contiguous source text
@@ -17,16 +23,13 @@ export const TAGLINES = Object.freeze([
     id: 'primary',
     role: 'Primary',
     text: 'Opaque to the relay. Open to inspection.',
-  }),
-  Object.freeze({
-    id: 'homepage-hero',
-    role: 'Homepage hero',
-    text: "Your relay carries it. Your relay can't read it.",
+    status: 'proposed',
   }),
   Object.freeze({
     id: 'product-hero',
     role: 'Product hero',
     text: 'The Signal Protocol, where your app actually runs.',
+    status: 'approved',
   }),
 ]);
 
@@ -105,8 +108,9 @@ export function findTaglines(html) {
 }
 
 /**
- * Check one page. A page that uses no tagline passes. A page that uses one
- * must also carry an annotation saying the copy is not final.
+ * Check one page. A page that uses no tagline passes, as does one that uses
+ * only approved taglines. A page that uses a proposed tagline must also carry
+ * an annotation saying the copy is not final.
  *
  * Returns a result rather than throwing, so a caller can report every page in
  * one pass instead of failing on the first.
@@ -114,8 +118,9 @@ export function findTaglines(html) {
 export function checkTaglineAnnotation(html, { source = 'input' } = {}) {
   const text = htmlToText(html);
   const found = findTaglines(html);
+  const proposed = found.filter((tagline) => tagline.status === 'proposed');
   const annotated = ANNOTATION_PATTERN.test(text);
-  const ok = found.length === 0 || annotated;
+  const ok = proposed.length === 0 || annotated;
   return {
     source,
     taglines: found.map((tagline) => tagline.id),
@@ -124,9 +129,11 @@ export function checkTaglineAnnotation(html, { source = 'input' } = {}) {
     message: ok
       ? found.length === 0
         ? `${source}: no tagline used.`
-        : `${source}: ${found.length} tagline(s), annotated.`
-      : `${source}: uses ${found
+        : `${source}: ${found.length} tagline(s), ${
+            proposed.length === 0 ? 'all approved' : 'annotated'
+          }.`
+      : `${source}: uses ${proposed
           .map((tagline) => `"${tagline.text}"`)
-          .join(', ')} with no proposed/provisional annotation. The taglines are pending founder sign-off and every surface using one must say so.`,
+          .join(', ')} with no proposed/provisional annotation. Proposed taglines are pending founder sign-off and every surface using one must say so.`,
   };
 }
