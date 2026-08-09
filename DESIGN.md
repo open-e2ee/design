@@ -420,11 +420,21 @@ E2EE is not TLS, is not anonymity, and is not compliance.
 ### Banned
 
 "Military-grade," "unbreakable," "complete privacy," "100% secure," "zero
-knowledge," "the server sees nothing," "audited" (until an audit exists — the
-truthful line is "not yet audited; independent review is planned"),
-"production-ready" for anything whose own docs do not say so, any compliance
-mandate framing, any FIPS implication, and any suggestion of Signal Messenger
-affiliation or wire compatibility.
+knowledge," "the server sees nothing," "audited" unqualified — along with
+"independently audited," "third-party audited," and any promise of a future
+firm engagement — "production-ready" for anything whose own docs do not say so,
+any compliance mandate framing, any FIPS implication, and any suggestion of
+Signal Messenger affiliation or wire compatibility.
+
+On audit status there is one fixed line, used verbatim:
+
+> Reviewed continuously by adversarial AI agents; not audited by any
+> independent firm.
+
+Its two halves never separate. The AI review stated alone reads as assurance
+with the limit filed off, and the limit stated alone understates what runs.
+`docs/messaging.md` §7 in the org workspace governs the wording and holds the
+longer expansion.
 
 ## Accessibility baseline
 
