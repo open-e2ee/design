@@ -648,12 +648,17 @@ for (const constant of [
 }
 
 /*
- * Taglines. They are proposed, not approved, and the helper that enforces that
- * on consumers has to hold both ways: catch an unannotated page, and pass a
- * page whose tagline is broken across elements but properly annotated.
+ * Taglines. Each carries its sign-off status, and the helper that enforces
+ * annotation on consumers has to hold three ways: catch an unannotated page
+ * using a proposed tagline, pass a page whose proposed tagline is broken
+ * across elements but properly annotated, and pass an approved tagline with
+ * no annotation at all.
  */
-assert.equal(TAGLINES.length, 3);
+assert.equal(TAGLINES.length, 2);
+assert.equal(TAGLINES[0].status, 'proposed');
+assert.equal(TAGLINES[1].status, 'approved');
 const taglineText = TAGLINES[0].text;
+const approvedText = TAGLINES[1].text;
 assert.equal(
   checkTaglineAnnotation('<p>Nothing to see here.</p>').ok,
   true,
@@ -678,11 +683,16 @@ assert.equal(
   'A tagline split across elements is still the tagline',
 );
 assert.equal(
+  checkTaglineAnnotation(`<h1>${approvedText}</h1>`).ok,
+  true,
+  'An approved tagline needs no annotation',
+);
+assert.equal(
   findTaglines(
-    '<h1>Your relay carries it. Your relay can’t read it.</h1>',
+    '<h1>The Signal Protocol, where your app actually runs.</h1>',
   ).length,
   1,
-  'A curly apostrophe should not hide a tagline',
+  'A tagline still matches through the text-level normalizer',
 );
 assert.equal(
   checkTaglineAnnotation(

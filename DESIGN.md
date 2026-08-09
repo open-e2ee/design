@@ -384,12 +384,15 @@ Full canon lives with the verbal identity; the binding summary:
   apps actually run: Expo and React Native, browsers, and Node. AGPL for open
   source, commercial licenses for proprietary products.
 - **Promise.** Opaque to the relay, open to inspection.
-- **Taglines — pending founder sign-off.** Primary: *"Opaque to the relay. Open
-  to inspection."* Homepage hero: *"Your relay carries it. Your relay can't read
-  it."* Product hero: *"The Signal Protocol, where your app actually runs."*
-  Until sign-off lands, any surface using these must annotate them as proposed.
-  `oe-design taglines <built-html-dir>` enforces that against built output, and
-  `checkTaglineAnnotation` from `@open-e2ee/design/taglines` does it in process.
+- **Taglines.** Product hero — **approved 2026-08-09**: *"The Signal Protocol,
+  where your app actually runs."* Primary — proposed, pending founder
+  sign-off: *"Opaque to the relay. Open to inspection."* The homepage-hero
+  line (*"Your relay carries it. Your relay can't read it."*) was retired
+  unshipped on 2026-08-09; the website homepage leads with its job statement.
+  Any surface using a *proposed* line must annotate it as proposed — an
+  approved line needs no annotation. `oe-design taglines <built-html-dir>`
+  enforces that against built output, and `checkTaglineAnnotation` from
+  `@open-e2ee/design/taglines` does it in process.
 - **Evidence over adjectives.** A quote, a number, a spec citation, or real code
   beats any intensifier.
 - **State the limit next to the claim.** Every capability statement that could
