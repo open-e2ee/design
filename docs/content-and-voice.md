@@ -24,8 +24,9 @@ a competent adult holding production responsibilities.
 - No fear marketing, no urgency, no exclamation marks.
 - **Mono is for values only** — packages, versions, identifiers, fingerprints,
   field names. Never for prose, never for emphasis.
-- **Maturity is stated verbatim** wherever maturity is relevant: `0.1.0-alpha;
-  public APIs and persisted formats may change before 1.0.`
+- **Maturity is the version number** wherever maturity is relevant: `0.1.x —
+  public APIs and persisted formats may change before 1.0.` No stage adjective
+  — not alpha, beta, early access, or preview.
 - **The relay formula is fixed:** "the relay never needs message plaintext or
   device private keys." Do not paraphrase it into an absolute.
 
