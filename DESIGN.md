@@ -297,7 +297,7 @@ privately; if the grammar lacks a shape, add one. See
 | Concept | Form |
 |---|---|
 | Device | Open rectangle, 4 px plaintext stroke, 3:2 landscape, with 2–3 interior content bars — visibly holding readable content |
-| Local store | Open rectangle with one full-width divider a third from the top, content bars present, attached to the device edge and never floating |
+| Local store | Open rectangle with one full-width divider a third from the top, attached to the device edge and never floating. It draws what it holds: content bars for readable material, filled notched slabs for keys. A store holding only key material carries no bars — see *What a store draws* |
 | Relay, branded | The org symbol: two brackets with an opaque slab between them. An empty relay renders the brackets with nothing between them, which is a diagram in itself. Brand-bearing — see *Two relay forms* |
 | Relay, unbranded | An open container holding opaque slabs with metadata ticks and no content bars, standing between two trust boundaries. The form for a relay the reader operates — see *Two relay forms* |
 | Object store | The same brackets, wider apart, holding 2–3 stacked opaque slabs of unequal size. Brand-bearing for the same reason the branded relay is: the brackets are the mark's construction |
@@ -348,6 +348,27 @@ the empty branded one says.
 
 Both forms are compositions of published primitives. Neither needs a shape the
 grammar does not already have.
+
+### What a store draws
+
+A local store draws its contents, and its contents are not always readable
+material. A store holding identity and signed prekeys holds key material, and
+the honest drawing of it is filled notched slabs under the divider with no
+content bars anywhere in the form.
+
+Bars in that store would be a claim, not a decoration. A content bar means
+readable material is present — that is the whole of what it means, and it is why
+one bar in a relay makes the relay a device. Putting bars in a key store asserts
+plaintext at rest in a box that holds no plaintext, and it does so in the one
+diagram whose subject is where plaintext is allowed to exist.
+
+The divider carries the distinction the bars used to. Label above it, contents
+below, and what sits below is whatever the device actually keeps there.
+
+`deviceOutline` has always accepted `bars: 0` and renders the outline and its
+divider without them; `contentBarRects` still refuses a count below one, because
+a form that draws bars draws at least one. Zero bars is not a bar count — it is
+the decision not to claim readability.
 
 ### The signature diagram
 
