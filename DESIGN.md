@@ -285,7 +285,12 @@ privately; if the grammar lacks a shape, add one. See
    one-word label (`seal` / `open`). Never a dashed rounded rectangle around a
    group. Encryption happens *at a place*; it is not a fence around a region.
 5. **One accent per diagram.** Diagrams are neutral. Brass marks the boundary;
-   ultramarine marks the one thing the reader should look at now.
+   ultramarine marks the one thing the reader should look at now. That
+   ultramarine is `--oe-accent`. There is no accent in the `--oe-diagram-*`
+   family and there should not be one: that family is the neutral material a
+   diagram is drawn *in*, and its neutrality is the point rather than an
+   omission. An accent is a claim about attention, so it comes from the ramp
+   that owns attention everywhere else in the system.
 
 ### Element vocabulary
 
@@ -421,8 +426,38 @@ actions.
   corner values.
 - Shadows communicate elevation, not decoration.
 - Motion is short, reversible, and disabled under reduced motion. The mark is
-  exempt: it never moves.
+  exempt: it never moves. A figure that teaches by stepping is the one case
+  needing more than that — see *Motion under reduced motion*.
 - Dense technical information favors alignment and whitespace over extra rules.
+
+### Motion under reduced motion
+
+`--oe-duration-fast`, `--oe-duration-normal` and `--oe-duration-slow` are
+**transition** durations, and they collapse to `0.01ms` under
+`prefers-reduced-motion`. That is correct for an interface. There the
+transition *is* the motion, so removing the duration removes the motion and
+takes nothing else with it.
+
+A figure that teaches by stepping is not that. Its per-step **dwell** — the
+time a step stays legible — is not a transition duration and must never be
+derived from one. Dwell holds still; there is no movement in it to remove, so
+shortening it costs the reader information rather than motion. A dwell read
+from a duration token plays an entire protocol flow in a single frame, which
+is the whole figure withheld from exactly the reader who asked for less
+movement.
+
+So, for any figure that advances through steps:
+
+> **Under reduced motion a teaching sequence keeps every step and drops the
+> transitions between them.** Same steps, same order, arriving without
+> animation.
+
+There is no dwell token, and a dwell held in a local constant is the correct
+implementation of this rule rather than a workaround to be tidied away later.
+Every `--oe-duration-*` collapses under reduced motion; a dwell token would
+exist precisely to *not* do that, and a value whose only job is to break its
+own family's contract is a trap for whoever reads it next. If a second surface
+ever needs the same dwell, that is when it earns a name.
 
 ## Content and voice
 
