@@ -24,6 +24,14 @@ see into it, so its contents are not readable. There is no third state. Nothing
 in this system is ever half-transparent, gradient-filled, frosted, or blurred,
 because "partly readable" is not a thing encryption does.
 
+The outline is a claim about the container, not about everything the container
+holds. Outlined means inspectable: you can see in. What you find there carries
+the readability claim in its own right — content bars are readable, filled slabs
+are not. An open container holding filled slabs is therefore not a
+contradiction. It says "you can inspect this, and what it holds is still
+sealed," which is the sentence a relay the reader operates has to be able to
+say. What an outline never does is make its contents readable by enclosing them.
+
 Three corollaries, all enforceable in review:
 
 1. **Overlap occludes; it never blends.** When two forms overlap, the front one
@@ -125,7 +133,7 @@ the mark is static in every context, forever.
 
 | Asset | Composition | Use |
 |---|---|---|
-| Org symbol | mark alone | Favicon, avatar, app icon, diagram relay glyph, anything under ~120 px wide |
+| Org symbol | mark alone | Favicon, avatar, app icon, the branded diagram relay, anything under ~120 px wide |
 | Horizontal lockup | mark + `OpenE2EE` | Site header, README hero, social preview, docs nav |
 | Stacked lockup | mark above `OpenE2EE` | Square and portrait crops, print, conference |
 | Product lockup | horizontal lockup + `Signal Protocol SDK` on a second line | Product hero, SDK README, npm, docs product switcher |
@@ -285,8 +293,9 @@ privately; if the grammar lacks a shape, add one. See
 |---|---|
 | Device | Open rectangle, 4 px plaintext stroke, 3:2 landscape, with 2–3 interior content bars — visibly holding readable content |
 | Local store | Open rectangle with one full-width divider a third from the top, content bars present, attached to the device edge and never floating |
-| Relay | The org symbol: two brackets with an opaque slab between them. An empty relay renders the brackets with nothing between them, which is a diagram in itself |
-| Object store | The same brackets, wider apart, holding 2–3 stacked opaque slabs of unequal size |
+| Relay, branded | The org symbol: two brackets with an opaque slab between them. An empty relay renders the brackets with nothing between them, which is a diagram in itself. Brand-bearing — see *Two relay forms* |
+| Relay, unbranded | An open container holding opaque slabs with metadata ticks and no content bars, standing between two trust boundaries. The form for a relay the reader operates — see *Two relay forms* |
+| Object store | The same brackets, wider apart, holding 2–3 stacked opaque slabs of unequal size. Brand-bearing for the same reason the branded relay is: the brackets are the mark's construction |
 | Ciphertext / envelope | Solid slab, sheared in transit and upright at rest. Never labeled with content, never given an icon |
 | Plaintext | Open outlined form with visible content bars |
 | Private key | A small solid notched slab drawn inside a device outline. Never a key shape. Never outside a device |
@@ -294,6 +303,46 @@ privately; if the grammar lacks a shape, add one. See
 | Trust boundary | Vertical gutter of canvas, dotted brass rule, label |
 | Session / ratchet state | A short run of small upright slabs at even intervals, each a discrete solid step toward the ciphertext fill (`--oe-diagram-ratchet-1…4`) — sequence without cartoon gears, and without an opacity ramp |
 | Metadata | Thin brass ticks along the outside top edge of a slab. Always drawn |
+
+### Two relay forms
+
+The carrier brackets are the mark's own construction. `carrierBracketPaths`
+reproduces the mark's geometry from the mark's own values, the test suite
+asserts it character for character, and `CarrierConstruction.thickness` is
+documented as the value the mark's geometry calls `thickness`. Drawing the
+brackets is drawing the identity. That is the point everywhere but one: the
+relay is the node the customer runs, and putting the vendor's mark on it claims
+a piece of infrastructure this project insists the reader owns.
+
+So there are two relay forms, and the choice between them is not stylistic.
+
+**The branded relay** — the brackets — belongs in diagrams whose subject is
+OpenE2EE: the mark, the social cards, the signature diagram, the product.
+
+**The unbranded relay** — the open container — belongs in any diagram of
+infrastructure the reader operates. If a reader can point at a node and say
+"that one is mine," it does not wear the mark.
+
+The unbranded relay is an open container at the same 4 px open stroke a device
+carries, holding one or more opaque slabs. Four things make it read as a relay
+and not as a device. Drop one and it is not this form:
+
+1. **No content bars, in any state.** A single bar makes it a device holding
+   readable content, which is the one claim this form exists to deny.
+2. **Metadata ticks on every slab it holds**, by the second corollary of the
+   material law. The ticks are the affirmative half of the drawing: they are
+   what the relay *can* see.
+3. **No notched slab inside it, ever**, by the third corollary. A device holds a
+   filled notched slab; a relay holds none, and the absence is the argument.
+4. **A trust boundary on both sides.** A form standing between two dotted brass
+   gutters is a third party. A form with a gutter on one side is the far end of
+   the trip. Nothing else in the grammar draws that difference.
+
+An empty unbranded relay is the container with nothing in it, and it says what
+the empty branded one says.
+
+Both forms are compositions of published primitives. Neither needs a shape the
+grammar does not already have.
 
 ### The signature diagram
 
