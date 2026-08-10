@@ -75,11 +75,15 @@ carrierBracketPaths({ x, y, width, height, thickness, arm }) // → [left, right
 carrierBrackets({ ...construction, fill })                   // → markup
 ```
 
-Two open brackets: a relay, an object store, the org mark. This is literally the
-same construction as the logo — the test suite asserts that
+Two open brackets: a branded relay, an object store, the org mark. This is
+literally the same construction as the logo — the test suite asserts that
 `carrierBracketPaths` with the mark's own construction values reproduces
 `brand/source/geometry.json`'s `carrierLeftPath` and `carrierRightPath`
 character for character.
+
+So drawing the brackets is drawing the identity, and for a relay the reader
+operates that is the wrong claim to make. `DESIGN.md` under *Two relay forms*
+has the unbranded container to use instead, and says which form goes where.
 
 The carrier is a **pair**. One bracket is a different mark. If your layout only
 has room for one, the layout is wrong; this repository shipped that bug on its
