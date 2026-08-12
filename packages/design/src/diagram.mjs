@@ -82,9 +82,11 @@ export function slabPath({ x, y, width, height, shear = 0 }) {
 }
 
 /**
- * A notched slab. Solid is a private key and may only be drawn inside a device
- * outline; outlined is a public key or prekey bundle and travels. The shape
- * rhyme between them is the argument, so both come from one path.
+ * A notched slab — the legacy compact key form. Solid is a private key and
+ * may only be drawn inside a device outline; outlined is a public key or
+ * prekey bundle and travels. DESIGN.md's key silhouette is now the canonical
+ * key glyph; this primitive remains shipped for existing static assets
+ * pending migration to it.
  */
 export function notchedSlabPath({ x, y, width, height, notch = 18 }) {
   check(

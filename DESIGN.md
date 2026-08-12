@@ -297,14 +297,14 @@ privately; if the grammar lacks a shape, add one. See
 | Concept | Form |
 |---|---|
 | Device | Open rectangle, 4 px plaintext stroke, 3:2 landscape, with 2–3 interior content bars — visibly holding readable content |
-| Local store | Open rectangle with one full-width divider a third from the top, attached to the device edge and never floating. It draws what it holds: content bars for readable material, filled notched slabs for keys. A store holding only key material carries no bars — see *What a store draws* |
+| Local store | Open rectangle with one full-width divider a third from the top, attached to the device edge and never floating. It draws what it holds: content bars for readable material, filled key silhouettes for keys. A store holding only key material carries no bars — see *What a store draws* |
 | Relay, branded | The org symbol: two brackets with an opaque slab between them. An empty relay renders the brackets with nothing between them, which is a diagram in itself. Brand-bearing — see *Two relay forms* |
 | Relay, unbranded | An open container holding opaque slabs with metadata ticks and no content bars, standing between two trust boundaries. The form for a relay the reader operates — see *Two relay forms* |
 | Object store | The same brackets, wider apart, holding 2–3 stacked opaque slabs of unequal size. Brand-bearing for the same reason the branded relay is: the brackets are the mark's construction |
 | Ciphertext / envelope | Solid slab, sheared in transit and upright at rest. Never labeled with content, never given an icon |
 | Plaintext | Open outlined form with visible content bars |
-| Private key | A small solid notched slab drawn inside a device outline. Never a key shape. Never outside a device |
-| Public key / prekey bundle | A small outlined notched slab. It travels and it is readable; the shape rhyme with the private key is the point |
+| Private key | A small filled key silhouette drawn inside a device outline. Never outside a device — see *Key material* |
+| Public key / prekey bundle | The same silhouette, outlined. It travels and it is readable; the shape rhyme with the private key is the point — see *Key material* |
 | Trust boundary | Vertical gutter of canvas, dotted brass rule, label |
 | Session / ratchet state | A short run of small upright slabs at even intervals, each a discrete solid step toward the ciphertext fill (`--oe-diagram-ratchet-1…4`) — sequence without cartoon gears, and without an opacity ramp |
 | Metadata | Thin brass ticks along the outside top edge of a slab. Always drawn |
@@ -337,8 +337,9 @@ and not as a device. Drop one and it is not this form:
 2. **Metadata ticks on every slab it holds**, by the second corollary of the
    material law. The ticks are the affirmative half of the drawing: they are
    what the relay *can* see.
-3. **No notched slab inside it, ever**, by the third corollary. A device holds a
-   filled notched slab; a relay holds none, and the absence is the argument.
+3. **No filled key glyph inside it, ever**, by the third corollary. A device
+   holds a filled key silhouette; a relay holds none, and the absence is the
+   argument.
 4. **A trust boundary on both sides.** A form standing between two dotted brass
    gutters is a third party. A form with a gutter on one side is the far end of
    the trip. Nothing else in the grammar draws that difference.
@@ -353,7 +354,7 @@ grammar does not already have.
 
 A local store draws its contents, and its contents are not always readable
 material. A store holding identity and signed prekeys holds key material, and
-the honest drawing of it is filled notched slabs under the divider with no
+the honest drawing of it is filled key silhouettes under the divider with no
 content bars anywhere in the form.
 
 Bars in that store would be a claim, not a decoration. A content bar means
@@ -369,6 +370,30 @@ below, and what sits below is whatever the device actually keeps there.
 divider without them; `contentBarRects` still refuses a count below one, because
 a form that draws bars draws at least one. Zero bars is not a bar count — it is
 the decision not to claim readability.
+
+### Key material
+
+A key is drawn as a key: a small silhouette in the grammar's own language —
+geometric, flat, orthogonal strokes, a round bow, a straight shaft, square
+teeth. No gradients, no opacity, the same two prohibitions every other
+primitive in this grammar carries.
+
+**Filled is private.** It is drawn only inside a device outline and never
+outside one. A private key anywhere else is the drawing making a claim the
+system does not make.
+
+**Outlined is public.** A public key or a prekey bundle travels and it is
+readable, so it is drawn open. The shape rhyme between the filled and
+outlined forms is the argument: they are the same key, and the fill is the
+only thing that changes between "only this device has it" and "this is
+meant to be handed out."
+
+(Rule changed 2026-08-12: the notched slab read as nothing to a lay reader
+in the interactive demo, and the founder reversed the earlier ban on a
+literal key shape for key glyphs. `notchedSlabPath` remains a shipped
+primitive — see [`docs/diagram-grammar.md`](./docs/diagram-grammar.md) — as
+the legacy compact key form used by existing static assets, pending
+migration to the silhouette.)
 
 ### The signature diagram
 
