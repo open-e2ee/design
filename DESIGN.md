@@ -374,9 +374,12 @@ the decision not to claim readability.
 ### Key material
 
 A key is drawn as a key: a small silhouette in the grammar's own language —
-geometric, flat, orthogonal strokes, a round bow, a straight shaft, square
-teeth. No gradients, no opacity, the same two prohibitions every other
-primitive in this grammar carries.
+geometric, flat, orthogonal strokes, a faceted hexagonal bow, a straight
+shaft, square teeth. No gradients, no opacity, the same two prohibitions
+every other primitive in this grammar carries. The facets are the choice: a
+round bow is the one curve the grammar would otherwise carry, and the
+hexagon keeps the silhouette inside the same angular language as the
+brackets and the slabs.
 
 **Filled is private.** It is drawn only inside a device outline and never
 outside one. A private key anywhere else is the drawing making a claim the
