@@ -64,9 +64,11 @@ a row of slabs still sits on one baseline.
 notchedSlabPath({ x, y, width, height, notch = 18 })
 ```
 
-Keys. Filled is a private key and may only be drawn inside a device outline;
-outlined is a public key or prekey bundle, and it travels. The shape rhyme
-between them is the argument, so both come from one function.
+The legacy compact key form: filled is a private key and may only be drawn
+inside a device outline; outlined is a public key or prekey bundle, and it
+travels. `DESIGN.md`'s key silhouette is the canonical key glyph; this
+primitive remains shipped for existing static assets pending migration to
+it.
 
 ### The carrier
 
