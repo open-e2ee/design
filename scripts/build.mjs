@@ -334,29 +334,46 @@ const componentsCss = `/*
 }
 
 /*
- * Square, because it holds one icon. The control shows the state it is in
- * rather than the state it would move to; \`themeIcons\` in ./icons maps the
- * three preferences to the three glyphs so both products cycle the same set.
+ * A control that is a drawing: the tap target of a small control with none of
+ * its furniture.
+ *
+ * It wore a bordered square, on the reasoning that a box is what tells a
+ * reader an icon is pressable. Measured, the box told nobody anything:
+ * \`--oe-border\` against \`--oe-canvas\` is 1.31:1 in the light theme and 1.49:1
+ * in the dark — under the 3:1 a meaningful boundary owes — while being the
+ * largest shape in the row it sat in. A mark that big and that faint is
+ * decoration outweighing the thing it decorates. The icon clears the text
+ * floor at 6.12:1 and 7.08:1, so the drawing was always carrying the meaning,
+ * and hover takes it to the foreground, which is the affordance.
+ *
+ * The square survives as a box that is not painted: \`--oe-control-height-sm\`
+ * is 2.5rem, so a finger still gets a 40px target and a row of these still
+ * measures like a row of controls.
+ *
+ * The icon's size is the caller's, set through \`--oe-icon-size\` on the control
+ * or the row that holds it. One in a header stands beside a wordmark and one
+ * in a dense panel beside 14px labels; a size fixed here would be wrong in one
+ * of them. \`font: inherit\` is what makes that token mean the same thing here
+ * as it does anywhere else: a <button> otherwise carries the browser's own
+ * ~13px font, so \`2em\` on a button and \`2em\` on the link beside it draw two
+ * different sizes.
  */
-.oe-theme-toggle {
+.oe-icon-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: var(--oe-control-height-sm);
   min-height: var(--oe-control-height-sm);
   padding: 0;
-  border: 1px solid var(--oe-border);
-  border-radius: var(--oe-control-radius);
+  border: 0;
   background: transparent;
   color: var(--oe-muted);
+  font: inherit;
   cursor: pointer;
-  transition:
-    color var(--oe-duration-fast) ease-out,
-    border-color var(--oe-duration-fast) ease-out;
+  transition: color var(--oe-duration-fast) ease-out;
 }
 
-.oe-theme-toggle:hover {
-  border-color: var(--oe-border-control);
+.oe-icon-button:hover {
   color: var(--oe-foreground);
 }
 `;
