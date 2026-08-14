@@ -1179,7 +1179,7 @@ for (const name of [
   'oe-button-secondary',
   'oe-button-small',
   'oe-button-full',
-  'oe-theme-toggle',
+  'oe-icon-button',
   'oe-icon',
   'oe-icon-link',
   'oe-visually-hidden',

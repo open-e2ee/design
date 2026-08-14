@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.7.0
+
+Replaces the theme switch's bordered square with one icon-control shape.
+Breaking for `components.css` consumers: `.oe-theme-toggle` is gone and its
+markup takes `.oe-icon-button`.
+
+### Added
+
+- **`.oe-icon-button`.** The shape of any control that is a drawing: the small
+  control's 40px tap target, muted, going to the foreground on hover, with no
+  border and no background. The icon's size is the caller's, through
+  `--oe-icon-size` on the control or the row that holds it.
+
+### Removed
+
+- **`.oe-theme-toggle`.** The border it painted measured 1.31:1 against the
+  light canvas and 1.49:1 against the dark, under the 3:1 a meaningful
+  boundary owes, while being the largest shape in the header row. The icon
+  inside it clears the text floor at 6.12:1 and 7.08:1, so nothing that was
+  carrying meaning was lost. A consumer swaps the class name; the control
+  keeps its size and its tap target.
+
 ## 0.6.0
 
 Records the founder's 2026-08-09 tagline review in the registry. Breaking for
