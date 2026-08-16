@@ -237,7 +237,7 @@ runtime third-party font request is made.
 derivative, and Libre Franklin is a Franklin Gothic revival, which puts the
 American civic and postal lineage in the typeface by descent rather than by
 pastiche. Practically: sturdy caps and figures, which the interface needs for
-`E2EE`, `PQXDH`, `ML-KEM`, and `AGPL-3.0`. Weights 400 body, 500 emphasis and
+`E2EE`, `PQXDH`, `ML-KEM`, and `AGPLv3`. Weights 400 body, 500 emphasis and
 labels, 600 subheads, 700 headings, 800 wordmark. Headings track `−1.5%` at
 24 px and above, `0` below.
 
@@ -543,7 +543,7 @@ Full canon lives with the verbal identity; the binding summary:
 
 - **Positioning.** OpenE2EE builds open-source, protocol-level end-to-end
   encryption SDKs for TypeScript developers — pure TypeScript that runs where
-  apps actually run: Expo and React Native, browsers, and Node. AGPL for open
+  apps actually run: Expo and React Native, browsers, and Node. AGPLv3 for open
   source, commercial licenses for proprietary products.
 - **Promise.** Opaque to the relay, open to inspection.
 - **Taglines.** Product hero — **approved 2026-08-09**: *"The Signal Protocol,
