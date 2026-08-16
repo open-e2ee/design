@@ -125,9 +125,38 @@ Clear space is one bracket stem on every side: `0.125` of the artwork width.
 Nothing enters it. The mark is optically centered as drawn — there is no
 correction offset.
 
-**The mark does not move.** It has no animation, no hover state, no loading
-spinner variant, no draw-on reveal. Diagrams may animate to teach a sequence;
-the mark is static in every context, forever.
+**The mark does not move, with one named exception.** It has no hover state, no
+loading spinner variant, and no animation a product invents for itself. Diagrams
+may animate to teach a sequence; the mark is static everywhere the exception
+below does not reach.
+
+The exception is the star field in the website's closing band, where the
+horizontal lockup is drawn as a field of small lights that a pointer pushes
+aside and that fall back into place when it leaves. It holds only there, only on
+these conditions, and it implies no second exception:
+
+- The field settles into the artwork it was sampled from. That artwork is what a
+  reader with no script, or with a preference for reduced motion, sees at all
+  times, and the two are the same drawing rather than two drawings kept in step.
+- The lights are sampled from `packages/design/dist/assets/`. A redrawing is
+  still a redrawing, moving or still.
+- Payload, carrier and wordmark light alike, in one colour. Recolouring any of
+  them differently stays misuse.
+- Clear space still holds, and no other element enters it.
+
+Be clear about what the exception costs, because three rules elsewhere in this
+document yield to it while the field is in motion. *Misuse* forbids a
+semi-transparent payload and a glow, and a light's opacity and halo both grow
+with how far it has been pushed. *Wordmark* says the wordmark needs no
+decoration, and a field of lights is decoration. More seriously, the gap between
+payload and bracket is called load-bearing geometry above — it is the trust
+boundary — and a field that comes apart lets lights cross it. All three hold
+again the moment the field settles, which is the whole reason the settled state
+is a condition rather than a nicety.
+
+(Rule changed 2026-08-15: the mark was static in every context, forever. The
+founder granted this exception after the previous rule, and each cost above, was
+put to him in writing.)
 
 ### Lockups
 
