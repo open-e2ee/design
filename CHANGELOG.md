@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.8.0
+
+Renders the licence as `AGPLv3` on the two social cards that name it. Not
+breaking: no token, class, or export changes, and the two cards keep their
+slugs, dimensions, and every other plate row.
+
+### Changed
+
+- **`open-e2ee-signal-protocol-sdk-og` and `open-e2ee-website-og`.** The third
+  plate row reads `AGPLv3 · commercial` in place of `AGPL-3.0-or-later ·
+  commercial`. A plate row is a label a reader meets, not a field a machine
+  parses, and AGPLv3 is how the rest of the identity sets it — DESIGN.md's
+  typography rule already names `AGPLv3` among the strings Public Sans has to
+  carry. The SPDX identifier stays wherever it is genuinely an identifier: a
+  `license` field, a LICENSE link, a package manifest.
+
+  A consumer repins and runs `brand:sync` to take the redrawn cards.
+
 ## 0.7.0
 
 Replaces the theme switch's bordered square with one icon-control shape.
