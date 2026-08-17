@@ -1233,6 +1233,26 @@ assert.ok(
   'The Octicons license text is not in the published files',
 );
 
+/*
+ * Consumers install by tag, so the tag the READMEs print is the whole install
+ * instruction. Nothing resolves it at read time — a reader copies the line —
+ * and the version it has to match already lives in `package.json`. Left
+ * unchecked it drifts silently on every release: both files sat at `v0.2.0`
+ * through six minor versions, telling consumers to install a release that
+ * predated most of the system they were reading about.
+ */
+const installTag = `v${packageJson.version}`;
+for (const readme of ['README.md', join('packages', 'design', 'README.md')]) {
+  const text = await readFile(join(root, readme), 'utf8');
+  const tags = [...text.matchAll(/(?:design#|refs\/tags\/)(v\d+\.\d+\.\d+)/g)].map(
+    (match) => match[1],
+  );
+  assert.ok(tags.length > 0, `${readme} prints no install tag to check`);
+  for (const tag of tags) {
+    assert.equal(tag, installTag, `${readme} tells consumers to install ${tag}`);
+  }
+}
+
 process.stdout.write(
-  `Verified ${contrastPairs.length} contrast pairs, both mark variants, ${iconNames.length} icons, and ${requiredFiles.length} package artifacts.\n`,
+  `Verified ${contrastPairs.length} contrast pairs, both mark variants, ${iconNames.length} icons, ${requiredFiles.length} package artifacts, and the ${installTag} install instructions.\n`,
 );
