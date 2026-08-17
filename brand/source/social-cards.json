@@ -35,7 +35,7 @@
       "plateRows": [
         "PQXDH · Double Ratchet · ML-KEM",
         "multi-device · groups · sealed sender",
-        "AGPL-3.0-or-later · commercial"
+        "AGPLv3 · commercial"
       ],
       "footer": "@open-e2ee/signal-protocol-sdk"
     },
@@ -50,7 +50,7 @@
       "plateRows": [
         "expo · react native · browser · node",
         "PQXDH · Double Ratchet · ML-KEM",
-        "AGPL-3.0-or-later · commercial"
+        "AGPLv3 · commercial"
       ],
       "footer": "open-e2ee.dev"
     },
