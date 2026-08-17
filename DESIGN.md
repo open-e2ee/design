@@ -563,9 +563,13 @@ Full canon lives with the verbal identity; the binding summary:
 - **Plain, exact, calm.** Short sentences. No fear marketing, no urgency, no
   exclamation marks. The reader is a competent adult with production
   responsibilities.
-- **Maturity is the version number:** `0.1.x — public APIs and persisted
-  formats may change before 1.0.` No stage adjective — not alpha, beta, early
-  access, or preview.
+- **Maturity is the version number:** `<major>.<minor>.x — public APIs and
+  persisted formats may change before 1.0.`, composed from the shipped
+  release's own version rather than typed. A consumer that hard-codes the
+  numbers states a maturity its next release contradicts, so read them from
+  the package: `package.json` in the SDK repository, the installed manifest on
+  the marketing site, the registry in the console. No stage adjective — not
+  alpha, beta, early access, or preview.
 - **The relay formula is fixed:** "the relay never needs message plaintext or
   device private keys." Do not paraphrase it into an absolute.
 
