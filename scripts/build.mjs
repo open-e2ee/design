@@ -245,7 +245,7 @@ const componentsCss = `/*
 
 /*
  * Sized in \`em\` and filled with \`currentColor\`, so an icon takes the size and
- * colour of whatever text it sits beside rather than needing a rule per place
+ * color of whatever text it sits beside rather than needing a rule per place
  * it appears.
  */
 .oe-icon {

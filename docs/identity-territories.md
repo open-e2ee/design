@@ -56,11 +56,11 @@ in transit, and the optical variant squares the payload and thickens the stems
 so the form survives rasterization. Which one you use is a build rule — optical
 from 16 to 31 px, full from 32 px, nothing below 16 — published in the asset
 manifest and asserted in `scripts/test.mjs` rather than left to a designer's eye.
-The mark is single-colour by construction; the two-tone brand tokens were deleted
-in the same commit so that recolouring part of the mark is unrepresentable, not
+The mark is single-color by construction; the two-tone brand tokens were deleted
+in the same commit so that recoloring part of the mark is unrepresentable, not
 merely discouraged.
 
-The construction generalises, which is the strongest thing about it: the same
+The construction generalizes, which is the strongest thing about it: the same
 `carrierBracketPaths` function draws the logo and every relay in every product
 diagram, and the test suite asserts the two are character-for-character identical.
 See [`diagram-grammar.md`](./diagram-grammar.md).
@@ -84,11 +84,11 @@ The wordmark performs the material law instead of illustrating it — `Open` at
 a uniform 600 below 14 px, where the weight contrast would read as a rendering
 bug.
 
-**Palette logic.** Warm paper neutral instead of cool grey, with `ultra` for
+**Palette logic.** Warm paper neutral instead of cool gray, with `ultra` for
 action, `seal` (brass) reserved for metadata and the trust boundary, plus
 `verify` and `alert`. Reserving a whole ramp for metadata is the palette
 expressing the honesty position: the thing the relay *can* still see gets its own
-colour and is never allowed to borrow the action colour. A chroma lint keeps the
+color and is never allowed to borrow the action color. A chroma lint keeps the
 neutral ramp warm (chroma ≤ 0.014, hue 66–96) so incremental edits cannot drift
 it back to blue, and every published contrast ratio is asserted to two decimal
 places.
@@ -111,7 +111,7 @@ rather than pretending the two modes are symmetric.
   public-facing.
 - **Bracket-as-code-syntax.** Two brackets in a developer-tools context can read
   as `[ ]` — a JSON array, a shell glob — rather than as a carrier. The shear on
-  the payload is the main defence and it is the first thing lost at small sizes,
+  the payload is the main defense and it is the first thing lost at small sizes,
   which is precisely why the optical variant exists.
 - **One bracket is a different mark.** The pair is the concept; a single bracket
   is a corner. This one is not hypothetical: the generated social card in this
@@ -128,7 +128,7 @@ rather than pretending the two modes are symmetric.
 Recoverable in full from `94d87d8`, the first commit, where it was the shipped
 identity. **What is recoverable is the artifact, not the argument**: that commit
 documents what the shield *was* and how to use it, but nowhere states what
-strategic idea it was meant to carry. The characterisation below is reconstructed
+strategic idea it was meant to carry. The characterization below is reconstructed
 from the artifact and should be read as such.
 
 **Logo concept.** A split shield containing geometric `O` and `E` forms, on a 512
@@ -144,8 +144,8 @@ grid. `brand/source/geometry.json` at that commit:
 "smallMaximumSize": 63
 ```
 
-The `opticalCenterOffset` is a detail worth keeping: a shield's visual centre
-sits above its geometric centre, so it needed an 8 px nudge to look centred. The
+The `opticalCenterOffset` is a detail worth keeping: a shield's visual center
+sits above its geometric center, so it needed an 8 px nudge to look centered. The
 carrier needs no such correction, which is a small argument for the carrier —
 one fewer number that has to be right by hand.
 
@@ -153,10 +153,10 @@ one fewer number that has to be right by hand.
 entirely conventional developer-tools pairing, and that is the criticism: it
 carried no argument.
 
-**Palette logic.** Cool grey and blue — `slate` 50–500 (`#f6f8fc` through
-`#5d6f87`), `blue` 200–950 centred on `#4c78d0`, with `green`, `amber`, and `red`
+**Palette logic.** Cool gray and blue — `slate` 50–500 (`#f6f8fc` through
+`#5d6f87`), `blue` 200–950 centered on `#4c78d0`, with `green`, `amber`, and `red`
 status ramps of two stops each. The neutral is cool by construction; `slate.50`
-is `#f6f8fc`, which is blue-tinted white. No colour was reserved for metadata.
+is `#f6f8fc`, which is blue-tinted white. No color was reserved for metadata.
 There was no way for that palette to say "the relay sees this much" because it
 had no vocabulary for it.
 
@@ -174,7 +174,7 @@ under a principle called *Security without theater*, and then used a shield. The
 principle was later rewritten as *Show the boundary, don't dramatize it*, and
 "security without theater" was retired as customer-facing copy.
 
-Two further limits: the shield's geometry generalises to nothing — it draws a
+Two further limits: the shield's geometry generalizes to nothing — it draws a
 logo and stops, where the carrier's brackets draw every relay in every diagram —
 and the `O`/`E` glyphs make the mark a monogram, which locks it to the current
 name at exactly the moment trademark clearance might force a rename.
@@ -220,7 +220,7 @@ reasons hold up on the evidence:
 1. **It describes the product instead of asserting a feeling.** A relay that
    holds something it cannot read *is* the SDK, drawn. The shield was a promise;
    the carrier is a diagram.
-2. **It generalises into a grammar.** One construction draws the logo, every
+2. **It generalizes into a grammar.** One construction draws the logo, every
    relay, every object store, and the org mark. The material law — open is
    outlined, opaque is filled, no third state — extends from the mark into
    diagrams, into tokens, into what the tests will let you ship. No other part of

@@ -14,7 +14,7 @@ a competent adult holding production responsibilities.
   beats any intensifier.
 - **State the limit next to the claim.** Every capability statement that could
   be over-read carries its boundary in the same breath and the same viewport.
-  Candour is the differentiator; it is never buried in a footnote.
+  Candor is the differentiator; it is never buried in a footnote.
 - Lead with the user outcome, then name the actor responsible for storage,
   transport, identity, or recovery.
 - Prefer concrete verbs such as `encrypt`, `verify`, `store`, and `rotate`.

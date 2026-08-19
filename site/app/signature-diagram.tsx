@@ -138,7 +138,7 @@ export function SignatureDiagram() {
       aria-labelledby="signature-diagram-title signature-diagram-desc"
     >
       <title id="signature-diagram-title">
-        One message travelling from one device to another through a relay
+        One message traveling from one device to another through a relay
       </title>
       <desc id="signature-diagram-desc">
         Two outlined devices with readable contents and a private key inside

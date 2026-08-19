@@ -175,7 +175,7 @@ export default function Home() {
             stems thicken, because the shear disintegrates at favicon scale;
             from 32px the payload shears to read as cargo in transit. Selection
             by size is a rule the build applies and the tests enforce, not a
-            judgement call. Nothing renders below 16px.
+            judgment call. Nothing renders below 16px.
           </p>
         </section>
 
@@ -207,7 +207,7 @@ export default function Home() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">Color</p>
-              <h2>Warm paper, not cool grey.</h2>
+              <h2>Warm paper, not cool gray.</h2>
             </div>
             <p>
               Every published contrast ratio is asserted to two decimal places,

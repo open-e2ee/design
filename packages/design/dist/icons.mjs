@@ -28,7 +28,7 @@ export const ICON_VIEW_BOX = '0 0 16 16';
 
 /**
  * Subpaths per icon, in paint order. `copy` needs two; the rest need one.
- * Render with `fill="currentColor"` so an icon takes the colour of the text
+ * Render with `fill="currentColor"` so an icon takes the color of the text
  * it sits beside.
  *
  * Names are semantic where the Octicons name is not: `github` is
