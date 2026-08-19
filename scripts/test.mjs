@@ -480,9 +480,19 @@ const goldenPaths = [
     'M22 20 L142 20 L130 84 L10 84 Z',
   ],
   [
-    'notched slab',
-    diagram.notchedSlabPath({ x: 0, y: 0, width: 80, height: 56 }),
-    'M0 0 H62 L80 18 V56 H0 Z',
+    'key silhouette at its construction box',
+    diagram.keySilhouettePath({ x: 0, y: 0, width: 26, height: 15 }),
+    'M10 5.5 H25 V13 H22 V8.5 H18 V13 H15 V8.5 H10 L7.5 12 H3 L0.5 7 L3 2 H7.5 Z',
+  ],
+  [
+    'key silhouette without a box falls back to that construction',
+    diagram.keySilhouettePath({ x: 0, y: 0 }),
+    'M10 5.5 H25 V13 H22 V8.5 H18 V13 H15 V8.5 H10 L7.5 12 H3 L0.5 7 L3 2 H7.5 Z',
+  ],
+  [
+    'key silhouette placed and scaled',
+    diagram.keySilhouettePath({ x: 10, y: 20, width: 52, height: 30 }),
+    'M30 31 H60 V46 H54 V37 H46 V46 H40 V37 H30 L25 44 H16 L11 34 L16 24 H25 Z',
   ],
   [
     'carrier left bracket',
@@ -761,6 +771,7 @@ const distributionIndex = await import(
 );
 for (const name of [
   'slabPath',
+  'keySilhouettePath',
   'carrierBracketPaths',
   'metadataTicks',
   'deviceOutline',

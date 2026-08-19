@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.9.0
+
+Draws key material as the key silhouette everywhere, and retires the notched
+slab. Breaking for `@open-e2ee/design/diagram` consumers: `notchedSlabPath` is
+gone and `keySilhouettePath` replaces it. No token, class, or asset slug
+changes.
+
+### Added
+
+- **`keySilhouettePath`.** The canonical key glyph DESIGN.md specifies: a
+  faceted hexagonal bow, a straight shaft, and two square teeth, drawn in a
+  26 x 15 construction box. Filled is a private key and may only sit inside a
+  device outline; outlined is a public key or a prekey bundle and it travels.
+  Omitting `width` and `height` returns the construction unchanged, and the
+  golden test pins that path character for character, so the primitive cannot
+  drift from the settled geometry. `KEY_SILHOUETTE_WIDTH` and
+  `KEY_SILHOUETTE_HEIGHT` carry the construction box.
+
+### Removed
+
+- **`notchedSlabPath`.** The notched slab read as nothing to a lay reader in
+  the interactive demo, which is what reversed the ban on a literal key shape
+  on 2026-08-12. It stayed shipped afterwards only to keep the existing static
+  assets drawable until they moved. The signature diagram now draws the
+  silhouette, so nothing in this repository or its consumers calls it.
+
+  A consumer swaps the call. `keySilhouettePath` takes the same `x`, `y`,
+  `width`, and `height`, drops `notch`, and defaults the box rather than
+  requiring one.
+
 ## 0.8.0
 
 Renders the licence as `AGPLv3` on the two social cards that name it. Not
