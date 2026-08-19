@@ -288,7 +288,7 @@ reinforces the mark and the mark explains every diagram. This is the brand's
 workhorse.
 
 **The grammar is published as code.** `@open-e2ee/design` exports the
-primitives — slabs, notched slabs, carrier brackets, metadata ticks, content
+primitives — slabs, the key silhouette, carrier brackets, metadata ticks, content
 bars, device outlines, boundary lines, the ratchet ramp — and the assets in this
 repository are drawn with the same functions a consumer imports, so an asset
 here and a diagram in an app cannot drift apart. Do not reimplement a primitive
@@ -422,10 +422,9 @@ meant to be handed out."
 
 (Rule changed 2026-08-12: the notched slab read as nothing to a lay reader
 in the interactive demo, and the founder reversed the earlier ban on a
-literal key shape for key glyphs. `notchedSlabPath` remains a shipped
-primitive — see [`docs/diagram-grammar.md`](./docs/diagram-grammar.md) — as
-the legacy compact key form used by existing static assets, pending
-migration to the silhouette.)
+literal key shape for key glyphs. The silhouette is the only key form now;
+[`docs/diagram-grammar.md`](./docs/diagram-grammar.md) carries its
+construction.)
 
 ### The signature diagram
 

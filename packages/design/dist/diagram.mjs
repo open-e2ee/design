@@ -82,18 +82,62 @@ export function slabPath({ x, y, width, height, shear = 0 }) {
 }
 
 /**
- * A notched slab — the legacy compact key form. Solid is a private key and
- * may only be drawn inside a device outline; outlined is a public key or
- * prekey bundle and travels. DESIGN.md's key silhouette is now the canonical
- * key glyph; this primitive remains shipped for existing static assets
- * pending migration to it.
+ * The key silhouette — the canonical key glyph. Solid is a private key and may
+ * only be drawn inside a device outline; outlined is a public key or a prekey
+ * bundle and it travels. The fill is the only difference between the two, which
+ * is the argument the shape rhyme makes: they are the same key.
+ *
+ * The geometry is the settled silhouette — a faceted hexagonal bow, a straight
+ * shaft, two square teeth — scaled from its own 26 x 15 construction box into
+ * the box the caller asks for. Asking for the construction box itself returns
+ * that construction unchanged, which the golden test pins character for
+ * character. The facets are the point: a round bow would be the one curve this
+ * grammar otherwise refuses.
  */
-export function notchedSlabPath({ x, y, width, height, notch = 18 }) {
-  check(
-    notch > 0 && notch < Math.min(width, height),
-    'The notch must be smaller than the slab it is cut from.',
-  );
-  return `M${round(x)} ${round(y)} H${round(x + width - notch)} L${round(x + width)} ${round(y + notch)} V${round(y + height)} H${round(x)} Z`;
+export const KEY_SILHOUETTE_WIDTH = 26;
+export const KEY_SILHOUETTE_HEIGHT = 15;
+
+/*
+ * The silhouette as commands over its construction box. Horizontal and vertical
+ * runs stay horizontal and vertical under a non-uniform scale, so they survive
+ * as `H` and `V` and the emitted path keeps the orthogonal reading.
+ */
+const KEY_SILHOUETTE_COMMANDS = Object.freeze([
+  ['M', 10, 5.5],
+  ['H', 25],
+  ['V', 13],
+  ['H', 22],
+  ['V', 8.5],
+  ['H', 18],
+  ['V', 13],
+  ['H', 15],
+  ['V', 8.5],
+  ['H', 10],
+  ['L', 7.5, 12],
+  ['H', 3],
+  ['L', 0.5, 7],
+  ['L', 3, 2],
+  ['H', 7.5],
+  ['Z'],
+]);
+
+export function keySilhouettePath({
+  x,
+  y,
+  width = KEY_SILHOUETTE_WIDTH,
+  height = KEY_SILHOUETTE_HEIGHT,
+}) {
+  check(width > 0 && height > 0, 'A key silhouette needs a positive width and height.');
+  const scaleX = width / KEY_SILHOUETTE_WIDTH;
+  const scaleY = height / KEY_SILHOUETTE_HEIGHT;
+  const atX = (value) => round(x + value * scaleX);
+  const atY = (value) => round(y + value * scaleY);
+  return KEY_SILHOUETTE_COMMANDS.map(([command, first, second]) => {
+    if (command === 'Z') return 'Z';
+    if (command === 'H') return `H${atX(first)}`;
+    if (command === 'V') return `V${atY(first)}`;
+    return `${command}${atX(first)} ${atY(second)}`;
+  }).join(' ');
 }
 
 /**

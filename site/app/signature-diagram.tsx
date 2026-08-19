@@ -7,8 +7,8 @@ import {
   PLAINTEXT_STROKE,
   STROKE_WIDTH,
   contentBarRects,
+  keySilhouettePath,
   metadataTickRects,
-  notchedSlabPath,
   slabPath,
 } from "@open-e2ee/design";
 
@@ -51,14 +51,13 @@ function Device({ x, label }: { x: number; label: string }) {
       }).map((bar) => (
         <rect key={bar.y} {...bar} fill={CONTENT_BAR_FILL} />
       ))}
-      {/* Filled notched slab: a private key, and it never leaves this outline. */}
+      {/* Filled key silhouette: a private key, and it never leaves this outline. */}
       <path
-        d={notchedSlabPath({
+        d={keySilhouettePath({
           x: x + DEVICE.padding,
           y: 190,
-          width: 40,
-          height: 24,
-          notch: 8,
+          width: 39,
+          height: 22.5,
         })}
         fill={PLAINTEXT_STROKE}
       />

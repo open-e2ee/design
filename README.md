@@ -48,13 +48,13 @@ npm run dev --prefix site
 from a GitHub release tag and pin it:
 
 ```sh
-npm install github:open-e2ee/design#v0.8.0
+npm install github:open-e2ee/design#v0.9.0
 ```
 
 or, equivalently, from the tag tarball:
 
 ```sh
-npm install https://github.com/open-e2ee/design/archive/refs/tags/v0.8.0.tar.gz
+npm install https://github.com/open-e2ee/design/archive/refs/tags/v0.9.0.tar.gz
 ```
 
 Pin an exact tag rather than a branch. The generated distribution is committed,

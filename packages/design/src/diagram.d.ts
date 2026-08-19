@@ -10,8 +10,12 @@ export interface SlabOptions extends Rect {
   shear?: number;
 }
 
-export interface NotchedSlabOptions extends Rect {
-  notch?: number;
+export interface KeySilhouetteOptions {
+  x: number;
+  y: number;
+  /** Defaults to the silhouette's own 26 x 15 construction box. */
+  width?: number;
+  height?: number;
 }
 
 export interface CarrierConstruction {
@@ -89,9 +93,11 @@ export declare const PLAINTEXT_STROKE: string;
 export declare const CIPHERTEXT_FILL: string;
 export declare const CARRIER_STROKE: string;
 export declare const BOUNDARY_STROKE: string;
+export declare const KEY_SILHOUETTE_WIDTH: 26;
+export declare const KEY_SILHOUETTE_HEIGHT: 15;
 
 export declare function slabPath(options: SlabOptions): string;
-export declare function notchedSlabPath(options: NotchedSlabOptions): string;
+export declare function keySilhouettePath(options: KeySilhouetteOptions): string;
 export declare function carrierBracketPaths(
   construction: CarrierConstruction,
 ): [string, string];

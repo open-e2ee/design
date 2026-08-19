@@ -60,15 +60,23 @@ An upright slab is ciphertext at rest; a sheared one is in transit. The shear
 leans the top edge in the direction of travel and leaves the footprint alone, so
 a row of slabs still sits on one baseline.
 
+### The key silhouette — key material
+
 ```js
-notchedSlabPath({ x, y, width, height, notch = 18 })
+keySilhouettePath({ x, y, width = 26, height = 15 })
 ```
 
-The legacy compact key form: filled is a private key and may only be drawn
-inside a device outline; outlined is a public key or prekey bundle, and it
-travels. `DESIGN.md`'s key silhouette is the canonical key glyph; this
-primitive remains shipped for existing static assets pending migration to
-it.
+Filled is a private key, and it may only be drawn inside a device outline.
+Outlined is a public key or a prekey bundle, and it travels. The fill is the
+only difference between the two forms, which is the argument the shape rhyme
+makes: they are the same key.
+
+The silhouette is a faceted hexagonal bow, a straight shaft, and two square
+teeth, drawn in its own 26 x 15 construction box. Omitting `width` and `height`
+returns that construction unchanged; any other box scales it, and horizontal and
+vertical runs stay orthogonal under the scale. The golden test pins that
+construction character for character, so the primitive cannot drift from the
+settled geometry. The website demo scene draws the same path.
 
 ### The carrier
 
