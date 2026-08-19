@@ -15,7 +15,7 @@ Everything that is the identity rather than the machinery:
   social card built from those sources, in every format and mode.
 - `packages/design/dist/assets/` — the same assets as published to npm.
 - The names **OpenE2EE** and **Open E2EE**, the carrier mark, and the
-  `Open` + `E2EE` wordmark, in any weight, colour, or arrangement.
+  `Open` + `E2EE` wordmark, in any weight, color, or arrangement.
 
 ## What is not reserved
 
@@ -40,7 +40,7 @@ rule, and the misuse list apply to every reproduction.
 
 ## What you may not do
 
-- Modify, recolour, redraw, animate, or extend the mark or wordmark.
+- Modify, recolor, redraw, animate, or extend the mark or wordmark.
 - Use them as your own identity, or in a way that suggests OpenE2EE endorses,
   sponsors, or authored something it did not.
 - Use them in a fork or derivative product without replacing the identity

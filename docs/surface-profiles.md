@@ -22,7 +22,7 @@ Two devices are expected here:
 
 - **A front-matter block** on every page — status, applies-to version,
   platforms, prerequisites, and reading time, set as a ruled monospace block.
-- **`Failure mode` and `Not covered` callouts**, which give the voice's candour
+- **`Failure mode` and `Not covered` callouts**, which give the voice's candor
   a permanent place in the layout rather than leaving it to each author.
 
 Typography splits by page kind: reference and task pages stay in Public Sans,
