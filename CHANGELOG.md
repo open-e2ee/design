@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.9.1
+
+Writes every surface in American English. Moves the reference site to Tailwind
+4.3.3. No token, class, asset slug, or export changes.
+
+### Added
+
+- **A spelling lint.** `scripts/test.mjs` reads every written surface in the
+  repository. It fails on the British forms that `scripts/spellings.mjs` lists.
+  That list sits in its own file. The file is the one place here where the
+  British form is the right thing to write. Two things stay out of scope.
+  Third-party license texts quote their originals word for word, and
+  `aria-labelledby` in the generated assets names an ARIA attribute.
+
+### Changed
+
+- **American spelling.** The sweep covers `DESIGN.md`, `docs/`, and the brand
+  license. It also covers the build and test scripts, the shipped source
+  comments, and the site. A mixed spelling reads as two authors rather than one
+  voice. The change is prose only. No token, class, or export name held a
+  British spelling, so no name a consumer references changed.
+- **Tailwind 4.3.3 in the reference site**, one minor version above the old
+  4.2.1 pin. The site builds a byte-identical stylesheet under both. This is a
+  dependency move, not a visual one.
+
 ## 0.9.0
 
 Draws key material as the key silhouette everywhere, and retires the notched
@@ -32,7 +57,7 @@ changes.
 
 ## 0.8.0
 
-Renders the licence as `AGPLv3` on the two social cards that name it. Not
+Renders the license as `AGPLv3` on the two social cards that name it. Not
 breaking: no token, class, or export changes, and the two cards keep their
 slugs, dimensions, and every other plate row.
 
@@ -114,7 +139,7 @@ every 0.3.0 token name and export is unchanged, and no existing value moved.
   writing out separately: `oe-button` with its secondary, small, and full
   variants, `oe-theme-toggle`, `oe-icon`, `oe-icon-link`, `oe-visually-hidden`,
   and the focus ring. Every rule is a token reference, and a test rejects a
-  literal colour in the file — a hex here renders correctly in the theme it was
+  literal color in the file — a hex here renders correctly in the theme it was
   written for and wrongly in the other.
 - **`@open-e2ee/design/icons`.** Six Octicons paths (`github`, `sun`, `moon`,
   `desktop`, `copy`, `check`) as geometry, plus `themeIcons` mapping the three
@@ -143,7 +168,7 @@ values win, because they are the ones reviewed into the current site.
 
 Adds the diagram grammar as published code, the lockup assets, a license, and
 the corrections an audit of 0.2.x turned up. Additive for existing token names;
-the diagram tokens are new and the `sync` state colour has moved.
+the diagram tokens are new and the `sync` state color has moved.
 
 ### Fixed
 
@@ -162,7 +187,7 @@ the diagram tokens are new and the `sync` state colour has moved.
 - **`sync` was byte-identical to `link`.** It resolved to the same value in both
   themes, so a sync badge carried no information the word did not. It now sits
   at `ultra.800` in light and `ultra.200` in dark, and a test asserts the state
-  colours stay distinct from each other.
+  colors stay distinct from each other.
 - `findTaglines` missed a tagline broken across inline elements, because the
   markup left a space before the punctuation. Whitespace is now discarded
   rather than collapsed, so `the <em>relay</em>.` is caught.
@@ -184,7 +209,7 @@ the diagram tokens are new and the `sync` state colour has moved.
   the test suite now fails any primitive that emits `opacity`, `fill-opacity`,
   `stroke-opacity`, `rgba()`, or a gradient, and any generated SVG that contains
   one.
-- **`sync` and `device` state colours** in both themes, with contrast pairs
+- **`sync` and `device` state colors** in both themes, with contrast pairs
   asserted alongside the existing trust, sealed, and offline states.
 - **Lockup assets.** Symbol, horizontal, stacked, and product lockups in light,
   dark, and mono under `brand/generated/lockup/`, generated from
@@ -216,7 +241,7 @@ stack. There are no aliases for the old token names — update call sites.
   sealed shut, in a full and an optical variant. The build picks the variant
   by size (optical from 16 to 31 px, the full mark from 32 px) and publishes
   that rule in the asset manifest. The shield is gone.
-- Rebuild the palette on warm paper rather than cool grey, with a brass seal
+- Rebuild the palette on warm paper rather than cool gray, with a brass seal
   ramp for metadata and the trust boundary. `white`, `ink`, and `slate`
   collapse into one `paper` ramp; `blue` becomes `ultra`, `green` becomes
   `verify`, `red` becomes `alert`, and `amber` becomes `seal`.

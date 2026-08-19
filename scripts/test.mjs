@@ -9,6 +9,7 @@ import {
   resolveReferences,
   textWidth,
 } from './lib.mjs';
+import { AMERICAN_SPELLINGS } from './spellings.mjs';
 import * as diagram from '../packages/design/src/diagram.mjs';
 import {
   ANNOTATION_PATTERN,
@@ -149,7 +150,7 @@ for (const [label, foreground, background, minimum, expected] of contrastPairs) 
 
 /*
  * Elevation. A sunken surface that resolves to the canvas is not a surface, it
- * is a claim in the token file that the renderer cannot honour: an inset well
+ * is a claim in the token file that the renderer cannot honor: an inset well
  * simply disappears. Both themes must put a real step between them, and the
  * four elevation levels must all be distinct.
  */
@@ -162,7 +163,7 @@ for (const [theme, tokens] of [
   for (const level of levels) {
     assert.ok(
       !seen.has(tokens[level]),
-      `${theme} ${level} and ${seen.get(tokens[level])} are the same colour; one of them is not an elevation level`,
+      `${theme} ${level} and ${seen.get(tokens[level])} are the same color; one of them is not an elevation level`,
     );
     seen.set(tokens[level], level);
   }
@@ -185,7 +186,7 @@ assert.ok(
 );
 
 /*
- * State colours. Each state must be legible on its own, and distinguishable
+ * State colors. Each state must be legible on its own, and distinguishable
  * from the others: a `sync` badge that is byte-identical to a link tells the
  * reader nothing that the word alone did not.
  */
@@ -196,21 +197,21 @@ for (const [theme, tokens] of [
   const states = ['verified', 'sealed', 'danger', 'offline', 'sync', 'device'];
   const seen = new Map();
   for (const state of states) {
-    assert.ok(tokens[state], `${theme} is missing the ${state} state colour`);
+    assert.ok(tokens[state], `${theme} is missing the ${state} state color`);
     assert.ok(
       tokens[`${state}-surface`] || state === 'offline',
       `${theme} ${state} has no chip surface to pair with`,
     );
     assert.ok(
       !seen.has(tokens[state]),
-      `${theme} ${state} and ${seen.get(tokens[state])} are the same colour`,
+      `${theme} ${state} and ${seen.get(tokens[state])} are the same color`,
     );
     seen.set(tokens[state], state);
   }
   assert.notEqual(
     tokens.sync,
     tokens.link,
-    `${theme} sync is the link colour exactly; the state carries no information`,
+    `${theme} sync is the link color exactly; the state carries no information`,
   );
 }
 
@@ -1102,14 +1103,14 @@ for (const name of ['symbol', 'horizontal', 'stacked', 'product']) {
     );
   }
 }
-/* The mono lockup has to be recolourable in one place, so it sets no hex. */
+/* The mono lockup has to be recolorable in one place, so it sets no hex. */
 const monoLockup = await readFile(
   join(root, 'brand/generated/lockup/open-e2ee-lockup-product-mono.svg'),
   'utf8',
 );
 assert.ok(
   !/fill="#/.test(monoLockup),
-  'The mono lockup hard-codes a colour instead of inheriting currentColor',
+  'The mono lockup hard-codes a color instead of inheriting currentColor',
 );
 
 const tokenCss = await readFile(
@@ -1133,7 +1134,7 @@ assert.match(tailwindCss, /@custom-variant dark/);
 /*
  * Typography. The wordmark's weight contrast is the concept, so a build that
  * flattens it or that loses a family from the self-hosted set is a failure
- * even though every colour still passes.
+ * even though every color still passes.
  */
 const packageJson = await readJson(join(root, 'package.json'));
 for (const family of ['public-sans', 'newsreader', 'jetbrains-mono']) {
@@ -1181,7 +1182,7 @@ const componentsCss = await readFile(
 );
 
 /*
- * Every control is a token reference. A literal colour, length, or duration
+ * Every control is a token reference. A literal color, length, or duration
  * here is the same drift the file exists to end: it would render correctly on
  * the surface it was written for and wrongly in the other theme.
  */
@@ -1205,7 +1206,7 @@ assert.match(componentsCss, /:focus-visible \{/);
 assert.doesNotMatch(
   componentsCss,
   /:\s*#[0-9a-fA-F]{3,8}\b/,
-  'A literal colour in components.css cannot follow the theme',
+  'A literal color in components.css cannot follow the theme',
 );
 
 /*
@@ -1264,6 +1265,47 @@ for (const readme of ['README.md', join('packages', 'design', 'README.md')]) {
   }
 }
 
+/*
+ * Spelling. Every written surface here is American English. A mixed spelling
+ * reads as two authors rather than one voice, and it survives review because
+ * each word on its own is correct English. The pairs live in `spellings.mjs`,
+ * the one place where the British form is the right thing to write.
+ * Third-party license texts under `brand/third-party/` quote their originals
+ * word for word, so they stay out of scope. The generated assets stay out too,
+ * where `aria-labelledby` names an ARIA attribute rather than a spelling.
+ */
+const proseFiles = [
+  'CHANGELOG.md',
+  'CONTRIBUTING.md',
+  'DESIGN.md',
+  'LICENSE-BRAND.md',
+  'README.md',
+  join('packages', 'design', 'README.md'),
+];
+for (const directory of [
+  'docs',
+  'scripts',
+  join('packages', 'design', 'src'),
+  join('packages', 'design', 'bin'),
+  join('site', 'app'),
+  join('site', 'tests'),
+]) {
+  for (const file of await filesIn(join(root, directory))) {
+    const path = join(directory, file);
+    if (path !== join('scripts', 'spellings.mjs')) proseFiles.push(path);
+  }
+}
+
+for (const file of proseFiles) {
+  const text = await readFile(join(root, file), 'utf8');
+  for (const [british, american] of AMERICAN_SPELLINGS) {
+    assert.ok(
+      !new RegExp(british, 'i').test(text),
+      `${file} spells it "${british}"; this repository writes American English, so "${american}"`,
+    );
+  }
+}
+
 process.stdout.write(
-  `Verified ${contrastPairs.length} contrast pairs, both mark variants, ${iconNames.length} icons, ${requiredFiles.length} package artifacts, and the ${installTag} install instructions.\n`,
+  `Verified ${contrastPairs.length} contrast pairs, both mark variants, ${iconNames.length} icons, ${requiredFiles.length} package artifacts, ${proseFiles.length} files for American spelling, and the ${installTag} install instructions.\n`,
 );

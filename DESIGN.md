@@ -115,7 +115,7 @@ Geometry lives in `brand/source/geometry.json` on a 512-unit grid with a
 | 32 px and up | `full` | Square payload with 40-unit clearance on all sides |
 | Below 16 px | none | Do not reproduce the mark |
 
-Variant selection by size is a rule, not a judgement call. The build encodes it,
+Variant selection by size is a rule, not a judgment call. The build encodes it,
 `manifest.json` publishes it under `variants`, and the test suite fails if a
 raster is generated from the wrong silhouette.
 
@@ -140,7 +140,7 @@ these conditions, and it implies no second exception:
   times, and the two are the same drawing rather than two drawings kept in step.
 - The lights are sampled from `packages/design/dist/assets/`. A redrawing is
   still a redrawing, moving or still.
-- Payload, carrier and wordmark light alike, in one colour. Recolouring any of
+- Payload, carrier and wordmark light alike, in one color. Recoloring any of
   them differently stays misuse.
 - Clear space still holds, and no other element enters it.
 
@@ -264,7 +264,7 @@ identifiers, fingerprints, field names. Never for prose, never for emphasis.
 
 ## Color
 
-The neutral ramp is warm paper, not cool grey. A lint in the test suite holds
+The neutral ramp is warm paper, not cool gray. A lint in the test suite holds
 every step of `paper` under `0.014` OKLCH chroma in the yellow band, so the ramp
 cannot drift blue through incremental edits.
 
@@ -304,7 +304,7 @@ privately; if the grammar lacks a shape, add one. See
    intersection. Where a diagram needs a lighter mark than the plaintext
    stroke — content bars, ratchet steps — it uses the solid
    `--oe-diagram-content-bar` and `--oe-diagram-ratchet-1…4` tokens. Alpha is
-   not a lighter colour, it is a claim that something is partly readable, and
+   not a lighter color, it is a claim that something is partly readable, and
    the test suite fails any primitive that emits one.
 3. **Diagonal means in transit.** Sheared forms are moving; orthogonal forms are
    at rest. Arrows are thin (2 px), straight, orthogonal, and unremarkable — the
@@ -457,7 +457,7 @@ Adopted alongside the identity and expected on the surfaces named:
   prerequisites, and reading time as a ruled monospace block at the top of every
   docs page. A manifest is front matter; it also improves `llms.txt` extraction.
 - **`Failure mode` and `Not covered` callouts** — a permanent home in the layout
-  for the candour the voice requires, and the natural place for the operational
+  for the candor the voice requires, and the natural place for the operational
   failures developers actually hit.
 - **Forward-only lifecycle stepper** — evaluating, licensed, active, renewal
   due. Rendered as a linear stepper in the console; it never moves backward.
@@ -558,7 +558,7 @@ Full canon lives with the verbal identity; the binding summary:
   beats any intensifier.
 - **State the limit next to the claim.** Every capability statement that could
   be over-read carries its boundary in the same breath, in the same viewport.
-  Candour is the differentiator and is never buried in a footnote.
+  Candor is the differentiator and is never buried in a footnote.
 - **Plain, exact, calm.** Short sentences. No fear marketing, no urgency, no
   exclamation marks. The reader is a competent adult with production
   responsibilities.
