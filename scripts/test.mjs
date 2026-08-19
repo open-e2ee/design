@@ -1274,6 +1274,16 @@ for (const readme of ['README.md', join('packages', 'design', 'README.md')]) {
  * word for word, so they stay out of scope. The generated assets stay out too,
  * where `aria-labelledby` names an ARIA attribute rather than a spelling.
  */
+/*
+ * Both halves of the lint spell the words out, so both skip themselves.
+ * `spellings.mjs` carries the entries, and the two lists below prove each
+ * pattern bites. Everything else here is written in American English.
+ */
+const spellingTables = new Set([
+  join('scripts', 'spellings.mjs'),
+  join('scripts', 'test.mjs'),
+]);
+
 const proseFiles = [
   'CHANGELOG.md',
   'CONTRIBUTING.md',
@@ -1292,16 +1302,57 @@ for (const directory of [
 ]) {
   for (const file of await filesIn(join(root, directory))) {
     const path = join(directory, file);
-    if (path !== join('scripts', 'spellings.mjs')) proseFiles.push(path);
+    if (!spellingTables.has(path)) proseFiles.push(path);
   }
+}
+
+/*
+ * The patterns have to separate the two directions, because the American form
+ * of several entries contains the British stem. A pattern that quietly lost its
+ * boundary would still pass every file here. It would fail the day somebody
+ * wrote "characteristic".
+ */
+for (const british of [
+  'colour',
+  'grey',
+  'greyscale',
+  'centre',
+  'licence',
+  'travelling',
+  'organise',
+  'characterised',
+  'recognised',
+]) {
+  assert.ok(
+    AMERICAN_SPELLINGS.some(({ pattern }) => pattern.test(british)),
+    `the spelling lint does not catch "${british}"`,
+  );
+}
+for (const american of [
+  'color',
+  'gray',
+  'grayscale',
+  'center',
+  'concentrate',
+  'license',
+  'traveled',
+  'organism',
+  'characteristic',
+  'generalist',
+]) {
+  assert.ok(
+    !AMERICAN_SPELLINGS.some(({ pattern }) => pattern.test(american)),
+    `the spelling lint rejects "${american}", which is already American`,
+  );
 }
 
 for (const file of proseFiles) {
   const text = await readFile(join(root, file), 'utf8');
-  for (const [british, american] of AMERICAN_SPELLINGS) {
+  for (const { pattern, british, american } of AMERICAN_SPELLINGS) {
+    const hit = text.match(pattern);
     assert.ok(
-      !new RegExp(british, 'i').test(text),
-      `${file} spells it "${british}"; this repository writes American English, so "${american}"`,
+      !hit,
+      `${file} spells it "${hit?.[0]}"; this repository writes American English, so write it the way "${british}" becomes "${american}"`,
     );
   }
 }
