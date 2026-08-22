@@ -85,9 +85,10 @@ distinctive.
 - **Organization:** OpenE2EE — the only thing that ever gets a drawn mark.
 - **Product family:** the `@open-e2ee/*` namespace. The organization is
   deliberately positioned as a family, not as a single product.
-- **Product:** **Signal Protocol SDK** — a typeset descriptor set beside the
-  organization identity. It never gets its own symbol, never gets its own color,
-  and never appears on a first-impression surface without `OpenE2EE`.
+- **Products:** **Signal Protocol SDK** and **Relay** — typeset descriptors set
+  beside the organization identity. A product never gets its own symbol, never
+  gets its own color, and never appears on a first-impression surface without
+  `OpenE2EE`. Relay remains unpublished until its launch reaches REL1.
 - **Surfaces:** OpenE2EE Docs, OpenE2EE Console.
 - **Legal entity:** OpenE2EE LLC, used only where legal identification is
   required.
@@ -165,7 +166,10 @@ put to him in writing.)
 | Org symbol | mark alone | Favicon, avatar, app icon, the branded diagram relay, anything under ~120 px wide |
 | Horizontal lockup | mark + `OpenE2EE` | Site header, README hero, social preview, docs nav |
 | Stacked lockup | mark above `OpenE2EE` | Square and portrait crops, print, conference |
-| Product lockup | horizontal lockup + `Signal Protocol SDK` on a second line | Product hero, SDK README, npm, docs product switcher |
+| Product lockup | horizontal lockup + a registered product descriptor on a second line | Product hero, SDK README, npm, docs product switcher |
+
+Registered descriptors are `Signal Protocol SDK` and `Relay`. A future product
+adds a descriptor to the generator; it does not add a mark or color.
 
 With symbol height `S`: wordmark cap height `0.62 S`; symbol-to-wordmark gap
 `0.375 S`; symbol and wordmark centered on each other vertically, never
