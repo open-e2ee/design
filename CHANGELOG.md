@@ -1,5 +1,52 @@
 # Changelog
 
+## 0.10.0
+
+Adds the product-UI half of the design contract: `DESIGN.md` Part II, a role
+token layer, and an information hue of its own. Breaking for a consumer that
+reads `--oe-info` or a `--oe-diagram-*` value: both families changed. No class,
+asset slug, or export name is gone.
+
+### Added
+
+- **`DESIGN.md` Part II, the product-UI contract.** Eight laws, the shell
+  measures, and two density modes. The display grammar, the five interface
+  states, and the interface voice. Part I keeps identity. Part II governs a
+  product interface.
+- **`@open-e2ee/design/roles.css`.** A role layer of 27 roles above the
+  semantic tokens. It removes the stock Tailwind palette and radius scale, then
+  re-adds the roles, `white`, `black`, `transparent`, and `current`. It declares
+  each role once and picks the value with `light-dark()`, and it carries the one
+  global focus ring. A component names `bg-ground-panel` or `text-text-3`, and
+  it writes no hex value.
+- **An `info` primitive ramp.** Sky blue at 242 degrees OKLCH, at 85 percent of
+  the accent chroma at every step. In the light theme it clears the accent by
+  30.1 degrees. In the dark theme it clears the accent by 29.2 degrees.
+- **`tokens/tint-rule.json`.** One lightness and one chroma ceiling per theme.
+  The build derives the four semantic tints from it. It no longer picks ramp
+  steps. The tints span 0.0013 and 0.0017 lightness. They spanned 0.1092.
+- **Two measurement scripts.** The script `scripts/measure-role-hues.mjs`
+  prints every role with its OKLCH reading. It also prints the contrast against
+  the surface each role meets. The script
+  `scripts/measure-diagram-contrast.mjs` prints every diagram token against the
+  canvas. Each script carries assertion flags.
+- **`scripts/verify-design-contract.sh`.** The eighteen conditions of the UI
+  redesign design contract, with a CI ratchet on the pass count.
+
+### Changed
+
+- **Information is its own hue.** `--oe-info` resolved to the accent ramp and
+  now resolves to the `info` ramp. An informational state and a call to action
+  were the same color.
+- **Brass carries the product warning.** At the 500 step `alert` measures 27.2
+  degrees and `seal` measures 75.3 degrees. A conventional amber lands 17
+  degrees from brass. A conventional orange lands 14 degrees from danger. The
+  warm quadrant holds no third hue. In a diagram brass keeps its own meaning.
+  There it marks what the relay can see, and it never warns.
+- **The content bar and the first ratchet step take `paper-500`.** Both sat
+  under 3:1 against the canvas. Every diagram token now clears 3:1 in both
+  themes, and the ratchet run still arrives at the ciphertext fill.
+
 ## 0.9.1
 
 Writes every surface in American English. Moves the reference site to Tailwind

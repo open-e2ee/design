@@ -177,7 +177,12 @@ dc_v17() {
 
 dc_v18() {
   roles_exist || return 1
-  git describe --tags --exact-match HEAD >/dev/null 2>&1 || return 1
+  # The tag the package version names, not the tag on HEAD. A release lands on
+  # main and the commits after it carry no tag, so an exact-match check on HEAD
+  # would report the release as gone on the next merge.
+  local tag
+  tag="v$(node -p 'require("./package.json").version')"
+  git rev-parse -q --verify "refs/tags/$tag" >/dev/null || return 1
   npm run check
 }
 
