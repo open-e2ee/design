@@ -87,6 +87,20 @@ Tailwind CSS v4:
 @import "@open-e2ee/design/tailwind.css";
 ```
 
+A product interface adds the role layer of `DESIGN.md` Part II:
+
+```css
+@import "tailwindcss";
+@import "@open-e2ee/design/fonts.css";
+@import "@open-e2ee/design/roles.css";
+```
+
+`roles.css` removes the stock Tailwind palette and radius scale, then re-adds
+the roles, `white`, `black`, `transparent`, and `current`. It declares each
+role once and picks the value with `light-dark()`, and it carries the one
+global focus ring. A component names a role such as `bg-ground-panel` or
+`text-text-3`. It names no ramp step and writes no hex value.
+
 Static-file consumers can export a versioned asset snapshot:
 
 ```sh

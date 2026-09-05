@@ -1,0 +1,45 @@
+{
+  "ground": {
+    "canvas": { "light": "{color.paper.50}", "dark": "{color.paper.975}" },
+    "panel": { "light": "{color.paper.100}", "dark": "{color.paper.950}" },
+    "raised": { "light": "{color.paper.0}", "dark": "{color.paper.900}" },
+    "hover": { "light": "{color.paper.150}", "dark": "{color.paper.850}" }
+  },
+  "border": {
+    "1": { "light": "{color.paper.200}", "dark": "{color.paper.800}" },
+    "2": { "light": "{color.paper.300}", "dark": "{color.paper.700}" },
+    "3": { "light": "{color.paper.500}", "dark": "{color.paper.500}" }
+  },
+  "text": {
+    "1": { "light": "{color.paper.1000}", "dark": "{color.paper.100}" },
+    "2": { "light": "{color.paper.700}", "dark": "{color.paper.300}" },
+    "3": { "light": "{color.paper.600}", "dark": "{color.paper.400}" },
+    "4": { "light": "{color.paper.500}", "dark": "{color.paper.500}" }
+  },
+  "accent": {
+    "": { "light": "{color.ultra.600}", "dark": "{color.ultra.300}" },
+    "hover": { "light": "{color.ultra.700}", "dark": "{color.ultra.200}" },
+    "ink": { "light": "{color.paper.0}", "dark": "{color.paper.1000}" },
+    "link": { "light": "{color.ultra.700}", "dark": "{color.ultra.300}" }
+  },
+  "info": {
+    "": { "light": "{color.ultra.600}", "dark": "{color.ultra.300}" },
+    "tint": { "light": "{color.ultra.100}", "dark": "{color.ultra.900}" },
+    "ink": { "light": "{color.paper.0}", "dark": "{color.paper.1000}" }
+  },
+  "success": {
+    "": { "light": "{color.verify.700}", "dark": "{color.verify.300}" },
+    "tint": { "light": "{color.verify.100}", "dark": "{color.verify.800}" },
+    "ink": { "light": "{color.paper.0}", "dark": "{color.paper.1000}" }
+  },
+  "warning": {
+    "": { "light": "{color.seal.800}", "dark": "{color.seal.300}" },
+    "tint": { "light": "{color.seal.100}", "dark": "{color.seal.900}" },
+    "ink": { "light": "{color.paper.0}", "dark": "{color.paper.1000}" }
+  },
+  "danger": {
+    "": { "light": "{color.alert.700}", "dark": "{color.alert.300}" },
+    "tint": { "light": "{color.alert.100}", "dark": "{color.alert.800}" },
+    "ink": { "light": "{color.paper.0}", "dark": "{color.paper.1000}" }
+  }
+}
