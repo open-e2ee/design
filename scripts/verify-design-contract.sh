@@ -72,10 +72,15 @@ dc_v04() {
   done
 }
 
+# The five states are the ones UIR1.1 defines, not a proxy word list. An
+# earlier draft grepped 'error', 'partial', and 'success', none of which is a
+# state name, so the condition could have passed on prose that named none of
+# the five.
 dc_v05() {
   part_two_exists || return 1
   local body state; body="$(sed -n '/^## Part II/,$p' "$DESIGN")"
-  for state in empty loading error 'partial' 'success'; do
+  for state in 'loading' 'failed read' 'empty result' 'precondition unmet' \
+    'filtered to nothing'; do
     grep -qi "$state" <<<"$body" || return 1
   done
 }

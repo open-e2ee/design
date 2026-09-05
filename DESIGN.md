@@ -14,6 +14,12 @@ weakens it is a change to reject regardless of how good it looks.
 > before the mark is used on a public launch surface. Internal, documentation,
 > and pre-launch use is fine.
 
+The document has two parts. Part I governs the identity that stays constant on
+every surface. Part II governs the product interfaces built on it. Where the
+two meet, Part I wins.
+
+## Part I, identity
+
 ## The material law
 
 **Open is outlined. Opaque is filled.**
@@ -660,3 +666,167 @@ not.
 The reservation exists because the trademark and visual-similarity search noted
 at the top of this document has not been run. It is a position while that
 resolves, not a permanent one.
+
+## Part II, product UI
+
+Part I governs identity. Part II governs the product interfaces. It covers the
+console, the documentation host, the website chrome, and the blog. It states
+the shell, the density, the display grammar, the interface states, and the
+interface voice. A product surface follows it and invents no local answer.
+
+The role token layer in `@open-e2ee/design` is the executable form of this
+part. A component reads a role. It never reads a ramp step, and it never
+writes a hex value.
+
+### The laws
+
+These laws resolve an ambiguous interface decision:
+
+1. **One accent, four jobs.** `--oe-accent` marks the primary action, the
+   link, the focus ring, and the current item. Everything else is a neutral or
+   a semantic role. One accent per view.
+2. **Mono is the voice of data.** A machine value renders in mono, tabular,
+   and selectable. That covers the identifier, the key, the fingerprint, the
+   price, the count, the latency, and the timestamp. Body prose is never mono.
+3. **Borders are elevation.** Surfaces stack by ground plus a 1 px hairline. A
+   shadow belongs only above the page plane, on a popover, a dropdown, or a
+   dialog. Each shadow carries an inset 1 px ring.
+4. **Role-mapped neutrals.** A component names a ground, a border weight, and
+   a text step. The theme swaps the values under it.
+5. **Weight stops at 600. Tracking applies at 20 px and above.**
+6. **Dense tables, calm pages.** Density belongs inside a data surface. The
+   page chrome around it stays airy.
+7. **Color means state.** A colored pixel is interactive, or it reports a
+   condition. Decorative color does not exist.
+8. **The interface states the outcome.** It describes no mechanism of its own.
+   The voice rule below states this in full.
+
+### The shell
+
+The console and the documentation host share one shell.
+
+- The **sidebar width** is 256 px. It carries the `panel` ground and a 1 px
+  `border-1` right edge.
+- The **collapsed rail** is 56 px. It shows the icon and the current marker
+  only. The collapse state persists under `oe-nav-collapsed`.
+- A navigation item uses weight 500 text at 14 px. Its padding is 8 px and
+  12 px, and its radius is 6 px.
+- The current item carries the `hover` ground, the `text-1` step, and a 2 px
+  accent bar on its left edge. Another item carries `text-3` and moves to
+  `text-2` on hover.
+- The **sheet breakpoint** is 768 px. Below it the sidebar becomes a left
+  sheet behind a 48 px top bar. That bar holds the menu trigger, the wordmark,
+  and the command trigger.
+- The collapse state belongs to the wide layout. It never applies inside the
+  sheet.
+- The content region is at most 1,200 px wide. Gutters are 32 px above the
+  sheet breakpoint and 16 px below it.
+- A **skip link** is the first focusable element on every page. It stays
+  offscreen until focus reaches it, then it moves focus to the main region.
+
+### The page header
+
+Every page carries the same header. The title sits at 20 px and weight 600.
+One line of `text-3` description sits under it. The page's single primary
+action sits on the right. An optional tab row sits beneath. The current tab
+carries `text-1` and a 2 px accent underline. Pages carry no breadcrumb.
+
+### Density
+
+Two modes exist. A surface picks one and improvises no third.
+
+- **Compact** governs a data surface. That covers the project table, the
+  license table, the key table, the member table, and the invoice table.
+- A compact row is 40 px tall. Cell padding is 10 px and 16 px, and text is
+  13 px.
+- A hairline divides one row from the next. The hovered row takes the `hover`
+  ground.
+- **Comfortable** governs a reading surface. That covers the overview, the
+  settings pages, the trust page, the documentation body, the blog, and every
+  interface state below.
+- A comfortable surface sets body text at 16 px and card padding at 24 px.
+  Sections sit 48 px apart.
+
+A card holds a discrete object such as one project, one figure, or one key.
+Sequential content uses a flat section with a hairline divider instead.
+
+### The 44 px minimum and a dense row
+
+Part I sets a 44 px minimum height for a control. A 40 px compact row keeps
+that rule, because a table row is content and not a control. The rule binds
+the controls inside the row and beside it.
+
+- A row that navigates carries one link across the whole row. The pointer
+  target is the full 40 px band, and the keyboard target is one stop.
+- A control inside a row has a hit area of at least 44 px. It grows by padding
+  and an expanded target, so the visible icon stays inside the 40 px band.
+- A row that needs a second action moves both into a row menu behind one 44 px
+  trigger.
+
+### Data display
+
+- **Identifiers.** Mono at 13 px in a chip on the `raised` ground, with a
+  `border-1` edge and a 6 px radius. A copy control appears on hover.
+- A truncated identifier shows its head and its tail. A copy takes the whole
+  value and confirms it.
+- **Secrets.** A license key or an API key appears in full once. Creation
+  shows it in a dialog with a copy control.
+- The interface masks it after that, in mono, and offers a rotation in place
+  of a reveal.
+- **Fingerprints.** An identity key fingerprint and a safety number group into
+  fixed blocks. A block never wraps in the middle.
+- **Prices.** Mono, tabular, and right-aligned in a table. A plan reads
+  `$99 / month`, and an overage reads `$0.05 per Relay MAU`. An unknown price
+  renders an em dash and never `$0`.
+- **Counts.** Exact below 10,000, and compact above it, such as `12.4k` and
+  `1.2M`. A count of zero renders `0` and never an em dash, because zero is a
+  measurement.
+- **Latency.** Milliseconds below one second, and seconds with two decimals
+  above it, such as `740ms` and `2.81s`.
+- **Timestamps.** A row shows relative time, such as `4m ago`, and carries the
+  absolute UTC value on the element.
+- A table under an active date filter shows the absolute value instead. A
+  relative time inside a fixed range is noise.
+- **Status.** A dot and a label report liveness. A tinted pill reports a
+  lifecycle state. One vocabulary serves every page.
+
+### The five interface states
+
+Every data surface defines all five. A surface that defines fewer falls back
+to a blank region, and a blank region tells a reader nothing.
+
+1. **Loading.** A skeleton in the shape of the result, and never a spinner
+   over an empty page. The skeleton holds the row height of its surface, so
+   the page does not jump when the data arrives.
+2. **Failed read.** The state names what did not load. It carries the retry
+   control and the identifier a support request needs. A failed read never
+   renders as an empty result.
+3. **Empty result.** One sentence naming what would appear here, and one
+   primary action that creates the first one. A mono snippet joins it when a
+   command is the fix.
+4. **Precondition unmet.** Something else has to happen before this surface
+   has anything to show. The state names the missing thing and links to it.
+   Authorization outcomes render here, and the console authorization contract
+   owns their wording.
+5. **Filtered to nothing.** The data exists, and the current filter excludes
+   it. The state says so and offers to clear the filter. It offers no creation
+   action, because a second object does not answer a filter.
+
+A partial result is no sixth state. A surface that loaded some of its regions
+renders each region in its own state.
+
+### Interface voice
+
+Decision D4 of the UI redesign plan governs interface copy. Reader-facing copy
+states what the reader gets. It explains nothing about how the interface
+produces it.
+
+- Write the outcome. Narrate no mechanism behind it.
+- A caption about recording, replay pacing, or where a computation ran is
+  mechanism. Remove it.
+- An error states what failed and what to do next. It names no layer that
+  raised it.
+- A label names the object in the terminology of Part I. The console says
+  project, relay, license, device, and envelope.
+- The banned-claims list in Part I binds interface copy exactly as it binds
+  marketing copy.
