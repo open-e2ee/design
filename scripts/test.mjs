@@ -721,6 +721,7 @@ const requiredFiles = [
   'packages/design/dist/css/wordmark.css',
   'packages/design/dist/css/components.css',
   'packages/design/dist/css/tailwind.css',
+  'packages/design/dist/css/roles.css',
   'packages/design/dist/icons.mjs',
   'packages/design/dist/icons.d.ts',
   'packages/design/dist/index.d.ts',
@@ -1130,6 +1131,71 @@ const tailwindCss = await readFile(
 assert.match(tailwindCss, /--color-canvas: var\(--oe-canvas\);/);
 assert.match(tailwindCss, /--color-sealed: var\(--oe-sealed\);/);
 assert.match(tailwindCss, /@custom-variant dark/);
+
+/*
+ * The role layer, DESIGN.md Part II. Every role is declared once and picks its
+ * value with light-dark(), so a second declaration under a dark selector is
+ * the regression to catch: it reintroduces the two-copy drift the layer exists
+ * to remove.
+ */
+const roleCss = await readFile(
+  join(root, 'packages/design/dist/css/roles.css'),
+  'utf8',
+);
+for (const role of [
+  'ground-canvas',
+  'ground-panel',
+  'ground-raised',
+  'ground-hover',
+  'border-1',
+  'border-2',
+  'border-3',
+  'text-1',
+  'text-2',
+  'text-3',
+  'text-4',
+  'accent',
+  'accent-hover',
+  'accent-ink',
+  'accent-link',
+  'info',
+  'info-tint',
+  'info-ink',
+  'success',
+  'success-tint',
+  'success-ink',
+  'warning',
+  'warning-tint',
+  'warning-ink',
+  'danger',
+  'danger-tint',
+  'danger-ink',
+]) {
+  const declarations = roleCss.match(
+    new RegExp(`^\\s*--oe-${role}:`, 'gm'),
+  );
+  assert.equal(
+    declarations?.length,
+    1,
+    `--oe-${role} is declared ${declarations?.length ?? 0} times, not once`,
+  );
+  assert.match(
+    roleCss,
+    new RegExp(`--oe-${role}: light-dark\\(`),
+    `--oe-${role} does not pick its value with light-dark()`,
+  );
+  assert.match(
+    roleCss,
+    new RegExp(`--color-${role}: var\\(--oe-${role}\\);`),
+    `--oe-${role} is not exposed as a utility`,
+  );
+}
+assert.match(roleCss, /^@theme inline \{$/m);
+assert.equal(
+  roleCss.match(/:focus-visible/g)?.length,
+  1,
+  'The role layer holds more than one focus-visible rule',
+);
 
 /*
  * Typography. The wordmark's weight contrast is the concept, so a build that

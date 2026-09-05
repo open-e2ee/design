@@ -29,6 +29,7 @@
     "./wordmark.css": "./packages/design/dist/css/wordmark.css",
     "./components.css": "./packages/design/dist/css/components.css",
     "./tailwind.css": "./packages/design/dist/css/tailwind.css",
+    "./roles.css": "./packages/design/dist/css/roles.css",
     "./theme": {
       "types": "./packages/design/dist/theme.d.ts",
       "default": "./packages/design/dist/theme.mjs"
