@@ -34,7 +34,12 @@ Requires Node.js 22+ and `rsvg-convert` from librsvg.
 npm install
 npm run check
 npm run pack:check
+bash scripts/verify-design-contract.sh
 ```
+
+`scripts/verify-design-contract.sh` holds the eighteen conditions of the UI
+redesign design contract. CI runs it on every pull request. It reports each
+condition and exits non-zero while any one fails.
 
 To run the reference site:
 

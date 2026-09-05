@@ -22,6 +22,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --yes librsvg2-bin
       - run: npm ci
       - run: npm run check
+      - run: bash scripts/verify-design-contract.sh
       - run: npm run pack:check
       - run: npm ci --prefix site
       - run: npm audit --prefix site --omit=dev --audit-level=high
