@@ -113,6 +113,16 @@ The script prints every role with its OKLCH lightness, chroma, and hue, and the
 contrast against the surface it meets. Two flags turn the measurement into a
 check: `--assert-separation 25` and `--assert-tint-offset`.
 
+The diagram tokens carry their own measurement:
+
+```sh
+node scripts/measure-diagram-contrast.mjs
+```
+
+It prints every `diagram-*` token against the canvas in both themes, and it
+prints the ratchet step separations. The flag `--assert-minimum 3` holds the
+family at the non-text contrast minimum.
+
 Static-file consumers can export a versioned asset snapshot:
 
 ```sh
