@@ -15,9 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # DC-V18 reads the release tag by name, and the default checkout
-          # fetches no tags.
-          fetch-tags: true
+          # DC-V18 reads the release tag by name. fetch-tags alone leaves the
+          # tag unresolvable on a shallow pull-request checkout, so take the
+          # full history, which carries the tags with it.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
