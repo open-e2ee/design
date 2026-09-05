@@ -1174,6 +1174,64 @@ assert.equal(
 );
 
 /*
+ * The shadcn bridge. A registry file writes bg-primary and text-muted-foreground
+ * and knows nothing about OpenE2EE roles, so the layer resolves each of those
+ * names to the role that carries its meaning. A name that resolves to nothing
+ * renders a generated component colorless, and a name that resolves to the
+ * wrong role renders it in a color no role chose.
+ */
+const bridge = new Map(
+  [...roleCss.matchAll(/^  --color-([a-z-]+): var\(--oe-([a-z0-9-]+)\);$/gm)]
+    .map((match) => [match[1], match[2]]),
+);
+for (const [name, role] of [
+  ['background', 'ground-canvas'],
+  ['foreground', 'text-1'],
+  ['card', 'ground-raised'],
+  ['card-foreground', 'text-1'],
+  ['popover', 'ground-raised'],
+  ['popover-foreground', 'text-1'],
+  ['primary', 'accent'],
+  ['primary-foreground', 'accent-ink'],
+  ['secondary', 'ground-panel'],
+  ['secondary-foreground', 'text-2'],
+  ['muted', 'ground-panel'],
+  ['muted-foreground', 'text-3'],
+  ['destructive', 'danger'],
+  ['destructive-foreground', 'danger-ink'],
+  ['border', 'border-1'],
+  ['input', 'border-1'],
+  ['ring', 'accent'],
+]) {
+  assert.equal(
+    bridge.get(name),
+    role,
+    `The shadcn name ${name} resolves to ${bridge.get(name) ?? 'nothing'}, not ${role}`,
+  );
+  assert.ok(
+    roleCss.includes(`--oe-${role}: light-dark(`),
+    `The shadcn name ${name} resolves to ${role}, which no role declares`,
+  );
+}
+
+/*
+ * shadcn spells a subtle hover ground "accent" and OpenE2EE spells the brand
+ * blue "accent". The role keeps the name. Bridging the shadcn meaning would
+ * repaint every OpenE2EE surface that already writes bg-accent, so a registry
+ * file writes bg-ground-hover instead.
+ */
+assert.equal(
+  bridge.get('accent'),
+  'accent',
+  'The shadcn bridge took the accent name away from the OpenE2EE accent',
+);
+assert.equal(
+  bridge.get('accent-foreground'),
+  undefined,
+  'The role layer bridges accent-foreground, which no OpenE2EE role owns',
+);
+
+/*
  * The role layer's measured values. The declarations above prove the shape of
  * the file; these prove the colors in it. Each role is read against the
  * surface it meets, so an ink is measured on its own solid and a tint is
