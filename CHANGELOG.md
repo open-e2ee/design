@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.11.0
+
+Adds the shadcn bridge that `0.10.0` announced and did not ship. Additive: no
+role, class, asset slug, or export name changes.
+
+### Added
+
+- **The shadcn bridge in `roles.css`.** Seventeen registry color names resolve
+  to OpenE2EE roles, so a generated component renders on the role layer with no
+  edit. The map covers `background`, `foreground`, `card`, `popover`,
+  `primary`, `secondary`, `muted`, `destructive`, `border`, `input`, and `ring`
+  with their foreground companions.
+
+### Note
+
+`accent` and `accent-foreground` are absent from the bridge. shadcn spells a
+subtle hover ground `accent`, and OpenE2EE spells the brand blue `accent`. The
+role keeps the name, because the accent is a Part I identity token and every
+OpenE2EE surface already writes `bg-accent` for it. A registry file that wants
+the shadcn meaning writes `bg-ground-hover` and `text-text-1`.
+
 ## 0.10.0
 
 Adds the product-UI half of the design contract: `DESIGN.md` Part II, a role

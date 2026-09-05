@@ -182,6 +182,40 @@ ${declarations(semanticShadows)}
  * that separation and stays red until UIR1.3 adds the ramp. No surface
  * consumes the information role before then.
  */
+/*
+ * The shadcn bridge. A registry file names a semantic Tailwind color that the
+ * OpenE2EE role layer does not declare, so a generated component renders with
+ * no color until each name resolves to a role. The map is the whole vocabulary
+ * base-nova writes.
+ *
+ * One name collides. shadcn spells a subtle hover ground "accent", and
+ * OpenE2EE spells the brand blue "accent". The role wins the name, because the
+ * accent is a Part I identity token and every OpenE2EE surface already writes
+ * bg-accent for it. A registry file that reaches for the shadcn meaning must be
+ * edited: bg-accent becomes bg-ground-hover, and text-accent-foreground becomes
+ * text-text-1. Leaving the file alone paints a hover row brand blue, which is
+ * why "accent" and "accent-foreground" are absent from this map.
+ */
+const shadcnBridge = [
+  ['background', 'ground-canvas'],
+  ['foreground', 'text-1'],
+  ['card', 'ground-raised'],
+  ['card-foreground', 'text-1'],
+  ['popover', 'ground-raised'],
+  ['popover-foreground', 'text-1'],
+  ['primary', 'accent'],
+  ['primary-foreground', 'accent-ink'],
+  ['secondary', 'ground-panel'],
+  ['secondary-foreground', 'text-2'],
+  ['muted', 'ground-panel'],
+  ['muted-foreground', 'text-3'],
+  ['destructive', 'danger'],
+  ['destructive-foreground', 'danger-ink'],
+  ['border', 'border-1'],
+  ['input', 'border-1'],
+  ['ring', 'accent'],
+];
+
 function roleCss() {
   const roleEntries = Object.entries(roles).flatMap(([group, members]) =>
     Object.entries(members).map(([suffix, pair]) => [
@@ -193,6 +227,10 @@ function roleCss() {
   const themeEntries = roleEntries.map(([name]) => [
     `  --color-${name}: var(--oe-${name});`,
   ]);
+
+  const bridgeEntries = shadcnBridge.map(
+    ([name, role]) => `  --color-${name}: var(--oe-${role});`,
+  );
 
   const radii = flatten(primitives.radius).map(
     ([name]) => `  --radius-${name}: var(--oe-radius-${name});`,
@@ -236,6 +274,17 @@ ${cssDeclarations(roleEntries)}
  */
 @theme inline {
 ${themeEntries.join('\n')}
+}
+
+/*
+ * The shadcn bridge. Each registry name resolves to the role that carries its
+ * meaning, so a generated component renders on the role layer without an edit.
+ * "accent" and "accent-foreground" are deliberately absent: the OpenE2EE
+ * accent already owns that name, and the note in scripts/build.mjs says what a
+ * registry file must write instead.
+ */
+@theme inline {
+${bridgeEntries.join('\n')}
 }
 
 /*

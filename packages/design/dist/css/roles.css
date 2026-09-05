@@ -96,6 +96,33 @@
 }
 
 /*
+ * The shadcn bridge. Each registry name resolves to the role that carries its
+ * meaning, so a generated component renders on the role layer without an edit.
+ * "accent" and "accent-foreground" are deliberately absent: the OpenE2EE
+ * accent already owns that name, and the note in scripts/build.mjs says what a
+ * registry file must write instead.
+ */
+@theme inline {
+  --color-background: var(--oe-ground-canvas);
+  --color-foreground: var(--oe-text-1);
+  --color-card: var(--oe-ground-raised);
+  --color-card-foreground: var(--oe-text-1);
+  --color-popover: var(--oe-ground-raised);
+  --color-popover-foreground: var(--oe-text-1);
+  --color-primary: var(--oe-accent);
+  --color-primary-foreground: var(--oe-accent-ink);
+  --color-secondary: var(--oe-ground-panel);
+  --color-secondary-foreground: var(--oe-text-2);
+  --color-muted: var(--oe-ground-panel);
+  --color-muted-foreground: var(--oe-text-3);
+  --color-destructive: var(--oe-danger);
+  --color-destructive-foreground: var(--oe-danger-ink);
+  --color-border: var(--oe-border-1);
+  --color-input: var(--oe-border-1);
+  --color-ring: var(--oe-accent);
+}
+
+/*
  * One global focus ring. No component writes a ring class, and no component
  * removes the outline without replacing it.
  */
