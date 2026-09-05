@@ -101,6 +101,18 @@ role once and picks the value with `light-dark()`, and it carries the one
 global focus ring. A component names a role such as `bg-ground-panel` or
 `text-text-3`. It names no ramp step and writes no hex value.
 
+The build derives the four semantic tints instead of picking them.
+`tokens/tint-rule.json` states one lightness and one chroma ceiling per theme.
+The build applies that rule to each semantic hue. To measure the result, run:
+
+```sh
+node scripts/measure-role-hues.mjs
+```
+
+The script prints every role with its OKLCH lightness, chroma, and hue, and the
+contrast against the surface it meets. Two flags turn the measurement into a
+check: `--assert-separation 25` and `--assert-tint-offset`.
+
 Static-file consumers can export a versioned asset snapshot:
 
 ```sh

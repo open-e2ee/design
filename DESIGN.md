@@ -282,9 +282,22 @@ cannot drift blue through incremental edits.
 |---|---|
 | `paper` | Canvas, surfaces, text, borders. Light and dark share the `paper-500` step, which is why one value can serve as a border and a subtle-text color in both modes |
 | `ultra` | Action. Links, focus, the accent. One accent per view |
-| `seal` | Metadata and the trust boundary. Brass. It is never a warning color first — it marks what the relay can see |
+| `info` | Information. Sky blue, measured at 242 degrees OKLCH, held below the accent chroma at every step so the accent stays the loudest call |
+| `seal` | Metadata and the trust boundary in a diagram, and the warning state in a product interface. Brass. A diagram never uses it to warn: there it marks what the relay can see |
 | `verify` | Verified state |
 | `alert` | Danger and failure |
+
+Brass carries both meanings because the warm quadrant holds no third hue. At
+the 500 step `alert` sits at 27.2 degrees and `seal` at 75.3 degrees. A
+conventional amber lands 17 degrees from brass, and a conventional orange lands
+14 degrees from danger. Neither clears both, so a sixth warm family would read
+as one of the two it stands beside.
+
+A semantic tint states a hue and nothing else. `tokens/tint-rule.json` supplies
+one lightness and one chroma ceiling per theme. The four tints then sit at one
+optical weight, so a row of status pills is level. A tint whose hue leaves the
+sRGB gamut at that lightness lands at the closest chroma that exists. Its
+lightness does not move.
 
 Semantic tokens are the public surface; primitives are for artwork. Every
 published contrast ratio is asserted in `scripts/test.mjs` to two decimal

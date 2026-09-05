@@ -8,6 +8,8 @@ import {
   filesIn,
   flatten,
   monoWidth,
+  oklch,
+  oklchHex,
   readJson,
   resolveReferences,
   textWidth,
@@ -38,6 +40,7 @@ const semanticSource = await readJson(join(root, 'tokens', 'semantic.json'));
 const componentSource = await readJson(join(root, 'tokens', 'components.json'));
 const brandSource = await readJson(join(root, 'tokens', 'brand.json'));
 const roleSource = await readJson(join(root, 'tokens', 'roles.json'));
+const tintRule = await readJson(join(root, 'tokens', 'tint-rule.json'));
 const geometry = await readJson(join(root, 'brand', 'source', 'geometry.json'));
 const lockupSource = await readJson(join(root, 'brand', 'source', 'lockups.json'));
 const typeMetrics = await readJson(
@@ -52,6 +55,26 @@ const semantic = resolveReferences(semanticSource, primitives);
 const components = resolveReferences(componentSource, primitives);
 const brand = resolveReferences(brandSource, primitives);
 const roles = resolveReferences(roleSource, primitives);
+
+/*
+ * One tint rule. A semantic tint states a hue and nothing else: the lightness
+ * and the chroma come from tint-rule.json, so the four tints sit at one
+ * optical weight and a row of status pills is level. Picking a ramp step per
+ * semantic cannot do this, because the ramps have different lengths and their
+ * hundred steps are not the same lightness.
+ *
+ * Chroma is a ceiling rather than a value. Sky blue and red run out of sRGB
+ * gamut near this lightness, so oklchHex reduces those two and the tints stay
+ * level in lightness, which is what the eye reads as weight.
+ */
+for (const members of Object.values(roles)) {
+  if (!('derive' in (members.tint ?? {}))) continue;
+  const { hue } = oklch(members.tint.derive);
+  members.tint = {
+    light: oklchHex({ ...tintRule.light, hue }),
+    dark: oklchHex({ ...tintRule.dark, hue }),
+  };
+}
 
 /* Font stacks quote family names; SVG attributes are already double-quoted. */
 const svgFont = (stack) => stack.replaceAll('"', "'");

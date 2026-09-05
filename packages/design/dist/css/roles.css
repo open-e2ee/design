@@ -47,17 +47,17 @@
   --oe-accent-hover: light-dark(#3442a6, #bdcdff);
   --oe-accent-ink: light-dark(#fdfdfd, #090806);
   --oe-accent-link: light-dark(#3442a6, #95acff);
-  --oe-info: light-dark(#4454cc, #95acff);
-  --oe-info-tint: light-dark(#dbe5ff, #1a235b);
+  --oe-info: light-dark(#006ba3, #72b9ee);
+  --oe-info-tint: light-dark(#ddf0ff, #073653);
   --oe-info-ink: light-dark(#fdfdfd, #090806);
   --oe-success: light-dark(#1e7049, #7ed5a4);
-  --oe-success-tint: light-dark(#d8f6e3, #165335);
+  --oe-success-tint: light-dark(#d9f5e3, #073d25);
   --oe-success-ink: light-dark(#fdfdfd, #090806);
   --oe-warning: light-dark(#604008, #ebb466);
-  --oe-warning-tint: light-dark(#ffe9cc, #422b06);
+  --oe-warning-tint: light-dark(#fcead1, #472d00);
   --oe-warning-ink: light-dark(#fdfdfd, #090806);
   --oe-danger: light-dark(#a32321, #f79c92);
-  --oe-danger-tint: light-dark(#ffe6e2, #7e1a18);
+  --oe-danger-tint: light-dark(#ffe6e3, #51231f);
   --oe-danger-ink: light-dark(#fdfdfd, #090806);
 }
 
