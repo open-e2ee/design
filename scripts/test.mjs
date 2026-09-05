@@ -209,12 +209,15 @@ for (const [theme, tokens] of [
     `${theme} ratchet does not arrive at the ciphertext fill, so the run reads as fading out`,
   );
   /*
-   * The content bar and the first ratchet step both sat under 3:1, which is
-   * the non-text minimum a diagram element has to meet to be read. Both now
-   * take the paper-500 step, the one value the two themes share. UIR1.4 owns
-   * the full diagram measurement; these two are the ones this task repaired.
+   * Every diagram token reaches 3:1 against the canvas, the non-text minimum a
+   * graphical object has to meet to be read. The canvas is the reference for
+   * the whole family: an open form leaves its interior transparent, a filled
+   * slab sits on the ground, and metadata ticks run along the outside edge of
+   * a slab. scripts/measure-diagram-contrast.mjs prints the same numbers.
    */
-  for (const token of ['diagram-content-bar', 'diagram-ratchet-1']) {
+  for (const token of Object.keys(tokens).filter((name) =>
+    name.startsWith('diagram-'),
+  )) {
     const ratio = contrast(tokens[token], tokens.canvas);
     assert.ok(
       ratio >= 3,
