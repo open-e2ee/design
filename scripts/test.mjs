@@ -3,8 +3,12 @@ import { access, readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  contrast,
   filesIn,
+  luminance,
   monoWidth,
+  oklch,
+  oklchHex,
   readJson,
   resolveReferences,
   textWidth,
@@ -35,47 +39,6 @@ const components = resolveReferences(
   primitives,
 );
 const geometry = await readJson(join(root, 'brand', 'source', 'geometry.json'));
-
-function channels(hex) {
-  return hex
-    .match(/[0-9a-f]{2}/gi)
-    .map((channel) => Number.parseInt(channel, 16) / 255);
-}
-
-function toLinear(channel) {
-  return channel <= 0.04045
-    ? channel / 12.92
-    : ((channel + 0.055) / 1.055) ** 2.4;
-}
-
-function luminance(hex) {
-  const [red, green, blue] = channels(hex).map(toLinear);
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-}
-
-function contrast(foreground, background) {
-  const [high, low] = [luminance(foreground), luminance(background)].sort(
-    (left, right) => right - left,
-  );
-  return (high + 0.05) / (low + 0.05);
-}
-
-function oklch(hex) {
-  const [red, green, blue] = channels(hex).map(toLinear);
-  const long = Math.cbrt(
-    0.4122214708 * red + 0.5363325363 * green + 0.0514459929 * blue,
-  );
-  const medium = Math.cbrt(
-    0.2119034982 * red + 0.6806995451 * green + 0.1073969566 * blue,
-  );
-  const short = Math.cbrt(
-    0.0883024619 * red + 0.2817188376 * green + 0.6299787005 * blue,
-  );
-  const a = 1.9779984951 * long - 2.428592205 * medium + 0.4505937099 * short;
-  const b = 0.0259040371 * long + 0.7827717662 * medium - 0.808675766 * short;
-  const hue = (Math.atan2(b, a) * 180) / Math.PI;
-  return { chroma: Math.hypot(a, b), hue: hue < 0 ? hue + 360 : hue };
-}
 
 /*
  * Contrast. Every ratio below was published in the identity specification and
@@ -245,10 +208,19 @@ for (const [theme, tokens] of [
     tokens['diagram-ciphertext-fill'],
     `${theme} ratchet does not arrive at the ciphertext fill, so the run reads as fading out`,
   );
-  assert.ok(
-    contrast(tokens['diagram-content-bar'], tokens.canvas) > 1.5,
-    `${theme} diagram-content-bar does not separate from the canvas`,
-  );
+  /*
+   * The content bar and the first ratchet step both sat under 3:1, which is
+   * the non-text minimum a diagram element has to meet to be read. Both now
+   * take the paper-500 step, the one value the two themes share. UIR1.4 owns
+   * the full diagram measurement; these two are the ones this task repaired.
+   */
+  for (const token of ['diagram-content-bar', 'diagram-ratchet-1']) {
+    const ratio = contrast(tokens[token], tokens.canvas);
+    assert.ok(
+      ratio >= 3,
+      `${theme} ${token} measures ${ratio.toFixed(2)}:1 against the canvas, under 3:1`,
+    );
+  }
 }
 
 /*
@@ -288,6 +260,7 @@ for (let index = 1; index < paperSteps.length; index += 1) {
 
 const rampHues = {
   ultra: [266, 274],
+  info: [236, 246],
   seal: [70, 80],
   verify: [154, 162],
   alert: [22, 32],
@@ -1196,6 +1169,75 @@ assert.equal(
   1,
   'The role layer holds more than one focus-visible rule',
 );
+
+/*
+ * The role layer's measured values. The declarations above prove the shape of
+ * the file; these prove the colors in it. Each role is read against the
+ * surface it meets, so an ink is measured on its own solid and a tint is
+ * measured under the primary text.
+ */
+const tintRule = await readJson(join(root, 'tokens', 'tint-rule.json'));
+const roleTokens = resolveReferences(
+  await readJson(join(root, 'tokens', 'roles.json')),
+  primitives,
+);
+for (const members of Object.values(roleTokens)) {
+  if (!('derive' in (members.tint ?? {}))) continue;
+  const { hue } = oklch(members.tint.derive);
+  members.tint = {
+    light: oklchHex({ ...tintRule.light, hue }),
+    dark: oklchHex({ ...tintRule.dark, hue }),
+  };
+}
+
+for (const theme of ['light', 'dark']) {
+  const canvas = roleTokens.ground.canvas[theme];
+  const primary = roleTokens.text['1'][theme];
+  for (const step of ['1', '2', '3']) {
+    assert.ok(
+      contrast(roleTokens.text[step][theme], canvas) >= 4.5,
+      `${theme} text-${step} does not reach 4.5:1 on the canvas`,
+    );
+  }
+  for (const [name, token] of [
+    ['text-4', roleTokens.text['4']],
+    ['border-3', roleTokens.border['3']],
+  ]) {
+    assert.ok(
+      contrast(token[theme], canvas) >= 3,
+      `${theme} ${name} does not reach 3:1 on the canvas`,
+    );
+  }
+  for (const group of ['accent', 'info', 'success', 'warning', 'danger']) {
+    const solid = roleTokens[group][''][theme];
+    assert.ok(
+      contrast(solid, canvas) >= 4.5,
+      `${theme} ${group} does not reach 4.5:1 on the canvas`,
+    );
+    assert.ok(
+      contrast(roleTokens[group].ink[theme], solid) >= 4.5,
+      `${theme} ${group}-ink does not reach 4.5:1 on its own solid`,
+    );
+    if (!roleTokens[group].tint) continue;
+    assert.ok(
+      contrast(primary, roleTokens[group].tint[theme]) >= 4.5,
+      `${theme} ${group}-tint does not carry the primary text at 4.5:1`,
+    );
+  }
+
+  /*
+   * One tint rule. The four tints sit at one lightness, so a row of status
+   * pills is optically level. Chroma is a ceiling, not a value: sky blue and
+   * red leave the sRGB gamut near this lightness and land lower.
+   */
+  const tintLightness = ['info', 'success', 'warning', 'danger'].map(
+    (group) => oklch(roleTokens[group].tint[theme]).lightness,
+  );
+  assert.ok(
+    Math.max(...tintLightness) - Math.min(...tintLightness) <= 0.005,
+    `${theme} semantic tints span more than 0.005 lightness`,
+  );
+}
 
 /*
  * Typography. The wordmark's weight contrast is the concept, so a build that
