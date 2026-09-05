@@ -22,7 +22,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --yes librsvg2-bin
       - run: npm ci
       - run: npm run check
-      - run: bash scripts/verify-design-contract.sh
+      # The UI redesign contract. --ratchet compares the pass count with
+      # scripts/redesign-baseline/passing.txt and fails on any difference, so
+      # the conditions still open do not block unrelated work, and a change
+      # that turns one green has to record the new count.
+      - run: bash scripts/verify-design-contract.sh --ratchet
       - run: npm run pack:check
       - run: npm ci --prefix site
       - run: npm audit --prefix site --omit=dev --audit-level=high

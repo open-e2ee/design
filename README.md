@@ -38,8 +38,13 @@ bash scripts/verify-design-contract.sh
 ```
 
 `scripts/verify-design-contract.sh` holds the eighteen conditions of the UI
-redesign design contract. CI runs it on every pull request. It reports each
-condition and exits non-zero while any one fails.
+redesign design contract. With no argument it reports each condition and exits
+non-zero while any one fails.
+
+CI runs it with `--ratchet` on every pull request. That mode compares the
+pass count against `scripts/redesign-baseline/passing.txt` and fails on any
+difference, so an open condition does not block unrelated work. A change
+that turns a condition green records the new count in the same commit.
 
 To run the reference site:
 

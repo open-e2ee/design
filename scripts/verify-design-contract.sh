@@ -9,6 +9,14 @@
 # Every condition guards on the artifact its owning task produces, so the whole
 # set is red until that task lands. A condition that could pass before its task
 # ran would prove nothing.
+#
+# Two modes. With no argument the script exits non-zero while any condition
+# fails, which is what a task uses to capture its fail-before evidence and to
+# prove its own conditions green. With --ratchet it compares the pass count
+# against the number recorded in scripts/redesign-baseline/passing.txt and
+# fails on any difference. CI runs the second mode, so a red condition set does
+# not block unrelated work, and a task that turns conditions green must record
+# the new count in the same commit. The count only ever rises.
 
 set -uo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
@@ -205,4 +213,16 @@ check DC-V17 'UIR1.4  Every diagram token measures 3:1 or better' dc_v17
 check DC-V18 'UIR1.5  The release tag exists and the build is clean' dc_v18
 
 printf 'Summary: %d passed, %d failed\n' "$passed" "$failed"
+
+if [ "${1:-}" = '--ratchet' ]; then
+  recorded="$(cat "$BASELINE/passing.txt")"
+  if [ "$passed" -ne "$recorded" ]; then
+    printf 'Ratchet: %s records %s passed, this run reports %d.\n' \
+      "$BASELINE/passing.txt" "$recorded" "$passed" >&2
+    printf 'A task that changes the count records it in the same commit.\n' >&2
+    exit 1
+  fi
+  exit 0
+fi
+
 [ "$failed" -eq 0 ]
