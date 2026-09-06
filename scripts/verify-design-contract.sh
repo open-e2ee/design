@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 #
-# The design contract verifier. Eighteen conditions, DC-V01 through DC-V18.
+# The design contract verifier. Twenty-four conditions, DC-V01 through DC-V24.
+#
+# DC-V19 through DC-V24 belong to docs/plans/funnel-redesign-plan.html, which
+# is active. They start red and turn green as FR9, FR10, FR16 and FR17 land.
 # Each one names the UI redesign task that added it. That plan completed on
 # 2026-09-06 and moved to archive/ui-redesign-2026-09-06/ in the workspace,
 # where proof/verifier-schedule.md records what each condition holds. This
@@ -184,6 +187,57 @@ dc_v18() {
   npm run check
 }
 
+# --- FR9, FR10, FR16 and FR17, the funnel and product redesign ------------------
+#
+# docs/plans/funnel-redesign-plan.html owns these. Each one guards on the
+# artifact its task ships, so it cannot pass before that task lands.
+
+# FR9. The mark measured 1.6 times the cap height beside the wordmark, and the
+# lockup carried the same clear space as the gap between two navigation words.
+# The fit is rendered geometry, so a source string cannot answer it.
+dc_v19() {
+  test -f scripts/measure-lockup-fit.mjs || return 1
+  node scripts/measure-lockup-fit.mjs --assert-cap-ratio 1.15 --assert-clear-space
+}
+
+# FR10. Six ramps ship here. A ramp with no role is a color nobody can reach,
+# so the role layer has to name every one of them.
+dc_v20() {
+  roles_exist || return 1
+  test -f scripts/check-ramp-roles.mjs || return 1
+  node scripts/check-ramp-roles.mjs --require-all
+}
+
+# FR10. The primitives may not move while the roles gain assignments. This
+# holds the baseline values, so a role change cannot smuggle a hue change.
+dc_v21() {
+  test -f scripts/redesign-baseline/primitives.sha256 || return 1
+  shasum -a 256 -c scripts/redesign-baseline/primitives.sha256
+}
+
+# FR16. Every paper step from 800 through 1000 measures four percent saturation
+# or less. The founder named the brown cast of the dark grounds on 2026-09-06.
+dc_v22() {
+  test -f scripts/measure-ramp-warmth.mjs || return 1
+  node scripts/measure-ramp-warmth.mjs --ramp paper --from 800 --assert-saturation 4
+}
+
+# FR16. Lightness may not move while the warmth comes out, because a contrast
+# ratio that shifts here shifts on all three hosts at once.
+dc_v23() {
+  test -f scripts/measure-ramp-warmth.mjs || return 1
+  node scripts/measure-ramp-warmth.mjs --ramp paper --assert-lightness-within 1
+}
+
+# FR17. The role layer answers the shared presentation measures, so one edit
+# reaches the website, the console, and the documentation together.
+dc_v24() {
+  roles_exist || return 1
+  grep -q -- '--oe-control-height' packages/design/dist/css/roles.css || return 1
+  grep -q -- '--oe-control-radius' packages/design/dist/css/roles.css || return 1
+  grep -q -- '--oe-rule-weight' packages/design/dist/css/roles.css
+}
+
 # --- self-assertions -----------------------------------------------------------
 #
 # A verifier nothing runs is not a verifier. These two say so out loud, and they
@@ -219,6 +273,12 @@ check DC-V15 'UIR1.3  Information and warning clear their neighbors by 25 degree
 check DC-V16 'UIR1.3  Every semantic tint sits at one lightness offset' dc_v16
 check DC-V17 'UIR1.4  Every diagram token measures 3:1 or better' dc_v17
 check DC-V18 'UIR1.5  The release tag exists and the build is clean' dc_v18
+check DC-V19 'FR9  The mark fits the cap height and the clear space holds' dc_v19
+check DC-V20 'FR10  Every ramp carries a role' dc_v20
+check DC-V21 'FR10  The primitives match their recorded digest' dc_v21
+check DC-V22 'FR16  No paper step below 800 exceeds four percent saturation' dc_v22
+check DC-V23 'FR16  Every paper step holds its baseline lightness' dc_v23
+check DC-V24 'FR17  The role layer answers the shared presentation measures' dc_v24
 
 printf 'Summary: %d passed, %d failed\n' "$passed" "$failed"
 
