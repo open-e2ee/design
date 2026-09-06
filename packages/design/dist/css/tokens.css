@@ -161,6 +161,15 @@
   --oe-panel-radius: 0.25rem;
   --oe-content-measure: 68ch;
   --oe-content-wide: 73.75rem;
+  --oe-chrome-header-height: 4rem;
+  --oe-chrome-header-height-compact: 3rem;
+  --oe-chrome-footer-padding-block-start: 3rem;
+  --oe-chrome-footer-padding-block-end: 2rem;
+  --oe-chrome-lockup-size: 1.25rem;
+  --oe-chrome-title-size: clamp(2.125rem, 1.35rem + 3.4vw, 3.75rem);
+  --oe-chrome-section-size: clamp(1.625rem, 1.25rem + 1.6vw, 2.25rem);
+  --oe-chrome-subsection-size: 1.125rem;
+  --oe-chrome-minor-size: 1rem;
   --oe-wordmark-font-family: "Public Sans Variable", "Public Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --oe-wordmark-open-weight: 500;
   --oe-wordmark-open-tracking: -0.01em;

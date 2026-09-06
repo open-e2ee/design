@@ -6,7 +6,7 @@ files directly.
 Not on npm yet — npm publication is pending. Install from a GitHub release tag:
 
 ```sh
-npm install github:open-e2ee/design#v0.11.0
+npm install github:open-e2ee/design#v0.12.0
 ```
 
 Public exports:

@@ -29,6 +29,17 @@
     "measure": "68ch",
     "wide": "73.75rem"
   },
+  "chrome": {
+    "header-height": "{space.16}",
+    "header-height-compact": "{space.12}",
+    "footer-padding-block-start": "{space.12}",
+    "footer-padding-block-end": "{space.8}",
+    "lockup-size": "1.25rem",
+    "title-size": "clamp(2.125rem, 1.35rem + 3.4vw, 3.75rem)",
+    "section-size": "clamp(1.625rem, 1.25rem + 1.6vw, 2.25rem)",
+    "subsection-size": "1.125rem",
+    "minor-size": "1rem"
+  },
   "wordmark": {
     "font-family": "{font.sans}",
     "open-weight": "500",

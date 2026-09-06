@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.12.0
+
+Adds the chrome measures the three hosts share. Additive: no role, class, asset
+slug, or export name changes.
+
+### Added
+
+- **The `--oe-chrome-*` tokens.** Nine measures that all three hosts read.
+  They cover the header height and its compact form, the two footer paddings,
+  and the lockup size. Four more carry the type scale. `DESIGN.md` Part II,
+  *The chrome*, states them.
+
+### Why
+
+The six chrome measures were host-local literals. They agreed on the header
+height by coincidence and disagreed on the footer and the type scale, and
+nothing could report the drift. A token is one definition, so a host that reads
+it cannot differ from a host that reads it.
+
 ## 0.11.0
 
 Adds the shadcn bridge that `0.10.0` announced and did not ship. Additive: no

@@ -737,6 +737,33 @@ The console and the documentation host share one shell.
 - A **skip link** is the first focusable element on every page. It stays
   offscreen until focus reaches it, then it moves focus to the main region.
 
+### The chrome
+
+The website, the documentation host, and the console are three hosts. A reader
+crosses them in one session, so the chrome around the content is one set of
+measures and not three. Each measure is a `--oe-chrome-*` token. A host reads
+the token. It writes no literal of its own.
+
+| Measure | Token | Value |
+|---|---|---|
+| Header height | `--oe-chrome-header-height` | 64 px |
+| Header height below the sheet breakpoint | `--oe-chrome-header-height-compact` | 48 px |
+| Footer space above | `--oe-chrome-footer-padding-block-start` | 48 px |
+| Footer space below | `--oe-chrome-footer-padding-block-end` | 32 px |
+| Lockup size | `--oe-chrome-lockup-size` | 20 px |
+| Title | `--oe-chrome-title-size` | 34 px to 60 px |
+| Section | `--oe-chrome-section-size` | 26 px to 36 px |
+| Subsection | `--oe-chrome-subsection-size` | 18 px |
+| Minor heading | `--oe-chrome-minor-size` | 16 px |
+
+The header and the footer each carry a 1 px `border-1` rule against the page.
+The lockup size sets the wordmark. The mark sizes from it through the ratio in
+*Lockups*, so one token fixes the whole composition on every host.
+
+The focus ring and the spacing base are already single-valued. `roles.css`
+carries one `:focus-visible` rule for every host. The 4 px scale in
+`tokens.css` is the only spacing source. Neither needs a chrome token.
+
 ### The page header
 
 Every page carries the same header. The title sits at 20 px and weight 600.
