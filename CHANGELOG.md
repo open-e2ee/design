@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.14.1
+
+Completes the `rule` utility family, so a hairline in any direction reads the
+shared rule weight.
+
+### Added
+
+- **`rule-l`, `rule-r`, and `rule-x`.** The family now covers every side that
+  the Tailwind border utilities cover.
+
+### Why
+
+0.14.0 shipped the family with the horizontal sides only. A console sidebar
+draws its edge with `border-r` and a header divider draws with `border-l`, so
+both found no utility and kept the literal width. The measure reached part of
+the chrome and left the rest behind.
+
 ## 0.14.0
 
 Adds the presentation measures to the role layer, so the website, the console,

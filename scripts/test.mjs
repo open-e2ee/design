@@ -1209,7 +1209,7 @@ for (const [name, expected] of [
 /*
  * A measure that no host can name is a measure that no host reads. Four are
  * published as Tailwind theme keys, and the rule weight is published as the
- * four utilities that draw a rule, because Tailwind has no border-width key.
+ * utilities that draw a rule, because Tailwind has no border-width key.
  */
 for (const [key, token] of [
   ['--text-body', '--oe-body-size'],
@@ -1223,11 +1223,21 @@ for (const [key, token] of [
     `The role layer does not publish ${token} as ${key}`,
   );
 }
-for (const utility of ['rule', 'rule-t', 'rule-b', 'rule-y']) {
+for (const [utility, property] of [
+  ['rule', 'border'],
+  ['rule-t', 'border-top'],
+  ['rule-b', 'border-bottom'],
+  ['rule-l', 'border-left'],
+  ['rule-r', 'border-right'],
+  ['rule-x', 'border-inline'],
+  ['rule-y', 'border-block'],
+]) {
   assert.match(
     roleCss,
-    new RegExp(`@utility ${utility} \\{\\n[^}]*var\\(--oe-rule-weight\\)`),
-    `The ${utility} utility does not draw the shared rule weight`,
+    new RegExp(
+      `@utility ${utility} \\{\\n  ${property}: var\\(--oe-rule-weight\\) solid var\\(--oe-border-1\\);`,
+    ),
+    `The ${utility} utility does not draw ${property} at the shared rule weight`,
   );
 }
 
