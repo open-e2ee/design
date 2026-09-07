@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.13.0
+
+Recuts the dark end of the `paper` ramp so it reads neutral. Token values only:
+no role, class, asset slug, or export name changes.
+
+### Changed
+
+- **`paper` steps 700 through 1000.** Each one tapers to 4 percent HSL
+  saturation or less, ending neutral at step 1000. Steps 0 through 650 keep
+  their values, so the warm paper identity is unchanged. Every step holds its
+  OKLCH lightness within 0.15 of a point, so no contrast ratio moves by design.
+  Five published pairs moved between 0.02 and 0.05, all upward.
+
+### Added
+
+- **`scripts/measure-ramp-warmth.mjs`.** It prints a ramp and asserts two
+  properties of it: a saturation ceiling from a named step down, and that every
+  step holds the lightness recorded in `scripts/redesign-baseline/`. Design
+  contract conditions DC-V22 and DC-V23 run it.
+
+### Why
+
+The dark roles landed on the warmest steps of the ramp. `ground-canvas` read
+`#0f0e0b` at 15 percent saturation and `ground-panel` read `#151310` at 14
+percent, so every large dark surface across the website, the console, and the
+documentation carried a brown cast. OKLCH chroma reported those steps as low
+because chroma falls with lightness. HSL saturation divides the channel spread
+by the room lightness leaves for it, so it reports the cast at the strength a
+reader sees.
+
 ## 0.12.0
 
 Adds the chrome measures the three hosts share. Additive: no role, class, asset
