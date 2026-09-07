@@ -276,7 +276,7 @@ check DC-V18 'UIR1.5  The release tag exists and the build is clean' dc_v18
 check DC-V19 'FR9  The mark fits the cap height and the clear space holds' dc_v19
 check DC-V20 'FR10  Every ramp carries a role' dc_v20
 check DC-V21 'FR10  The primitives match their recorded digest' dc_v21
-check DC-V22 'FR16  No paper step below 800 exceeds four percent saturation' dc_v22
+check DC-V22 'FR16  No paper step from 800 down exceeds four percent saturation' dc_v22
 check DC-V23 'FR16  Every paper step holds its baseline lightness' dc_v23
 check DC-V24 'FR17  The role layer answers the shared presentation measures' dc_v24
 
