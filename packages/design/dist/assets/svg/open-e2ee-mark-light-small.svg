@@ -7,7 +7,7 @@
       path { fill: CanvasText; }
     }
   </style>
-  <path d="M56 56 H200 V112 H112 V400 H200 V456 H56 Z" fill="#090806"/>
-  <path d="M456 56 H312 V112 H400 V400 H312 V456 H456 Z" fill="#090806"/>
-  <path d="M152 152 H360 V360 H152 Z" fill="#090806"/>
+  <path d="M56 56 H200 V112 H112 V400 H200 V456 H56 Z" fill="#080808"/>
+  <path d="M456 56 H312 V112 H400 V400 H312 V456 H456 Z" fill="#080808"/>
+  <path d="M152 152 H360 V360 H152 Z" fill="#080808"/>
 </svg>
