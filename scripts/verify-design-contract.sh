@@ -2,13 +2,15 @@
 #
 # The design contract verifier. Twenty-four conditions, DC-V01 through DC-V24.
 #
-# DC-V19 through DC-V24 belong to docs/plans/funnel-redesign-plan.html, which
-# is active. They start red and turn green as FR9, FR10, FR16 and FR17 land.
-# Each one names the UI redesign task that added it. That plan completed on
-# 2026-09-06 and moved to archive/ui-redesign-2026-09-06/ in the workspace,
-# where proof/verifier-schedule.md records what each condition holds. This
-# script is the standing contract now: add and drop nothing here without
-# stating the reason in the pull request that changes it.
+# DC-V01 through DC-V18 name the UI redesign task that added each one. That
+# plan completed on 2026-09-06 and moved to archive/ui-redesign-2026-09-06/ in
+# the workspace, where proof/verifier-schedule.md records what each condition
+# holds. DC-V19 through DC-V24 name the funnel and product redesign task that
+# added each one. That plan completed on 2026-09-07 and moved to
+# archive/funnel-redesign-2026-09-07/ in the workspace, where the plan's
+# verifier table records what each condition holds. This script is the
+# standing contract now: add and drop nothing here without stating the reason
+# in the pull request that changes it.
 #
 # Every condition guards on the artifact its task shipped, so a condition that
 # passes without that artifact proves nothing.
@@ -189,8 +191,10 @@ dc_v18() {
 
 # --- FR9, FR10, FR16 and FR17, the funnel and product redesign ------------------
 #
-# docs/plans/funnel-redesign-plan.html owns these. Each one guards on the
-# artifact its task ships, so it cannot pass before that task lands.
+# The funnel and product redesign added these. Its archive is
+# archive/funnel-redesign-2026-09-07/ in the workspace. Each one guards on
+# the artifact its task shipped, so a condition that passes without that
+# artifact proves nothing.
 
 # FR9. The mark measured 1.6 times the cap height beside the wordmark, and the
 # lockup carried the same clear space as the gap between two navigation words.
