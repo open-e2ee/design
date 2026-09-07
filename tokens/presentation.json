@@ -1,0 +1,7 @@
+{
+  "body-size": "1rem",
+  "body-leading": "1.6",
+  "rule-weight": "1px",
+  "control-height": "2.75rem",
+  "control-radius": "{radius.sm}"
+}
