@@ -67,7 +67,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--oe-button-gap);
-  min-height: var(--oe-control-height-md);
+  min-height: var(--oe-control-height);
   padding-block: var(--oe-space-2);
   padding-inline: var(--oe-button-padding-inline-md);
   border: 1px solid var(--oe-accent);

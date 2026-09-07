@@ -104,7 +104,7 @@ footer {
 .theme-toggle,
 .button {
   display: inline-flex;
-  min-height: var(--oe-control-height-md);
+  min-height: var(--oe-control-height);
   align-items: center;
   justify-content: center;
   padding-inline: var(--oe-button-padding-inline-md);

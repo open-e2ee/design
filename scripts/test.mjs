@@ -1098,7 +1098,7 @@ assert.match(tokenCss, /--oe-canvas: #faf7f3;/);
 assert.match(tokenCss, /--oe-color-paper-500: #807b74;/);
 assert.match(tokenCss, /--oe-diagram-boundary: #a5700d;/);
 assert.match(tokenCss, /:root\.dark/);
-assert.match(tokenCss, /--oe-control-height-md: 2\.75rem;/);
+assert.match(tokenCss, /--oe-control-height: 2\.75rem;/);
 
 const tailwindCss = await readFile(
   join(root, 'packages/design/dist/css/tailwind.css'),
@@ -1171,6 +1171,75 @@ assert.equal(
   roleCss.match(/:focus-visible/g)?.length,
   1,
   'The role layer holds more than one focus-visible rule',
+);
+
+/*
+ * The presentation measures. The role layer publishes five names, and a host
+ * reads them rather than answering the same question a fourth time. Each one
+ * is declared once, in the token layer that every consumer of the role layer
+ * already imports, and it is published here as a utility.
+ */
+const presentationTokens = await readJson(
+  join(root, 'tokens', 'presentation.json'),
+);
+for (const [name, expected] of [
+  ['body-size', '1rem'],
+  ['body-leading', '1.6'],
+  ['rule-weight', '1px'],
+  ['control-height', '2.75rem'],
+  ['control-radius', '0.125rem'],
+]) {
+  const declarations = tokenCss.match(new RegExp(`^\\s*--oe-${name}:`, 'gm'));
+  assert.equal(
+    declarations?.length,
+    1,
+    `--oe-${name} is declared ${declarations?.length ?? 0} times, not once`,
+  );
+  assert.match(
+    tokenCss,
+    new RegExp(`--oe-${name}: ${expected.replace('.', '\\.')};`),
+    `--oe-${name} does not measure ${expected}`,
+  );
+  assert.ok(
+    name in presentationTokens,
+    `tokens/presentation.json does not own ${name}`,
+  );
+}
+
+/*
+ * A measure that no host can name is a measure that no host reads. Four are
+ * published as Tailwind theme keys, and the rule weight is published as the
+ * four utilities that draw a rule, because Tailwind has no border-width key.
+ */
+for (const [key, token] of [
+  ['--text-body', '--oe-body-size'],
+  ['--leading-body', '--oe-body-leading'],
+  ['--radius-control', '--oe-control-radius'],
+  ['--spacing-control', '--oe-control-height'],
+]) {
+  assert.match(
+    roleCss,
+    new RegExp(`  ${key}: var\\(${token}\\);`),
+    `The role layer does not publish ${token} as ${key}`,
+  );
+}
+for (const utility of ['rule', 'rule-t', 'rule-b', 'rule-y']) {
+  assert.match(
+    roleCss,
+    new RegExp(`@utility ${utility} \\{\\n[^}]*var\\(--oe-rule-weight\\)`),
+    `The ${utility} utility does not draw the shared rule weight`,
+  );
+}
+
+/*
+ * The component layer reads the shared control height rather than a size of
+ * its own. The suffixed sm and lg heights stay: they are the dense row and the
+ * hero control, and neither is the default this measure names.
+ */
+assert.match(
+  await readFile(join(root, 'packages/design/dist/css/components.css'), 'utf8'),
+  /min-height: var\(--oe-control-height\);/,
+  'The default button does not read the shared control height',
 );
 
 /*
