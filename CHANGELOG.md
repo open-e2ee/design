@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.15.0
+
+Sets the mark against the cap height of the words beside it, and narrows the
+wordmark's weight pair.
+
+### Changed
+
+- **The lockup proportions.** `brand/source/lockups.json` carries
+  `symbolCapHeights`, the symbol height in wordmark cap heights, in place of
+  `wordmarkCapHeight`, the cap height in symbol heights. It is `1.1`, and
+  `scripts/test.mjs` refuses anything above `1.15`. Every generated lockup
+  redraws: the wordmark cap height moves from 79.36 to 116.36 units against an
+  unchanged 128-unit symbol.
+- **`Open` sets at weight 600.** The pair was 500 against 800. `DESIGN.md` now
+  bounds the pair at 200, and the verifier holds the bound.
+- **One weight pair, two consumers.** `tokens/components.json` sets the live
+  text and `brand/source/lockups.json` sets the generated SVG. The verifier now
+  asserts the two agree; nothing had.
+- **The horizontal lockup canvas holds the wordmark's descender.** It measures
+  1010.07 by 190.39 units, where it measured 1010.07 by 160. The stacked and
+  product canvases already counted the descender. The symbol and the wordmark
+  keep the positions they had, so the canvas grows only at the bottom.
+
+### Added
+
+- **`scripts/measure-lockup-fit.mjs`.** It reads the generated SVG files and
+  the extracted font metrics, and reports the symbol height in cap heights and
+  the narrowest clear space on any edge. `--assert-cap-ratio` and
+  `--assert-clear-space` turn each reading into a verdict.
+
+### Why
+
+A consumer that reads `symbolSize / wordmarkFontSize` out of the manifest draws
+a mark 1.61 times the cap height of the capitals beside it. Measured in the
+website header at 20 px: a 23.31 px mark against a 14.46 px cap height. The
+mark is what a reader sees first, and at that size it reads as a block that the
+words are attached to.
+
+### Consumers
+
+Repin, then reread `lockups.symbolSize / lockups.wordmarkFontSize` from
+`manifest.json` for the mark's height. Anything that hard-codes `1.166em` draws
+the old lockup.
+
+The horizontal lockup is no longer 1010.07 by 160. Anything that places it by
+height, crops it to a fixed box, or samples its viewBox reads the new figure
+from `manifest.json` under `lockups.assets`.
+
 ## 0.14.1
 
 Completes the `rule` utility family, so a hairline in any direction reads the

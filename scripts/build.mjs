@@ -1164,7 +1164,10 @@ await mkdir(lockupDirectory, { recursive: true });
 
 const symbol = lockupSource.symbolSize;
 const lockupPad = symbol * geometry.clearSpaceRatio;
-const wordmarkCap = symbol * lockupSource.proportions.wordmarkCapHeight;
+/* The symbol is set against the cap height, not against the font size. A mark
+   sized from the font size stands a cap-to-ascender's worth taller than the
+   capitals beside it, which is the size a reader compares it to. */
+const wordmarkCap = symbol / lockupSource.proportions.symbolCapHeights;
 const wordmarkSize = wordmarkCap / capRatio;
 const symbolGap = symbol * lockupSource.proportions.symbolGap;
 const stackedGap = symbol * lockupSource.proportions.stackedGap;
@@ -1216,6 +1219,15 @@ const lockupModes = {
   mono: { mark: 'currentColor', label: 'currentColor', product: 'currentColor' },
 };
 
+/* The wordmark's ink runs from its cap top down to the descender of `p`, and
+   the clear space is measured from the ink rather than from the capitals.
+   `stacked` and `product` have always held that descender inside the padded
+   canvas. `horizontal` could ignore it only while the symbol was the taller of
+   the two things being centered, which it no longer is. */
+const wordmarkDescender = descenderRatio * wordmarkSize;
+const horizontalRise = Math.max(symbol / 2, wordmarkCap / 2);
+const horizontalDrop = Math.max(symbol / 2, wordmarkCap / 2 + wordmarkDescender);
+
 const lockupGeometry = {
   symbol: {
     width: symbol + lockupPad * 2,
@@ -1226,15 +1238,15 @@ const lockupGeometry = {
   },
   horizontal: {
     width: lockupPad * 2 + symbol + symbolGap + wordmarkWidth,
-    height: symbol + lockupPad * 2,
+    height: lockupPad * 2 + horizontalRise + horizontalDrop,
     description:
       'The OpenE2EE symbol beside the wordmark, centered on each other vertically.',
     body: (colors) =>
-      `${symbolAt(lockupPad, lockupPad, colors.mark)}
+      `${symbolAt(lockupPad, lockupPad + horizontalRise - symbol / 2, colors.mark)}
   ${wordmarkText({
     x: lockupPad + symbol + symbolGap,
     /* Centered on the symbol, never baseline-aligned. */
-    y: lockupPad + symbol / 2 + wordmarkCap / 2,
+    y: lockupPad + horizontalRise + wordmarkCap / 2,
     fill: colors.label,
     size: wordmarkSize,
   })}`,

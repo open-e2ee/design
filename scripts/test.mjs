@@ -1039,8 +1039,14 @@ const lockupSource = await readJson(join(root, 'brand/source/lockups.json'));
 const symbolSize = manifest.lockups.symbolSize;
 assert.equal(
   manifest.lockups.wordmarkCapHeight,
-  Number((symbolSize * lockupSource.proportions.wordmarkCapHeight).toFixed(2)),
-  'The wordmark cap height is no longer 0.62 S',
+  Number((symbolSize / lockupSource.proportions.symbolCapHeights).toFixed(2)),
+  'The wordmark cap height is no longer S divided by the symbol cap heights',
+);
+/* The bound the lockup exists to hold. A mark set from the font size draws
+   about a sixth taller than the capitals beside it. */
+assert.ok(
+  lockupSource.proportions.symbolCapHeights <= 1.15,
+  `The symbol stands ${lockupSource.proportions.symbolCapHeights} cap heights tall; the lockup allows 1.15`,
 );
 assert.equal(
   manifest.lockups.symbolGap,
@@ -1062,10 +1068,15 @@ assert.equal(
   ),
   'The product baseline is no longer 1.55 wordmark cap heights below the wordmark',
 );
-assert.equal(
-  Number((manifest.lockups.wordmarkFontSize * capRatio).toFixed(2)),
-  manifest.lockups.wordmarkCapHeight,
-  'The wordmark font size does not produce the specified cap height',
+/* Both numbers reach the manifest rounded to two places, so the identity
+   between them holds to within that rounding and not exactly. Comparing two
+   independently rounded values for equality passed on one set of ratios by
+   luck and failed on the next. */
+assert.ok(
+  Math.abs(manifest.lockups.wordmarkFontSize * capRatio - manifest.lockups.wordmarkCapHeight) <=
+    0.01,
+  `The wordmark font size ${manifest.lockups.wordmarkFontSize} does not produce the cap height ` +
+    `${manifest.lockups.wordmarkCapHeight} at ${capRatio} em`,
 );
 for (const name of ['symbol', 'horizontal', 'stacked', 'product']) {
   for (const mode of ['light', 'dark', 'mono']) {
@@ -1420,6 +1431,25 @@ assert.notEqual(
   components.wordmark['open-weight'],
   components.wordmark['e2ee-weight'],
   'The wordmark lost its weight contrast',
+);
+/* Two sources set the same pair: the tokens set the live text, and
+   brand/source/lockups.json sets the generated SVG. A reader who meets both
+   meets one wordmark, so the two agree here rather than by habit. */
+assert.equal(
+  Number(components.wordmark['open-weight']),
+  lockupSource.wordmark.openWeight,
+  'The token wordmark and the generated wordmark set Open at different weights',
+);
+assert.equal(
+  Number(components.wordmark['e2ee-weight']),
+  lockupSource.wordmark.e2eeWeight,
+  'The token wordmark and the generated wordmark set E2EE at different weights',
+);
+/* DESIGN.md's bound on the pair. Two weights further apart than this read as
+   two typefaces at the 20 px the chrome sets the lockup at. */
+assert.ok(
+  lockupSource.wordmark.e2eeWeight - lockupSource.wordmark.openWeight <= 200,
+  `The wordmark pair is ${lockupSource.wordmark.e2eeWeight - lockupSource.wordmark.openWeight} apart; DESIGN.md allows 200`,
 );
 assert.equal(components.prose['font-family'], primitives.font.serif);
 assert.equal(components.metadata['font-family'], primitives.font.mono);
