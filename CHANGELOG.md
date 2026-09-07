@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.14.0
+
+Adds the presentation measures to the role layer, so the website, the console,
+and the documentation host draw at one density instead of three.
+
+### Added
+
+- **`tokens/presentation.json`.** Five measures the three hosts share:
+  `--oe-body-size`, `--oe-body-leading`, `--oe-rule-weight`,
+  `--oe-control-height`, and `--oe-control-radius`. They are declared in the
+  token layer and published by `roles.css`.
+- **Four theme keys in `roles.css`.** `--text-body`, `--leading-body`,
+  `--radius-control`, and `--spacing-control` expose four of the measures as
+  Tailwind utilities.
+- **The `rule` utilities.** `rule`, `rule-t`, `rule-b`, and `rule-y` draw a
+  hairline from `--oe-rule-weight` and the `border-1` role. Tailwind writes a
+  literal width into its own border utilities, so a rule drawn with `border-t`
+  cannot follow a measure.
+
+### Changed
+
+- **`--oe-control-height-md` is now `--oe-control-height`.** The default
+  control height is a shared measure and no longer carries a size suffix.
+  `--oe-control-height-sm` and `--oe-control-height-lg` are unchanged.
+- **`--oe-control-radius` moves from `tokens/components.json` to
+  `tokens/presentation.json`.** The name, the value, and the emitted
+  declaration are unchanged.
+
+### Why
+
+The three hosts already agreed on color. `console/src/app/docs-theme.css`
+answers every Fumadocs property from an `--oe-*` role, so one ramp decides
+every surface a reader meets. They did not agree on presentation. The website
+declared 16 px text at 1.6 leading as literals. The console declared neither
+and inherited 1.5 from the framework reset. The documentation body ran 1.75.
+The website drew a 2 px control corner and the console drew 3 px. A reader
+crossing from a documentation page to a console page in one task met two
+densities and read two products.
+
+Five names fix that. A host reads a measure rather than answering the same
+question a fourth time, and one edit reaches all three.
+
 ## 0.13.0
 
 Recuts the dark end of the `paper` ramp so it reads neutral. Token values only:

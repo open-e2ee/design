@@ -764,6 +764,30 @@ The focus ring and the spacing base are already single-valued. `roles.css`
 carries one `:focus-visible` rule for every host. The 4 px scale in
 `tokens.css` is the only spacing source. Neither needs a chrome token.
 
+### The presentation
+
+The chrome measures fix the frame. These five fix the drawing inside it. A
+host reads the measure. It writes no literal of its own, and the role layer
+publishes each one so a component names it through a utility.
+
+| Measure | Token | Utility | Value |
+|---|---|---|---|
+| Interface text size | `--oe-body-size` | `text-body` | 16 px |
+| Interface leading | `--oe-body-leading` | `leading-body` | 1.6 |
+| Rule weight | `--oe-rule-weight` | `rule`, `rule-t`, `rule-b`, `rule-y` | 1 px |
+| Control height | `--oe-control-height` | `h-control` | 44 px |
+| Control radius | `--oe-control-radius` | `rounded-control` | 2 px |
+
+The control height is the 44 px minimum that Part I sets for a default
+control. `--oe-control-height-sm` and `--oe-control-height-lg` remain: the
+first is the dense row of *Density* below, the second is a hero control, and
+neither is the default this measure names.
+
+Tailwind writes a literal width into every border utility, so a rule drawn
+with `border-t` cannot follow a measure. The four `rule` utilities carry the
+weight and the `border-1` role together, which is the whole drawing of a rule
+between two records.
+
 ### The page header
 
 Every page carries the same header. The title sits at 20 px and weight 600.

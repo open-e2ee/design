@@ -142,9 +142,7 @@
   --oe-shadow-md: 0 18px 44px rgb(9 8 6 / 0.1);
 
   --oe-control-height-sm: 2.5rem;
-  --oe-control-height-md: 2.75rem;
   --oe-control-height-lg: 3rem;
-  --oe-control-radius: 0.125rem;
   --oe-control-focus-width: 2px;
   --oe-control-focus-offset: 2px;
   --oe-button-padding-inline-sm: 0.75rem;
@@ -204,6 +202,12 @@
   --oe-diagram-boundary-dash: 2 6;
   --oe-diagram-metadata-tick-width: 2px;
   --oe-diagram-metadata-tick-length: 10px;
+
+  --oe-body-size: 1rem;
+  --oe-body-leading: 1.6;
+  --oe-rule-weight: 1px;
+  --oe-control-height: 2.75rem;
+  --oe-control-radius: 0.125rem;
 }
 
 :root.dark {
