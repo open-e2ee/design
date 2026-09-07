@@ -18,6 +18,17 @@ wordmark's weight pair.
 - **One weight pair, two consumers.** `tokens/components.json` sets the live
   text and `brand/source/lockups.json` sets the generated SVG. The verifier now
   asserts the two agree; nothing had.
+- **The horizontal lockup canvas holds the wordmark's descender.** It measures
+  1010.07 by 190.39 units, where it measured 1010.07 by 160. The stacked and
+  product canvases already counted the descender. The symbol and the wordmark
+  keep the positions they had, so the canvas grows only at the bottom.
+
+### Added
+
+- **`scripts/measure-lockup-fit.mjs`.** It reads the generated SVG files and
+  the extracted font metrics, and reports the symbol height in cap heights and
+  the narrowest clear space on any edge. `--assert-cap-ratio` and
+  `--assert-clear-space` turn each reading into a verdict.
 
 ### Why
 
@@ -32,6 +43,10 @@ words are attached to.
 Repin, then reread `lockups.symbolSize / lockups.wordmarkFontSize` from
 `manifest.json` for the mark's height. Anything that hard-codes `1.166em` draws
 the old lockup.
+
+The horizontal lockup is no longer 1010.07 by 160. Anything that places it by
+height, crops it to a fixed box, or samples its viewBox reads the new figure
+from `manifest.json` under `lockups.assets`.
 
 ## 0.14.1
 

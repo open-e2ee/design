@@ -55,21 +55,21 @@
         "mode": "light",
         "svg": "lockup/open-e2ee-lockup-horizontal-light.svg",
         "width": 1010.07,
-        "height": 160
+        "height": 190.39
       },
       {
         "lockup": "horizontal",
         "mode": "dark",
         "svg": "lockup/open-e2ee-lockup-horizontal-dark.svg",
         "width": 1010.07,
-        "height": 160
+        "height": 190.39
       },
       {
         "lockup": "horizontal",
         "mode": "mono",
         "svg": "lockup/open-e2ee-lockup-horizontal-mono.svg",
         "width": 1010.07,
-        "height": 160
+        "height": 190.39
       },
       {
         "lockup": "stacked",
@@ -152,7 +152,7 @@
       }
     ]
   },
-  "sha256": "45bdb7c5bd779689aa7da49f2573b4cc104394854cdee94370ef404830ad057b",
+  "sha256": "f412cb0b765d5f64e25dc9f346e22f2b5d4527cbb486336ce472f6acdc71a47f",
   "files": [
     "lockup/open-e2ee-lockup-horizontal-dark.svg",
     "lockup/open-e2ee-lockup-horizontal-light.svg",

@@ -132,6 +132,13 @@ Clear space is one bracket stem on every side: `0.125` of the artwork width.
 Nothing enters it. The mark is optically centered as drawn — there is no
 correction offset.
 
+A wordmark's ink runs from its cap top down to its descender, and `Open` has
+one. A lockup canvas therefore holds the descender inside the clear space
+rather than letting it stand in the space this rule keeps empty, so a
+horizontal lockup is taller than the mark it carries.
+`scripts/measure-lockup-fit.mjs --assert-clear-space` measures every generated
+lockup and reports the narrowest edge.
+
 **The mark does not move, with one named exception.** It has no hover state, no
 loading spinner variant, and no animation a product invents for itself. Diagrams
 may animate to teach a sequence; the mark is static everywhere the exception
@@ -189,7 +196,7 @@ capitals beside it are what a reader compares it to, and Public Sans sets a cap
 height of 0.723 em, so a mark sized from the font size stands about a sixth
 taller than the letters it is supposed to sit level with. `1.1` is the bound the
 generator holds; a lockup whose mark passes `1.15` cap heights fails
-`scripts/test.mjs`. All four lockups are generated into
+`scripts/test.mjs` and `scripts/measure-lockup-fit.mjs`. All four lockups are generated into
 `brand/generated/lockup/` in light, dark, and mono from
 `brand/source/lockups.json` and real font metrics; use those rather than
 rebuilding the proportions by hand, and if you must rebuild them in CSS, read

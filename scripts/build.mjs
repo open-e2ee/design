@@ -1219,6 +1219,15 @@ const lockupModes = {
   mono: { mark: 'currentColor', label: 'currentColor', product: 'currentColor' },
 };
 
+/* The wordmark's ink runs from its cap top down to the descender of `p`, and
+   the clear space is measured from the ink rather than from the capitals.
+   `stacked` and `product` have always held that descender inside the padded
+   canvas. `horizontal` could ignore it only while the symbol was the taller of
+   the two things being centered, which it no longer is. */
+const wordmarkDescender = descenderRatio * wordmarkSize;
+const horizontalRise = Math.max(symbol / 2, wordmarkCap / 2);
+const horizontalDrop = Math.max(symbol / 2, wordmarkCap / 2 + wordmarkDescender);
+
 const lockupGeometry = {
   symbol: {
     width: symbol + lockupPad * 2,
@@ -1229,15 +1238,15 @@ const lockupGeometry = {
   },
   horizontal: {
     width: lockupPad * 2 + symbol + symbolGap + wordmarkWidth,
-    height: symbol + lockupPad * 2,
+    height: lockupPad * 2 + horizontalRise + horizontalDrop,
     description:
       'The OpenE2EE symbol beside the wordmark, centered on each other vertically.',
     body: (colors) =>
-      `${symbolAt(lockupPad, lockupPad, colors.mark)}
+      `${symbolAt(lockupPad, lockupPad + horizontalRise - symbol / 2, colors.mark)}
   ${wordmarkText({
     x: lockupPad + symbol + symbolGap,
     /* Centered on the symbol, never baseline-aligned. */
-    y: lockupPad + symbol / 2 + wordmarkCap / 2,
+    y: lockupPad + horizontalRise + wordmarkCap / 2,
     fill: colors.label,
     size: wordmarkSize,
   })}`,
