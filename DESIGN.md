@@ -774,19 +774,22 @@ publishes each one so a component names it through a utility.
 |---|---|---|---|
 | Interface text size | `--oe-body-size` | `text-body` | 16 px |
 | Interface leading | `--oe-body-leading` | `leading-body` | 1.6 |
-| Rule weight | `--oe-rule-weight` | `rule`, `rule-t`, `rule-b`, `rule-y` | 1 px |
+| Rule weight | `--oe-rule-weight` | the `rule` family | 1 px |
 | Control height | `--oe-control-height` | `h-control` | 44 px |
 | Control radius | `--oe-control-radius` | `rounded-control` | 2 px |
 
 The control height is the 44 px minimum that Part I sets for a default
-control. `--oe-control-height-sm` and `--oe-control-height-lg` remain: the
-first is the dense row of *Density* below, the second is a hero control, and
-neither is the default this measure names.
+control. `--oe-control-height-sm` and `--oe-control-height-lg` remain. The
+first is the dense row of *Density* below. The second is a hero control.
+Neither is the default that this measure names.
 
 Tailwind writes a literal width into every border utility, so a rule drawn
-with `border-t` cannot follow a measure. The four `rule` utilities carry the
-weight and the `border-1` role together, which is the whole drawing of a rule
-between two records.
+with `border-t` cannot follow a measure. The `rule` family carries the weight
+and the `border-1` role together, which is the whole drawing of a rule between
+two records. It holds `rule`, `rule-t`, `rule-b`, `rule-l`, `rule-r`,
+`rule-x`, and `rule-y`, one for each side that the border utilities cover. A
+direction that the family misses is a direction where a host writes the
+literal back.
 
 ### The page header
 

@@ -315,9 +315,13 @@ ${bridgeEntries.join('\n')}
 /*
  * The rule. Tailwind writes a literal width into every border utility, so a
  * hairline drawn with the border-t utility cannot follow a measure, and each
- * host drifts on its own. These four utilities carry --oe-rule-weight and the
+ * host drifts on its own. These utilities carry --oe-rule-weight and the
  * border role together, which is the whole drawing of a rule between two
  * records.
+ *
+ * The family covers every side that the border utilities cover. A divider
+ * between two columns is the same drawing as a divider between two rows, and a
+ * host that finds no utility for one direction writes the literal back.
  */
 @utility rule {
   border: var(--oe-rule-weight) solid var(--oe-border-1);
@@ -329,6 +333,18 @@ ${bridgeEntries.join('\n')}
 
 @utility rule-b {
   border-bottom: var(--oe-rule-weight) solid var(--oe-border-1);
+}
+
+@utility rule-l {
+  border-left: var(--oe-rule-weight) solid var(--oe-border-1);
+}
+
+@utility rule-r {
+  border-right: var(--oe-rule-weight) solid var(--oe-border-1);
+}
+
+@utility rule-x {
+  border-inline: var(--oe-rule-weight) solid var(--oe-border-1);
 }
 
 @utility rule-y {
