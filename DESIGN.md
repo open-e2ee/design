@@ -177,15 +177,19 @@ put to him in writing.)
 Registered descriptors are `Signal Protocol SDK` and `Relay`. A future product
 adds a descriptor to the generator; it does not add a mark or color.
 
-With symbol height `S`: wordmark cap height `0.62 S`; symbol-to-wordmark gap
-`0.375 S`; symbol and wordmark centered on each other vertically, never
-baseline-aligned. Stacked gap `0.31 S`. The product line sets at `0.62` of the
-wordmark cap height, baseline `1.55` cap heights below the wordmark, left edges
-flush with the mark's left edge.
+With symbol height `S`: the symbol stands `1.1` wordmark cap heights, so the
+wordmark cap height is `S / 1.1`; symbol-to-wordmark gap `0.375 S`; symbol and
+wordmark centered on each other vertically, never baseline-aligned. Stacked gap
+`0.31 S`. The product line sets at `0.62` of the wordmark cap height, baseline
+`1.55` cap heights below the wordmark, left edges flush with the mark's left
+edge.
 
-Both ratios are of `S`, the symbol height — not of the font size. Public Sans
-has a cap height of 0.723 em, so a lockup built by setting the wordmark to
-`0.62em` is about a sixth too large. All four lockups are generated into
+The symbol is measured against the cap height, not against the font size. The
+capitals beside it are what a reader compares it to, and Public Sans sets a cap
+height of 0.723 em, so a mark sized from the font size stands about a sixth
+taller than the letters it is supposed to sit level with. `1.1` is the bound the
+generator holds; a lockup whose mark passes `1.15` cap heights fails
+`scripts/test.mjs`. All four lockups are generated into
 `brand/generated/lockup/` in light, dark, and mono from
 `brand/source/lockups.json` and real font metrics; use those rather than
 rebuilding the proportions by hand, and if you must rebuild them in CSS, read
@@ -202,14 +206,19 @@ above 31 px; or set the wordmark in a single uniform weight above 14 px.
 
 ## Wordmark
 
-`OpenE2EE`, set in Public Sans: **`Open` at weight 500, `E2EE` at weight 800**,
-tracked `−1%` and `−1.5%` respectively. The light, open-countered half says
+`OpenE2EE`, set in Public Sans: **`Open` at weight 600, `E2EE` at weight 800**,
+tracked `−1%` and `−1.5%` respectively. The lighter, open-countered half says
 *open*; the dense, closed half names the encryption. Read left to right it is an
 open thing becoming an opaque thing — which is the transformation the product
 performs. It needs no rule, box, color split, or other decoration.
 
+The pair is 200 apart and no wider. At chrome sizes the whole lockup is 20 px
+tall, and a wider pair reads there as two typefaces rather than as one word in
+two states.
+
 Below 14 px the wordmark reverts to one uniform weight 600; the contrast stops
-resolving at that size and starts reading as a rendering fault.
+resolving at that size and starts reading as a rendering fault. The open half
+already sets at 600, so only the dense half changes.
 
 Import `@open-e2ee/design/wordmark.css` and use:
 
@@ -227,7 +236,7 @@ tokens. A future `brand/generated/wordmark.svg` should be drawn once as outlines
 and exported, never re-derived from live font metrics, applying four craft
 corrections that live text cannot express:
 
-1. **The `nE` join.** Add `+8/1000 em` sidebearing after `n` so the 500-to-800
+1. **The `nE` join.** Add `+8/1000 em` sidebearing after `n` so the 600-to-800
    weight cliff reads as intentional rather than as a rendering artifact.
 2. **The `2`.** Condense horizontally to `97%` and slightly reduce stroke
    contrast so it does not out-weigh the flanking `E`s. Never set it as a

@@ -1164,7 +1164,10 @@ await mkdir(lockupDirectory, { recursive: true });
 
 const symbol = lockupSource.symbolSize;
 const lockupPad = symbol * geometry.clearSpaceRatio;
-const wordmarkCap = symbol * lockupSource.proportions.wordmarkCapHeight;
+/* The symbol is set against the cap height, not against the font size. A mark
+   sized from the font size stands a cap-to-ascender's worth taller than the
+   capitals beside it, which is the size a reader compares it to. */
+const wordmarkCap = symbol / lockupSource.proportions.symbolCapHeights;
 const wordmarkSize = wordmarkCap / capRatio;
 const symbolGap = symbol * lockupSource.proportions.symbolGap;
 const stackedGap = symbol * lockupSource.proportions.stackedGap;
