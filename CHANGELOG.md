@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.16.0
+
+Adds six chrome icons. Purely additive: every 0.15.0 export is unchanged.
+
+### Added
+
+- **`stack`, `send`, `people`, `clock`, `pulse`, and `terminal` in
+  `@open-e2ee/design/icons`.** Octicons 19.32.0 geometry (`stack`,
+  `paper-airplane`, `people`, `clock`, `pulse`, `terminal`), copied
+  unmodified like the rest of the set. The website's pricing page names what
+  every plan carries in six cards, and each card leads with one of these.
+  None of them is a padlock or a shield: `DESIGN.md` rules both out, and a
+  card about the protocol carries a stack.
+
 ## 0.15.0
 
 Sets the mark against the cap height of the words beside it, and narrows the
