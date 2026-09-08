@@ -552,6 +552,19 @@ const componentsCss = `/*
   color: var(--oe-foreground);
 }
 
+/*
+ * The secondary that leads among secondaries. Its frame steps from the
+ * control border to the foreground, and nothing else moves: the fill stays
+ * clear, so the one filled control in a view keeps the accent, and the label
+ * keeps its weight. A plan table carries it on the plan that costs nothing,
+ * beside the filled plan and the plain secondaries. It is a modifier of the
+ * secondary and does nothing on its own.
+ */
+.oe-button-secondary.oe-button-strong,
+.oe-button-secondary.oe-button-strong:hover:not(:disabled) {
+  border-color: var(--oe-foreground);
+}
+
 .oe-button-small {
   min-height: var(--oe-control-height-sm);
   padding-inline: var(--oe-button-padding-inline-sm);

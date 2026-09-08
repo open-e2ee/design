@@ -1467,6 +1467,7 @@ const componentsCss = await readFile(
 for (const name of [
   'oe-button',
   'oe-button-secondary',
+  'oe-button-strong',
   'oe-button-small',
   'oe-button-full',
   'oe-icon-button',
