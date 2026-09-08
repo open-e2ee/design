@@ -128,9 +128,17 @@ raster is generated from the wrong silhouette.
 
 ### Clear space and placement
 
-Clear space is one bracket stem on every side: `0.125` of the artwork width.
-Nothing enters it. The mark is optically centered as drawn — there is no
-correction offset.
+Clear space is `0.125` of the mark's width on every side. The width is the
+width of the generated file, not the drawing inside it. That is 64 units on
+the 512-unit grid. Beside the 128-unit symbol in a lockup, it is 16 units.
+`geometry.json` carries the ratio as `clearSpaceRatio`. `scripts/build.mjs`
+pads every lockup canvas by it.
+
+The file keeps the same distance between its own edge and the brackets. So the
+brackets stand two margins from anything else. The clear space is not one
+bracket stem. A full stem is 48 units, which is `0.125` of the 384-unit drawing
+inside the file. Nothing enters the clear space. The mark is optically centered
+as drawn, with no correction offset.
 
 A wordmark's ink runs from its cap top down to its descender, and `Open` has
 one. A lockup canvas therefore holds the descender inside the clear space

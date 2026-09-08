@@ -39,7 +39,7 @@ should not need to choose by eye.
 
 ## Rules
 
-- Preserve clear space equal to 12.5% of the artwork width on every side.
+- Preserve clear space of 12.5% of the placed file's width on every side.
 - Never let the payload touch or overlap a bracket. That gap is the trust
   boundary; it is geometry, not spacing.
 - Never fill the brackets' interior or outline the payload — open is outlined,
