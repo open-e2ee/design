@@ -571,6 +571,19 @@ const componentsCss = `/*
   font-size: var(--oe-button-font-size-sm);
 }
 
+/*
+ * The hero control that \`--oe-control-height-lg\` was reserved for: the pair
+ * of actions under a page's one heading, where the buttons are the largest
+ * controls in view and the default 44 px reads as a row from a table. It steps
+ * height, inline padding, and type together, so the label keeps its
+ * proportion to the frame, and changes nothing about color or weight.
+ */
+.oe-button-large {
+  min-height: var(--oe-control-height-lg);
+  padding-inline: var(--oe-button-padding-inline-lg);
+  font-size: var(--oe-button-font-size-lg);
+}
+
 .oe-button-full {
   width: 100%;
 }

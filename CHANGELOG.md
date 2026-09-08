@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.19.0
+
+Adds one button modifier and its type token. Purely additive: every 0.18.0
+export is unchanged.
+
+### Added
+
+- **`.oe-button-large` in `components.css`, and `--oe-button-font-size-lg`.**
+  The hero control that `--oe-control-height-lg` was reserved for: 48 px tall,
+  with the large inline padding and a 17 px label, so the pair of actions under
+  a page's one heading reads as the largest controls in view. It steps height,
+  padding, and type together and changes nothing about color or weight. The
+  website's pricing hero carries it on "Start free" and "See what is included".
+
 ## 0.18.0
 
 Adds four chrome icons. Purely additive: every 0.17.0 export is unchanged.

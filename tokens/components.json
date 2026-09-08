@@ -13,6 +13,7 @@
     "font-weight": "600",
     "font-size-sm": "0.875rem",
     "font-size-md": "0.9375rem",
+    "font-size-lg": "1.0625rem",
     "gap": "{space.2}",
     "disabled-opacity": "0.55"
   },
