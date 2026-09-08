@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.17.0
+
+Adds one button modifier. Purely additive: every 0.16.0 export is unchanged.
+
+### Added
+
+- **`.oe-button-strong` in `components.css`.** A modifier of
+  `.oe-button-secondary` that paints the frame in the foreground instead of
+  the control border, and changes nothing else. It is the secondary that leads
+  among secondaries: the website's pricing table carries it on the plan that
+  costs nothing, beside the one filled plan and two plain secondaries, so the
+  filled control keeps the accent and the free plan still reads apart. On its
+  own the class does nothing.
+
 ## 0.16.0
 
 Adds six chrome icons. Purely additive: every 0.15.0 export is unchanged.
