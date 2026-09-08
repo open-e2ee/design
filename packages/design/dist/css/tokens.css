@@ -153,6 +153,8 @@
   --oe-button-font-size-sm: 0.875rem;
   --oe-button-font-size-md: 0.9375rem;
   --oe-button-font-size-lg: 1.0625rem;
+  --oe-button-note-font-size: 0.8125rem;
+  --oe-button-note-font-weight: 400;
   --oe-button-gap: 0.5rem;
   --oe-button-disabled-opacity: 0.55;
   --oe-icon-size: 1em;

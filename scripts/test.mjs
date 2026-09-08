@@ -1471,6 +1471,8 @@ for (const name of [
   'oe-button-small',
   'oe-button-large',
   'oe-button-full',
+  'oe-button-stacked',
+  'oe-button-note',
   'oe-icon-button',
   'oe-icon',
   'oe-icon-link',

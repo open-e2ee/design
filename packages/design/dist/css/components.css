@@ -151,6 +151,32 @@
 }
 
 /*
+ * A button that carries its condition: the label over a smaller note, "Start
+ * free" over "No credit card needed". The offer and its condition are one
+ * decision, so they sit inside one control and the reader takes them in one
+ * glance; a note under the row belonged to nothing, and a note inside the link
+ * but outside the button was a second target. The row becomes a column, the
+ * block padding grows so the pair sits inside the frame the way a single
+ * label does, and the note steps down to the metadata size in the normal
+ * weight, so the label remains the thing the eye lands on. Color is
+ * untouched: the note is the button's own foreground on its own fill, which
+ * clears 4.5:1 on every theme, where a faded note would not. A stacked button
+ * is taller than the plain buttons beside it, so its row stretches its items
+ * and the neighbors grow to the same height.
+ */
+.oe-button-stacked {
+  flex-direction: column;
+  gap: var(--oe-space-1);
+  padding-block: var(--oe-space-3);
+}
+
+.oe-button-note {
+  display: block;
+  font-size: var(--oe-button-note-font-size);
+  font-weight: var(--oe-button-note-font-weight);
+}
+
+/*
  * A control that is a drawing: the tap target of a small control with none of
  * its furniture.
  *
