@@ -7,7 +7,13 @@ export type IconName =
   | 'check'
   | 'external'
   | 'menu'
-  | 'close';
+  | 'close'
+  | 'stack'
+  | 'send'
+  | 'people'
+  | 'clock'
+  | 'pulse'
+  | 'terminal';
 export type ThemePreference = 'light' | 'dark' | 'system';
 
 export declare const ICON_VIEW_BOX: string;
