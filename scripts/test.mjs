@@ -1469,6 +1469,7 @@ for (const name of [
   'oe-button-secondary',
   'oe-button-strong',
   'oe-button-small',
+  'oe-button-large',
   'oe-button-full',
   'oe-icon-button',
   'oe-icon',
