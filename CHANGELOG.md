@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.18.0
+
+Adds four chrome icons. Purely additive: every 0.17.0 export is unchanged.
+
+### Added
+
+- **`key`, `unseen`, `device`, and `attachment` in `@open-e2ee/design/icons`.**
+  Octicons 19.32.0 geometry (`key`, `eye-closed`, `device-mobile`,
+  `paperclip`), copied unmodified like the rest of the set. The website's
+  pricing page grew from six cards to nine, and four of them had no glyph that
+  fit: keys and sessions, sealed sender, multi-device, and encrypted
+  attachments. None of them is a padlock or a shield: `DESIGN.md` rules both
+  out, and a sealed sender is an eye that does not see.
+
 ## 0.17.0
 
 Adds one button modifier. Purely additive: every 0.16.0 export is unchanged.

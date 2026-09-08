@@ -13,7 +13,11 @@ export type IconName =
   | 'people'
   | 'clock'
   | 'pulse'
-  | 'terminal';
+  | 'terminal'
+  | 'key'
+  | 'unseen'
+  | 'device'
+  | 'attachment';
 export type ThemePreference = 'light' | 'dark' | 'system';
 
 export declare const ICON_VIEW_BOX: string;
