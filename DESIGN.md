@@ -864,8 +864,8 @@ bare utility.
 The grounds are neutral in both themes. Dark reads `#0a0a0a`, `#111111`,
 `#181818`, and `#202020` for canvas, panel, raised, and hover, and no dark
 ground carries more than 4 percent saturation. Light reads white, `#fafafa`,
-`#f4f4f5`, and `#ececee`. The accent is the OpenE2EE blue, `#4454cc` on light and
-`#5b6be0` on dark, and the ink on it is white in both themes.
+`#f4f4f5`, and `#ececee`. The accent is the OpenE2EE blue, `#4454cc` on light
+and `#5b6be0` on dark, and the ink on it is white in both themes.
 
 ### The page header
 
