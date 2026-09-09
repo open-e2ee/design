@@ -1,36 +1,7 @@
 #!/usr/bin/env node
-/*
- * Measures the generated lockups against the two fit rules, and asserts them.
- *
- *   node scripts/measure-lockup-fit.mjs
- *     Prints every generated lockup with the drawn height of its symbol, the
- *     cap height of the wordmark beside it, the ratio between them, and the
- *     narrowest clear space any edge of the artwork holds.
- *
- *   node scripts/measure-lockup-fit.mjs --assert-cap-ratio 1.15
- *     No symbol stands more than that many cap heights. Design contract
- *     condition DC-V19.
- *
- *   node scripts/measure-lockup-fit.mjs --assert-clear-space
- *     Nothing drawn enters the clear space DESIGN.md keeps empty on every
- *     side. Design contract condition DC-V19.
- *
- * The reading comes out of the generated SVG files and the extracted font
- * metrics, never out of brand/source/lockups.json. A guard that reads the
- * ratios its subject was drawn from reports those ratios back whatever the
- * drawing became.
- *
- * The symbol height is what the transform draws, not what the manifest says.
- * The cap height is the font size in the file multiplied by the cap ratio of
- * the pinned face. Those two numbers are what a reader compares, because the
- * capitals beside the mark are the only other thing at mark scale.
- *
- * Ink, for the clear space, runs from the cap top of a line down to its
- * descender. `Open` carries a descender, so a wordmark that fits by its
- * capitals can still stand in the space the mark reserves.
- *
- * The measurement is separate from the verdict. Each assertion prints the
- * number it read before it decides, so a failure says how far off it is.
+/* Measure visible symbol bounds, wordmark ink alignment, and clear space.
+ * Run with --assert-ink-fit and --assert-clear-space to enforce the contract.
+ * Measurements come from the generated SVG and pinned glyph outlines.
  */
 import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
@@ -46,6 +17,10 @@ const typeMetrics = await readJson(
   join(root, 'brand', 'source', 'public-sans-metrics.json'),
 );
 
+const outlines = await readJson(join(root, 'brand/source/wordmark-outlines.json'));
+const glyphBounds = outlines.runs.flatMap((run) => run.glyphs.map((glyph) => glyph.bounds));
+const inkTop = Math.max(...glyphBounds.map((bounds) => bounds[3])) / outlines.unitsPerEm;
+const inkBottom = -Math.min(...glyphBounds.map((bounds) => bounds[1])) / outlines.unitsPerEm;
 const capRatio = typeMetrics.capHeight / typeMetrics.unitsPerEm;
 const descenderRatio = typeMetrics.descender / typeMetrics.unitsPerEm;
 
@@ -130,12 +105,14 @@ async function readLockup(asset) {
   const lines = textLines(svg);
   const boxes = [];
   if (symbol !== null) boxes.push(symbol);
-  for (const line of lines) {
+  for (const [index, line] of lines.entries()) {
+    const top = index === 0 ? inkTop : capRatio;
+    const bottom = index === 0 ? inkBottom : descenderRatio;
     boxes.push({
       x: line.x,
-      y: line.y - line.size * capRatio,
+      y: line.y - line.size * top,
       width: lineWidth(line),
-      height: line.size * (capRatio + descenderRatio),
+      height: line.size * (top + bottom),
     });
   }
   return { asset, symbol, lines, boxes };
@@ -183,24 +160,20 @@ function table() {
   return rows.join('\n');
 }
 
-function assertCapRatio(limit) {
+function assertInkFit() {
   let failed = 0;
-  for (const lockup of lockups) {
-    const fit = capRatioOf(lockup);
-    if (fit === null) continue;
-    const { lockup: name, mode } = lockup.asset;
-    if (fit.ratio > limit || fit.ratio < 1.09) {
-      failed += 1;
-      process.stdout.write(
-        `FAIL ${name}-${mode} draws a ${round(lockup.symbol.height)}-unit symbol ` +
-          `beside a ${round(fit.capHeight)}-unit cap height, a ratio of ` +
-          `${round(fit.ratio)} outside the allowed 1.09–${limit} range\n`,
-      );
-      continue;
-    }
-    process.stdout.write(
-      `PASS ${name}-${mode} stands ${round(fit.ratio)} cap heights, within ${limit}\n`,
+  for (const { asset, symbol, lines } of lockups) {
+    if (symbol === null || lines.length === 0) continue;
+    const line = lines[0];
+    const top = line.y - line.size * inkTop;
+    const bottom = line.y + line.size * inkBottom;
+    const heightError = Math.abs(symbol.height - line.size * 1.1);
+    const alignmentError = asset.lockup === 'stacked' ? 0 : Math.abs(
+      symbol.y + symbol.height / 2 - (top + bottom) / 2,
     );
+    const pass = heightError <= TOLERANCE && alignmentError <= TOLERANCE;
+    if (!pass) failed += 1;
+    process.stdout.write(`${pass ? 'PASS' : 'FAIL'} ${asset.lockup}-${asset.mode}: height error ${round(heightError)}, alignment error ${round(alignmentError)} units\n`);
   }
   return failed;
 }
@@ -229,31 +202,20 @@ function assertClearSpace() {
   return failed;
 }
 
-const options = new Map();
-const argv = process.argv.slice(2);
-for (let index = 0; index < argv.length; index += 1) {
-  if (!argv[index].startsWith('--')) {
-    process.stderr.write(`Unknown argument ${argv[index]}\n`);
-    process.exit(2);
+const options = new Set(process.argv.slice(2));
+for (const option of options) {
+  if (!['--assert-ink-fit', '--assert-clear-space'].includes(option)) {
+    throw new Error(`Unknown argument ${option}`);
   }
-  options.set(argv[index].slice(2), argv[index + 1]);
-  index += 1;
 }
-
 let failures = 0;
 let asserted = false;
-
-if (options.has('assert-cap-ratio')) {
-  const limit = Number(options.get('assert-cap-ratio'));
-  if (!Number.isFinite(limit)) {
-    process.stderr.write('--assert-cap-ratio needs a number\n');
-    process.exit(2);
-  }
-  failures += assertCapRatio(limit);
+if (options.has('--assert-ink-fit')) {
+  failures += assertInkFit();
   asserted = true;
 }
 
-if (options.has('assert-clear-space')) {
+if (options.has('--assert-clear-space')) {
   failures += assertClearSpace();
   asserted = true;
 }

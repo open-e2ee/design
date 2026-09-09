@@ -1242,11 +1242,11 @@ await mkdir(lockupDirectory, { recursive: true });
 
 const symbol = lockupSource.symbolSize;
 const lockupPad = symbol * geometry.clearSpaceRatio;
-/* The symbol is set against the cap height, not against the font size. A mark
-   sized from the font size stands a cap-to-ascender's worth taller than the
-   capitals beside it, which is the size a reader compares it to. */
-const wordmarkCap = symbol / lockupSource.proportions.symbolCapHeights;
-const wordmarkSize = wordmarkCap / capRatio;
+const wordmarkGlyphBounds = wordmarkOutlines.runs.flatMap((run) => run.glyphs.map((glyph) => glyph.bounds));
+const wordmarkInkTopRatio = Math.max(...wordmarkGlyphBounds.map((bounds) => bounds[3])) / wordmarkOutlines.unitsPerEm;
+const wordmarkInkBottomRatio = -Math.min(...wordmarkGlyphBounds.map((bounds) => bounds[1])) / wordmarkOutlines.unitsPerEm;
+const wordmarkSize = symbol / lockupSource.proportions.symbolFontSize;
+const wordmarkCap = wordmarkSize * capRatio;
 const symbolGap = symbol * lockupSource.proportions.symbolGap;
 const stackedGap = symbol * lockupSource.proportions.stackedGap;
 const productCap = wordmarkCap * lockupSource.proportions.productCapHeight;
@@ -1299,14 +1299,9 @@ const lockupModes = {
   mono: { mark: 'currentColor', label: 'currentColor', product: 'currentColor' },
 };
 
-/* The wordmark's ink runs from its cap top down to the descender of `p`, and
-   the clear space is measured from the ink rather than from the capitals.
-   `stacked` and `product` have always held that descender inside the padded
-   canvas. `horizontal` could ignore it only while the symbol was the taller of
-   the two things being centered, which it no longer is. */
-const wordmarkDescender = descenderRatio * wordmarkSize;
-const horizontalRise = Math.max(symbol / 2, wordmarkCap / 2);
-const horizontalDrop = Math.max(symbol / 2, wordmarkCap / 2 + wordmarkDescender);
+const horizontalRise = symbol / 2;
+const horizontalDrop = symbol / 2;
+const horizontalBaseline = lockupPad + symbol / 2 + wordmarkSize * (wordmarkInkTopRatio - wordmarkInkBottomRatio) / 2;
 
 const lockupGeometry = {
   symbol: {
@@ -1325,8 +1320,8 @@ const lockupGeometry = {
       `${symbolAt(lockupPad, lockupPad + horizontalRise - symbol / 2, colors.mark)}
   ${wordmarkText({
     x: lockupPad + symbol + symbolGap,
-    /* Centered on the symbol, never baseline-aligned. */
-    y: lockupPad + horizontalRise + wordmarkCap / 2,
+    /* Center the mark on the full wordmark ink, including its descender. */
+    y: horizontalBaseline,
     fill: colors.label,
     size: wordmarkSize,
   })}`,
@@ -1358,14 +1353,13 @@ const lockupGeometry = {
     ),
     height:
       lockupPad * 2 +
-      symbol / 2 +
-      wordmarkCap / 2 +
+      (horizontalBaseline - lockupPad) +
       productDrop +
       descenderRatio * productSize,
     description:
       'The horizontal OpenE2EE lockup with the product name on a second line, flush with the left edge of the symbol.',
     body: (colors) => {
-      const wordmarkBaseline = lockupPad + symbol / 2 + wordmarkCap / 2;
+      const wordmarkBaseline = horizontalBaseline;
       return `${symbolAt(lockupPad, lockupPad, colors.mark)}
   ${wordmarkText({
     x: lockupPad + symbol + symbolGap,
@@ -1402,7 +1396,7 @@ await mkdir(hostedDirectory, { recursive: true });
 for (const [mode, colors] of Object.entries(brand.modes)) {
   const definition = lockupGeometry.horizontal;
   let cursor = lockupPad + symbol + symbolGap;
-  const baseline = lockupPad + horizontalRise + wordmarkCap / 2;
+  const baseline = horizontalBaseline;
   const scale = wordmarkSize / wordmarkOutlines.unitsPerEm;
   const paths = [];
   for (const run of wordmarkOutlines.runs) {
@@ -1434,7 +1428,7 @@ const manifest = {
     png: pngVariants,
   },
   lockups: {
-    rule: 'Lockup proportions are derived from the symbol height S and the Public Sans cap height; see DESIGN.md.',
+    rule: 'Lockup proportions are derived from visible symbol and Public Sans wordmark bounds; see DESIGN.md.',
     symbolSize: symbol,
     wordmarkCapHeight: round2(wordmarkCap),
     wordmarkFontSize: round2(wordmarkSize),
@@ -1444,6 +1438,9 @@ const manifest = {
     productBaselineDrop: round2(productDrop),
     note: 'Lockup SVGs use live Public Sans text. hosted/ supplies outlined SVG and PNG uploads.',
     symbolFontRatio: symbol / wordmarkSize,
+    symbolBaselineDropRatio: (symbol / wordmarkSize - wordmarkInkTopRatio + wordmarkInkBottomRatio) / 2,
+    wordmarkInkTopRatio,
+    wordmarkInkBottomRatio,
     gapFontRatio: symbolGap / wordmarkSize,
     assets: lockups,
   },

@@ -192,19 +192,19 @@ put to him in writing.)
 Registered descriptors are `Signal Protocol SDK` and `Relay`. A future product
 adds a descriptor to the generator; it does not add a mark or color.
 
-With symbol height `S`: the symbol stands `1.1` wordmark cap heights, so the
-wordmark cap height is `S / 1.1`; symbol-to-wordmark gap `0.375 S`; symbol and
-wordmark centered on each other vertically, never baseline-aligned. Stacked gap
-`0.31 S`. The product line sets at `0.62` of the wordmark cap height, baseline
-`1.55` cap heights below the wordmark, left edges flush with the mark's left
-edge.
+With symbol height `S`, the visible mark is 1.1 wordmark em tall. Its center
+aligns with the full wordmark ink. Extra height extends equally above the `O`
+and below the `p`. This gives the mark the selected 110% height.
+Public Sans has a 0.894 em wordmark ink height and a 0.161 em descender at the
+registered weights. The symbol-to-wordmark gap is `0.375 S`; the stacked gap
+is `0.31 S`. The product line sets at `0.62` of the wordmark cap height, with
+its baseline `1.55` cap heights below the wordmark and its left edge flush
+with the mark.
 
-The symbol is measured against the cap height, not against the font size. The
-capitals beside it are what a reader compares it to, and Public Sans sets a cap
-height of 0.723 em, so a mark sized from the font size stands about a sixth
-taller than the letters it is supposed to sit level with. `1.1` is the bound the
-generator holds; a lockup whose mark passes `1.15` cap heights fails
-`scripts/test.mjs` and `scripts/measure-lockup-fit.mjs`. All four lockups are generated into
+The generator extracts the glyph bounds from the pinned font. Tests require
+a 1.1-em symbol centered on the full wordmark ink. In CSS, align the mark
+and wordmark baselines, then lower the mark by 0.264 em.
+All four lockups are generated into
 `brand/generated/lockup/` in light, dark, and mono from
 `brand/source/lockups.json` and real font metrics; use those rather than
 rebuilding the proportions by hand, and if you must rebuild them in CSS, read

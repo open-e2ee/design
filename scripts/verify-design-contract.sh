@@ -201,7 +201,7 @@ dc_v18() {
 # The fit is rendered geometry, so a source string cannot answer it.
 dc_v19() {
   test -f scripts/measure-lockup-fit.mjs || return 1
-  node scripts/measure-lockup-fit.mjs --assert-cap-ratio 1.15 --assert-clear-space
+  node scripts/measure-lockup-fit.mjs --assert-ink-fit --assert-clear-space
 }
 
 # FR10. Six ramps ship here. A ramp with no role is a color nobody can reach,

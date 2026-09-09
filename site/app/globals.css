@@ -64,15 +64,16 @@ footer {
 
 .brand {
   display: inline-flex;
-  align-items: center;
-  gap: 0.298em;
+  align-items: baseline;
+  gap: 0.4125em;
   font-size: var(--oe-chrome-lockup-size);
   text-decoration: none;
 }
 
 .brand-mark {
-  width: max(16px, 0.795em);
-  height: max(16px, 0.795em);
+  transform: translateY(0.264em);
+  width: max(16px, 1.1em);
+  height: max(16px, 1.1em);
   flex: none;
 }
 
