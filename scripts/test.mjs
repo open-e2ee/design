@@ -437,9 +437,16 @@ for (const variant of ['full', 'optical']) {
   const svg = await readFile(join(root, `brand/generated/svg/open-e2ee-mark-light${variant === 'optical' ? '-small' : ''}.svg`), 'utf8');
   assert.ok(svg.includes(shape.payloadWithLockPath), 'Generated mark must contain the lock cutout');
   assert.match(svg, /fill-rule="evenodd"/, 'The lock must remain transparent in either theme');
+  const canvas = /viewBox="([^"]+)"/.exec(svg)[1].split(' ').map(Number);
+  const artwork = shape.construction.artwork;
+  const padding = artwork.width * 0.07;
+  for (const actual of [artwork.x - canvas[0], artwork.y - canvas[1], canvas[0] + canvas[2] - artwork.x - artwork.width, canvas[1] + canvas[3] - artwork.y - artwork.height]) {
+    assert.ok(Math.abs(actual - padding) < 1e-6, 'Outer padding must equal inner clearance');
+  }
+
 }
 
-assert.equal(geometry.clearSpaceRatio, 0.125);
+assert.equal(geometry.clearSpaceRatio, 0.07);
 assert.equal(geometry.minimumSize, 16);
 assert.equal(geometry.smallMaximumSize, 31);
 assert.equal(geometry.opticalCenterOffset, '0px');

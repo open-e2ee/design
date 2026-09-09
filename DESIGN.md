@@ -131,17 +131,12 @@ raster is generated from the wrong silhouette.
 
 ### Clear space and placement
 
-Clear space is `0.125` of the mark's width on every side. The width is the
-width of the generated file, not the drawing inside it. That is 64 units on
-the 512-unit grid. Beside the 128-unit symbol in a lockup, it is 16 units.
-`geometry.json` carries the ratio as `clearSpaceRatio`. `scripts/build.mjs`
-pads every lockup canvas by it.
-
-The file keeps the same distance between its own edge and the brackets. So the
-brackets stand two margins from anything else. The clear space is not one
-bracket stem. A full stem is 34.56 units, which is `0.09` of the 384-unit drawing
-inside the file. Nothing enters the clear space. The mark is optically centered
-as drawn, with no correction offset.
+Outer padding is 7% of the visible artwork width on every side. It equals
+its inner square clearance. Each standalone canvas includes this padding.
+Wordmark assets use the same padding around their outer bounds. The gap
+between the mark and wordmark remains 0.375 of mark height.
+`geometry.json` carries the ratio as `clearSpaceRatio`. The generator trims
+hosted wordmarks to their outlined glyph bounds before adding the padding.
 
 A wordmark's ink runs from its cap top down to its descender, and `Open` has
 one. A lockup canvas therefore holds the descender inside the clear space

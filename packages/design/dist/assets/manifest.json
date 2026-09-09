@@ -1,6 +1,6 @@
 {
   "package": "@open-e2ee/design",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "mark": "carrier",
   "variants": {
     "rule": "Use the optical canvas from 16 to 31 px and the full canvas from 32 px. Both use the same approved proportions.",
@@ -38,85 +38,85 @@
         "lockup": "symbol",
         "mode": "light",
         "svg": "lockup/open-e2ee-lockup-symbol-light.svg",
-        "width": 160,
-        "height": 160
+        "width": 145.92,
+        "height": 145.92
       },
       {
         "lockup": "symbol",
         "mode": "dark",
         "svg": "lockup/open-e2ee-lockup-symbol-dark.svg",
-        "width": 160,
-        "height": 160
+        "width": 145.92,
+        "height": 145.92
       },
       {
         "lockup": "symbol",
         "mode": "mono",
         "svg": "lockup/open-e2ee-lockup-symbol-mono.svg",
-        "width": 160,
-        "height": 160
+        "width": 145.92,
+        "height": 145.92
       },
       {
         "lockup": "horizontal",
         "mode": "light",
         "svg": "lockup/open-e2ee-lockup-horizontal-light.svg",
-        "width": 698.68,
-        "height": 160
+        "width": 684.6,
+        "height": 145.92
       },
       {
         "lockup": "horizontal",
         "mode": "dark",
         "svg": "lockup/open-e2ee-lockup-horizontal-dark.svg",
-        "width": 698.68,
-        "height": 160
+        "width": 684.6,
+        "height": 145.92
       },
       {
         "lockup": "horizontal",
         "mode": "mono",
         "svg": "lockup/open-e2ee-lockup-horizontal-mono.svg",
-        "width": 698.68,
-        "height": 160
+        "width": 684.6,
+        "height": 145.92
       },
       {
         "lockup": "stacked",
         "mode": "light",
         "svg": "lockup/open-e2ee-lockup-stacked-light.svg",
-        "width": 522.68,
-        "height": 293.02
+        "width": 508.6,
+        "height": 278.94
       },
       {
         "lockup": "stacked",
         "mode": "dark",
         "svg": "lockup/open-e2ee-lockup-stacked-dark.svg",
-        "width": 522.68,
-        "height": 293.02
+        "width": 508.6,
+        "height": 278.94
       },
       {
         "lockup": "stacked",
         "mode": "mono",
         "svg": "lockup/open-e2ee-lockup-stacked-mono.svg",
-        "width": 522.68,
-        "height": 293.02
+        "width": 508.6,
+        "height": 278.94
       },
       {
         "lockup": "product",
         "mode": "light",
         "svg": "lockup/open-e2ee-lockup-product-light.svg",
-        "width": 698.68,
-        "height": 248.24
+        "width": 684.6,
+        "height": 234.16
       },
       {
         "lockup": "product",
         "mode": "dark",
         "svg": "lockup/open-e2ee-lockup-product-dark.svg",
-        "width": 698.68,
-        "height": 248.24
+        "width": 684.6,
+        "height": 234.16
       },
       {
         "lockup": "product",
         "mode": "mono",
         "svg": "lockup/open-e2ee-lockup-product-mono.svg",
-        "width": 698.68,
-        "height": 248.24
+        "width": 684.6,
+        "height": 234.16
       }
     ]
   },
@@ -157,7 +157,7 @@
       }
     ]
   },
-  "sha256": "c5f91b402cfb2e713cbedcc106539af1beadfcb2714771cf86c9cf6853670100",
+  "sha256": "7aba6387b2e8d90df315aaa28115f0cdb95304691480b0eca853c1548d7d258c",
   "files": [
     "hosted/open-e2ee-logo-dark.png",
     "hosted/open-e2ee-logo-dark.svg",
