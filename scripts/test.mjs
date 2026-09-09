@@ -1038,17 +1038,9 @@ for (const family of ['social', 'lockup']) {
  */
 const lockupSource = await readJson(join(root, 'brand/source/lockups.json'));
 const symbolSize = manifest.lockups.symbolSize;
-assert.equal(
-  manifest.lockups.wordmarkCapHeight,
-  Number((symbolSize / lockupSource.proportions.symbolCapHeights).toFixed(2)),
-  'The wordmark cap height is no longer S divided by the symbol cap heights',
-);
-/* The bound the lockup exists to hold. A mark set from the font size draws
-   about a sixth taller than the capitals beside it. */
-assert.ok(
-  lockupSource.proportions.symbolCapHeights <= 1.15,
-  `The symbol stands ${lockupSource.proportions.symbolCapHeights} cap heights tall; the lockup allows 1.15`,
-);
+assert.equal(lockupSource.proportions.symbolInkHeights, 1);
+assert.equal(manifest.lockups.symbolFontRatio, 0.894);
+assert.equal(manifest.lockups.symbolBaselineDropRatio, 0.161);
 assert.equal(
   manifest.lockups.symbolGap,
   Number((symbolSize * lockupSource.proportions.symbolGap).toFixed(2)),
@@ -1063,7 +1055,7 @@ assert.equal(
   manifest.lockups.productBaselineDrop,
   Number(
     (
-      manifest.lockups.wordmarkCapHeight *
+      (symbolSize / 0.894) * capRatio *
       lockupSource.proportions.productBaseline
     ).toFixed(2),
   ),
@@ -1700,7 +1692,7 @@ process.stdout.write(
 );
 
 // Measure visible artwork instead of the SVG canvas.
-execFileSync(process.execPath, [join(root, 'scripts/measure-lockup-fit.mjs'), '--assert-cap-ratio', '1.15', '--assert-clear-space']);
+execFileSync(process.execPath, [join(root, 'scripts/measure-lockup-fit.mjs'), '--assert-ink-fit', '--assert-clear-space']);
 for (const mode of ['light', 'dark']) {
   const svg = await readFile(join(root, `brand/generated/hosted/open-e2ee-logo-${mode}.svg`), 'utf8');
   assert.doesNotMatch(svg, /<text\b|font-family=/, 'Hosted logos must not depend on installed fonts');

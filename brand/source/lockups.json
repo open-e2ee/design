@@ -11,14 +11,14 @@
   "productWeight": 500,
   "symbolSize": 128,
   "proportions": {
-    "symbolCapHeights": 1.1,
     "symbolGap": 0.375,
     "stackedGap": 0.31,
     "productCapHeight": 0.62,
-    "productBaseline": 1.55
+    "productBaseline": 1.55,
+    "symbolInkHeights": 1
   },
   "notes": {
-    "proportions": "Every ratio here is DESIGN.md's lockup table, not a fresh decision. symbolCapHeights is the symbol height S in wordmark cap heights, so the cap height is S divided by it; symbolGap and stackedGap are multiples of S; productCapHeight is a multiple of the wordmark cap height and productBaseline is that cap height again, measured down from the wordmark baseline.",
+    "proportions": "The visible symbol matches the full wordmark ink height, from the top of O to the bottom of p. Gap and stacked gap are multiples of symbol height; product ratios use the wordmark cap height.",
     "typeMetrics": "Cap height, descender, and per-character advances come from brand/source/public-sans-metrics.json, extracted from the pinned font by scripts/extract-font-metrics.py. Advances exclude kerning, so a generated canvas reserves marginally more width than the text needs.",
     "productLeftEdge": "Flush with the mark's left edge, not the wordmark's. DESIGN.md says 'left edges flush' for the second line of the product lockup; this is the reading consumers already derived by hand.",
     "productTracking": "Not specified by DESIGN.md, so the product line sets untracked."

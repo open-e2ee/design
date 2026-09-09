@@ -9,6 +9,7 @@ from pathlib import Path
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
 from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.boundsPen import BoundsPen
 
 ROOT = Path(__file__).resolve().parent.parent
 source = ROOT / 'node_modules/@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2'
@@ -24,6 +25,8 @@ for text, weight, tracking in [(lockup['open'], lockup['openWeight'], lockup['op
         glyph = glyphs[cmap[ord(character)]]
         pen = SVGPathPen(glyphs)
         glyph.draw(pen)
-        run['glyphs'].append({'path': pen.getCommands(), 'advance': glyph.width})
+        bounds = BoundsPen(glyphs)
+        glyph.draw(bounds)
+        run['glyphs'].append({'path': pen.getCommands(), 'advance': glyph.width, 'bounds': bounds.bounds})
     result['runs'].append(run)
 (ROOT / 'brand/source/wordmark-outlines.json').write_text(json.dumps(result, indent=2) + '\n')
