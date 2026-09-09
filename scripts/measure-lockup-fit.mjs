@@ -167,7 +167,7 @@ function assertInkFit() {
     const line = lines[0];
     const top = line.y - line.size * inkTop;
     const bottom = line.y + line.size * inkBottom;
-    const heightError = Math.abs(symbol.height - line.size);
+    const heightError = Math.abs(symbol.height - line.size * 1.1);
     const alignmentError = asset.lockup === 'stacked' ? 0 : Math.abs(
       symbol.y + symbol.height / 2 - (top + bottom) / 2,
     );
