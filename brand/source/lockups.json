@@ -15,10 +15,10 @@
     "stackedGap": 0.31,
     "productCapHeight": 0.62,
     "productBaseline": 1.55,
-    "symbolFontSize": 1.1
+    "symbolFontSize": 1.3
   },
   "notes": {
-    "proportions": "The visible symbol is 1.1 wordmark em tall. Its center aligns with the full wordmark ink, so extra height extends equally above the O and below the p. Gap and stacked gap are multiples of symbol height; product ratios use the wordmark cap height.",
+    "proportions": "The visible symbol is 1.3 wordmark em tall. Its center aligns with the full wordmark ink, so extra height extends equally above the O and below the p. Gap and stacked gap are multiples of symbol height; product ratios use the wordmark cap height.",
     "typeMetrics": "Cap height, descender, and per-character advances come from brand/source/public-sans-metrics.json, extracted from the pinned font by scripts/extract-font-metrics.py. Advances exclude kerning, so a generated canvas reserves marginally more width than the text needs.",
     "productLeftEdge": "Flush with the mark's left edge, not the wordmark's. DESIGN.md says 'left edges flush' for the second line of the product lockup; this is the reading consumers already derived by hand.",
     "productTracking": "Not specified by DESIGN.md, so the product line sets untracked."

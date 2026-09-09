@@ -61,7 +61,8 @@ Structure and language do more work than decoration.
 ### Show the boundary, don't dramatize it
 
 Communicate privacy through explicit state, drawn boundaries, and calm
-hierarchy. No decorative padlocks, no neon glow, no metallic shields, no
+hierarchy. Only the canonical mark contains a padlock. No other decorative
+padlocks, no neon glow, no metallic shields, no
 fear-based imagery. (This principle was previously phrased "security without
 theater." That phrasing is retained here as an internal design principle only —
 it is not customer-facing copy and must not be used as a headline or tagline.)
@@ -106,9 +107,11 @@ is why product marks are forbidden rather than merely discouraged.
 ## The mark
 
 Two open brackets — the carrier, outlined, inspectable — holding a filled
-payload that never touches them. The gap between payload and bracket is the
-trust boundary; it is load-bearing geometry, not spacing, and it may never be
-tightened.
+square with a custom filled-lock cutout. The square is 68% of artwork width.
+The lock is 60% of square height and 80% as wide as it is tall.
+Its visible bounds are centered on the square. The brackets are 9% thick.
+The gap is 7% of artwork width on each side. The lock is transparent,
+so the whole mark uses one color in either theme.
 
 Geometry lives in `brand/source/geometry.json` on a 512-unit grid with a
 32-unit module. All color comes from tokens. Generated assets in
@@ -118,8 +121,8 @@ Geometry lives in `brand/source/geometry.json` on a 512-unit grid with a
 
 | Size | Variant | Why |
 |---|---|---|
-| 16–31 px | `optical` | Stems thickened to 56 units so they survive favicon scale |
-| 32 px and up | `full` | Square payload with 40-unit clearance on all sides |
+| 16–31 px | `optical` | 400-unit artwork canvas with the approved proportions |
+| 32 px and up | `full` | 384-unit artwork canvas with the approved proportions |
 | Below 16 px | none | Do not reproduce the mark |
 
 Variant selection by size is a rule, not a judgment call. The build encodes it,
@@ -136,7 +139,7 @@ pads every lockup canvas by it.
 
 The file keeps the same distance between its own edge and the brackets. So the
 brackets stand two margins from anything else. The clear space is not one
-bracket stem. A full stem is 48 units, which is `0.125` of the 384-unit drawing
+bracket stem. A full stem is 34.56 units, which is `0.09` of the 384-unit drawing
 inside the file. Nothing enters the clear space. The mark is optically centered
 as drawn, with no correction offset.
 
@@ -192,9 +195,9 @@ put to him in writing.)
 Registered descriptors are `Signal Protocol SDK` and `Relay`. A future product
 adds a descriptor to the generator; it does not add a mark or color.
 
-With symbol height `S`, the visible mark is 1.1 wordmark em tall. Its center
+With symbol height `S`, the visible mark is 1.3 wordmark em tall. Its center
 aligns with the full wordmark ink. Extra height extends equally above the `O`
-and below the `p`. This gives the mark the selected 110% height.
+and below the `p`. This gives the mark the selected 130% height.
 Public Sans has a 0.894 em wordmark ink height and a 0.161 em descender at the
 registered weights. The symbol-to-wordmark gap is `0.375 S`; the stacked gap
 is `0.31 S`. The product line sets at `0.62` of the wordmark cap height, with
@@ -202,8 +205,8 @@ its baseline `1.55` cap heights below the wordmark and its left edge flush
 with the mark.
 
 The generator extracts the glyph bounds from the pinned font. Tests require
-a 1.1-em symbol centered on the full wordmark ink. In CSS, align the mark
-and wordmark baselines, then lower the mark by 0.264 em.
+a 1.3-em symbol centered on the full wordmark ink. In CSS, align the mark
+and wordmark baselines, then lower the mark by 0.364 em.
 All four lockups are generated into
 `brand/generated/lockup/` in light, dark, and mono from
 `brand/source/lockups.json` and real font metrics; use those rather than

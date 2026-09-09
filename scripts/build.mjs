@@ -791,8 +791,8 @@ await writeText(
 /*
  * The Carrier mark.
  *
- * Two hollow carrier brackets hold one solid payload that touches neither of
- * them. Everything is a single fill color: no strokes, no radii, no gradients,
+ * Two carrier brackets hold a square with a centered lock cutout, separate from
+ * both brackets. Everything uses one fill color with transparent negative space,
  * no second tone. The payload is square at every size; the two variants differ
  * so the silhouette survives at favicon sizes.
  */
@@ -807,22 +807,22 @@ function variantForSize(size) {
 }
 
 function markPaths(variant) {
-  const { carrierLeftPath, carrierRightPath, payloadPath } = geometry[variant];
-  return [carrierLeftPath, carrierRightPath, payloadPath];
+  const { carrierLeftPath, carrierRightPath, payloadWithLockPath } = geometry[variant];
+  return [carrierLeftPath, carrierRightPath, payloadWithLockPath];
 }
 
 const markDescription = {
   full:
-    'Two open carrier brackets holding a solid square payload. The payload ' +
+    'Two open carrier brackets holding a square with a centered lock cutout. The square ' +
     'touches neither bracket.',
   optical:
-    'Two open carrier brackets holding a solid square payload. Small-size ' +
-    'optical variant, drawn with thicker stems for favicon scale.',
+    'Two open carrier brackets holding a square with a centered lock cutout. Small-size ' +
+    'optical canvas with the same proportions at favicon scale.',
 };
 
 function markMarkup(fill, variant, indent = '  ') {
   return markPaths(variant)
-    .map((path) => `${indent}<path d="${path}" fill="${fill}"/>`)
+    .map((path) => `${indent}<path d="${path}" fill="${fill}" fill-rule="evenodd"/>`)
     .join('\n');
 }
 

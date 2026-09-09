@@ -427,6 +427,18 @@ for (const variant of ['full', 'optical']) {
   assert.equal(shear, 0, `${variant} payload must be square (shear 0)`);
 }
 
+assert.equal(geometry.lock.squareRatio, 0.68);
+assert.equal(geometry.lock.heightRatio, 0.6);
+for (const variant of ['full', 'optical']) {
+  const shape = geometry[variant];
+  const points = pathPoints(shape.payloadPath);
+  const width = Math.max(...points.map(({ x }) => x)) - Math.min(...points.map(({ x }) => x));
+  assert.ok(Math.abs(width / shape.construction.artwork.width - 0.68) < 1e-12);
+  const svg = await readFile(join(root, `brand/generated/svg/open-e2ee-mark-light${variant === 'optical' ? '-small' : ''}.svg`), 'utf8');
+  assert.ok(svg.includes(shape.payloadWithLockPath), 'Generated mark must contain the lock cutout');
+  assert.match(svg, /fill-rule="evenodd"/, 'The lock must remain transparent in either theme');
+}
+
 assert.equal(geometry.clearSpaceRatio, 0.125);
 assert.equal(geometry.minimumSize, 16);
 assert.equal(geometry.smallMaximumSize, 31);
@@ -1038,9 +1050,9 @@ for (const family of ['social', 'lockup']) {
  */
 const lockupSource = await readJson(join(root, 'brand/source/lockups.json'));
 const symbolSize = manifest.lockups.symbolSize;
-assert.equal(lockupSource.proportions.symbolFontSize, 1.1);
-assert.equal(manifest.lockups.symbolFontRatio, 1.1);
-assert.equal(Number(manifest.lockups.symbolBaselineDropRatio.toFixed(3)), 0.264);
+assert.equal(lockupSource.proportions.symbolFontSize, 1.3);
+assert.equal(manifest.lockups.symbolFontRatio, 1.3);
+assert.equal(Number(manifest.lockups.symbolBaselineDropRatio.toFixed(3)), 0.364);
 assert.equal(
   manifest.lockups.symbolGap,
   Number((symbolSize * lockupSource.proportions.symbolGap).toFixed(2)),
@@ -1055,7 +1067,7 @@ assert.equal(
   manifest.lockups.productBaselineDrop,
   Number(
     (
-      (symbolSize / 1.1) * capRatio *
+      (symbolSize / 1.3) * capRatio *
       lockupSource.proportions.productBaseline
     ).toFixed(2),
   ),
