@@ -884,7 +884,7 @@ Two modes exist. A surface picks one and improvises no third.
 - A hairline divides one row from the next. The hovered row takes the `hover`
   ground.
 - **Comfortable** governs a reading surface. That covers the overview, the
-  settings pages, the trust page, the documentation body, and every interface
+  settings pages, the contact page, the documentation body, and every interface
   state below.
 - A comfortable surface sets interface text at the `base` step and card
   padding at 24 px. Sections sit 48 px apart.
