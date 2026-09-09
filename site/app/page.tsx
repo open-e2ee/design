@@ -1,4 +1,5 @@
 import tokens from '@open-e2ee/design/tokens';
+import packageJson from '../../package.json';
 import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import { SignatureDiagram } from "./signature-diagram";
@@ -86,7 +87,7 @@ export default function Home() {
             <a className="button" href={`${sourceUrl}/blob/main/DESIGN.md`}>
               Read the design contract
             </a>
-            <code>npm install github:open-e2ee/design#v0.2.0</code>
+            <code>npm install github:open-e2ee/design#v{packageJson.version}</code>
           </div>
           <div className="law" aria-label="The material law">
             <article>
