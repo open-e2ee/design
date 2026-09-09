@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.20.0
+
+Adds the stacked button and its two type tokens. Purely additive: every
+0.19.0 export is unchanged.
+
+### Added
+
+- **`.oe-button-stacked` and `.oe-button-note` in `components.css`, with
+  `--oe-button-note-font-size` and `--oe-button-note-font-weight`.** A button
+  that carries its condition: the label over a smaller note, "Start free" over
+  "No credit card needed". The modifier turns the button's row into a column
+  and grows the block padding; the note is 13 px in the normal weight and
+  keeps the button's own foreground color. It composes with `.oe-button-large`
+  and `.oe-button-secondary`. A row that holds one should stretch its items so
+  the neighbors match its height. The website's heroes carry it on the
+  primary action.
+
 ## 0.19.0
 
 Adds one button modifier and its type token. Purely additive: every 0.18.0
