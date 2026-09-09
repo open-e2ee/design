@@ -1038,9 +1038,9 @@ for (const family of ['social', 'lockup']) {
  */
 const lockupSource = await readJson(join(root, 'brand/source/lockups.json'));
 const symbolSize = manifest.lockups.symbolSize;
-assert.equal(lockupSource.proportions.symbolInkHeights, 1);
-assert.equal(manifest.lockups.symbolFontRatio, 0.894);
-assert.equal(manifest.lockups.symbolBaselineDropRatio, 0.161);
+assert.equal(lockupSource.proportions.symbolFontSize, 1);
+assert.equal(manifest.lockups.symbolFontRatio, 1);
+assert.equal(manifest.lockups.symbolBaselineDropRatio, 0.21400000000000002);
 assert.equal(
   manifest.lockups.symbolGap,
   Number((symbolSize * lockupSource.proportions.symbolGap).toFixed(2)),
@@ -1055,7 +1055,7 @@ assert.equal(
   manifest.lockups.productBaselineDrop,
   Number(
     (
-      (symbolSize / 0.894) * capRatio *
+      symbolSize * capRatio *
       lockupSource.proportions.productBaseline
     ).toFixed(2),
   ),

@@ -192,16 +192,18 @@ put to him in writing.)
 Registered descriptors are `Signal Protocol SDK` and `Relay`. A future product
 adds a descriptor to the generator; it does not add a mark or color.
 
-With symbol height `S`, the visible mark matches the full wordmark ink height:
-from the top of the `O` to the bottom of the `p`. Align those two edges. Public
-Sans at the registered weights measures 0.894 em across those bounds, with
-0.161 em below the baseline. Use the largest mark that fits these bounds.
-The symbol-to-wordmark gap is `0.375 S`; the stacked gap is `0.31 S`.
-The product line sets at `0.62` of the wordmark cap height, with its baseline
-`1.55` cap heights below the wordmark and its left edge flush with the mark.
+With symbol height `S`, the visible mark is one wordmark em tall. Its center
+aligns with the full wordmark ink. Extra height extends equally above the `O`
+and below the `p`. This gives the mark the largest height in a one-em square.
+Public Sans has a 0.894 em wordmark ink height and a 0.161 em descender at the
+registered weights. The symbol-to-wordmark gap is `0.375 S`; the stacked gap
+is `0.31 S`. The product line sets at `0.62` of the wordmark cap height, with
+its baseline `1.55` cap heights below the wordmark and its left edge flush
+with the mark.
 
-The generator extracts the glyph bounds from the pinned font. Tests require the
-symbol to match those bounds and preserve the baseline alignment.
+The generator extracts the glyph bounds from the pinned font. Tests require
+a one-em symbol centered on the full wordmark ink. In CSS, align the mark
+and wordmark baselines, then lower the mark by 0.214 em.
 All four lockups are generated into
 `brand/generated/lockup/` in light, dark, and mono from
 `brand/source/lockups.json` and real font metrics; use those rather than

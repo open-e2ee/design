@@ -1245,10 +1245,8 @@ const lockupPad = symbol * geometry.clearSpaceRatio;
 const wordmarkGlyphBounds = wordmarkOutlines.runs.flatMap((run) => run.glyphs.map((glyph) => glyph.bounds));
 const wordmarkInkTopRatio = Math.max(...wordmarkGlyphBounds.map((bounds) => bounds[3])) / wordmarkOutlines.unitsPerEm;
 const wordmarkInkBottomRatio = -Math.min(...wordmarkGlyphBounds.map((bounds) => bounds[1])) / wordmarkOutlines.unitsPerEm;
-const wordmarkInkRatio = wordmarkInkTopRatio + wordmarkInkBottomRatio;
-const wordmarkSize = symbol / (wordmarkInkRatio * lockupSource.proportions.symbolInkHeights);
+const wordmarkSize = symbol / lockupSource.proportions.symbolFontSize;
 const wordmarkCap = wordmarkSize * capRatio;
-const wordmarkInkTop = wordmarkSize * wordmarkInkTopRatio;
 const symbolGap = symbol * lockupSource.proportions.symbolGap;
 const stackedGap = symbol * lockupSource.proportions.stackedGap;
 const productCap = wordmarkCap * lockupSource.proportions.productCapHeight;
@@ -1303,7 +1301,7 @@ const lockupModes = {
 
 const horizontalRise = symbol / 2;
 const horizontalDrop = symbol / 2;
-const horizontalBaseline = lockupPad + wordmarkInkTop;
+const horizontalBaseline = lockupPad + symbol / 2 + wordmarkSize * (wordmarkInkTopRatio - wordmarkInkBottomRatio) / 2;
 
 const lockupGeometry = {
   symbol: {
@@ -1322,7 +1320,7 @@ const lockupGeometry = {
       `${symbolAt(lockupPad, lockupPad + horizontalRise - symbol / 2, colors.mark)}
   ${wordmarkText({
     x: lockupPad + symbol + symbolGap,
-    /* Align the visible capital top and p descender with the mark. */
+    /* Center the mark on the full wordmark ink, including its descender. */
     y: horizontalBaseline,
     fill: colors.label,
     size: wordmarkSize,
@@ -1355,7 +1353,7 @@ const lockupGeometry = {
     ),
     height:
       lockupPad * 2 +
-      wordmarkInkTop +
+      (horizontalBaseline - lockupPad) +
       productDrop +
       descenderRatio * productSize,
     description:
@@ -1440,7 +1438,7 @@ const manifest = {
     productBaselineDrop: round2(productDrop),
     note: 'Lockup SVGs use live Public Sans text. hosted/ supplies outlined SVG and PNG uploads.',
     symbolFontRatio: symbol / wordmarkSize,
-    symbolBaselineDropRatio: wordmarkInkBottomRatio,
+    symbolBaselineDropRatio: (symbol / wordmarkSize - wordmarkInkTopRatio + wordmarkInkBottomRatio) / 2,
     wordmarkInkTopRatio,
     wordmarkInkBottomRatio,
     gapFontRatio: symbolGap / wordmarkSize,
