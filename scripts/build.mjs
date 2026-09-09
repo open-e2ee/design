@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { cp, mkdir, rm } from 'node:fs/promises';
+import { cp, mkdir, rm, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -46,6 +46,7 @@ const presentationSource = await readJson(
 const tintRule = await readJson(join(root, 'tokens', 'tint-rule.json'));
 const geometry = await readJson(join(root, 'brand', 'source', 'geometry.json'));
 const lockupSource = await readJson(join(root, 'brand', 'source', 'lockups.json'));
+const wordmarkOutlines = await readJson(join(root, 'brand/source/wordmark-outlines.json'));
 const typeMetrics = await readJson(
   join(root, 'brand', 'source', 'public-sans-metrics.json'),
 );
@@ -921,6 +922,31 @@ for (const size of markSizes) {
   }
 }
 
+/* App icons have an opaque light ground for launchers that ignore SVG themes. */
+const appIcon = standaloneSvg({ mode: 'light', fill: brand.modes.light.mark, variant: 'full', background: brand.modes.light.background })
+  .replace('<style>', `<rect width="512" height="512" fill="${brand.modes.light.background}"/><style>`);
+for (const size of [180, 192, 512]) {
+  execFileSync('rsvg-convert', ['--width', String(size), '--height', String(size), '--output', join(generatedBrand, `open-e2ee-app-icon-${size}.png`)], { input: appIcon });
+}
+const faviconImages = await Promise.all([16, 32, 48].map(async (size) => ({
+  size, data: await readFile(join(pngDirectory, String(size), 'open-e2ee-mark-light.png')),
+})));
+const icoHeader = Buffer.alloc(6 + faviconImages.length * 16);
+icoHeader.writeUInt16LE(1, 2);
+icoHeader.writeUInt16LE(faviconImages.length, 4);
+let icoOffset = icoHeader.length;
+for (const [index, { size, data }] of faviconImages.entries()) {
+  const offset = 6 + index * 16;
+  icoHeader[offset] = size;
+  icoHeader[offset + 1] = size;
+  icoHeader.writeUInt16LE(1, offset + 4);
+  icoHeader.writeUInt16LE(32, offset + 6);
+  icoHeader.writeUInt32LE(data.length, offset + 8);
+  icoHeader.writeUInt32LE(icoOffset, offset + 12);
+  icoOffset += data.length;
+}
+await writeFile(join(generatedBrand, 'open-e2ee-favicon.ico'), Buffer.concat([icoHeader, ...faviconImages.map(({ data }) => data)]));
+
 /*
  * Presentation sheet: both modes, and the size rule drawn rather than stated.
  */
@@ -1261,8 +1287,10 @@ ${body(colors)}
 }
 
 /* Symbol height S is fixed, so every lockup places the mark at the same scale. */
+const symbolBounds = geometry[variantForSize(symbol)].construction.artwork;
+const symbolScale = symbol / symbolBounds.height;
 const symbolAt = (x, y, fill) =>
-  `  <g transform="translate(${round2(x)} ${round2(y)}) scale(${round2(symbol / 512)})">
+  `  <g transform="translate(${round2(x - symbolBounds.x * symbolScale)} ${round2(y - symbolBounds.y * symbolScale)}) scale(${symbolScale})">
 ${markMarkup(fill, variantForSize(symbol), '    ')}
   </g>`;
 
@@ -1368,6 +1396,29 @@ for (const [name, definition] of Object.entries(lockupGeometry)) {
   }
 }
 
+/* Portable uploads use paths from the pinned font, without host font lookup. */
+const hostedDirectory = join(generatedBrand, 'hosted');
+await mkdir(hostedDirectory, { recursive: true });
+for (const [mode, colors] of Object.entries(brand.modes)) {
+  const definition = lockupGeometry.horizontal;
+  let cursor = lockupPad + symbol + symbolGap;
+  const baseline = lockupPad + horizontalRise + wordmarkCap / 2;
+  const scale = wordmarkSize / wordmarkOutlines.unitsPerEm;
+  const paths = [];
+  for (const run of wordmarkOutlines.runs) {
+    for (const glyph of run.glyphs) {
+      paths.push(`<path fill="${colors.label}" transform="translate(${cursor} ${baseline}) scale(${scale} ${-scale})" d="${glyph.path}"/>`);
+      cursor += glyph.advance * scale + run.tracking * wordmarkSize;
+    }
+  }
+  const file = join(hostedDirectory, `open-e2ee-logo-${mode}.svg`);
+  const svg = lockupSvg({ name: 'horizontal', mode, colors, ...definition })
+    .replace(/<text\b[\s\S]*?<\/text>/, paths.join('\n'))
+    .replace('Set in Public Sans; the wordmark is live text and needs the family available.', 'Public Sans wordmark outlines.');
+  await writeText(file, svg);
+  execFileSync('rsvg-convert', ['--width', '1200', '--output', file.replace('.svg', '.png'), file]);
+}
+
 await cp(generatedBrand, assetDistribution, { recursive: true });
 
 const assetDigest = await digestDirectory(generatedBrand);
@@ -1391,7 +1442,9 @@ const manifest = {
     stackedGap: round2(stackedGap),
     productFontSize: round2(productSize),
     productBaselineDrop: round2(productDrop),
-    note: 'SVG only, and the wordmark is live text: a lockup needs Public Sans available to render as drawn.',
+    note: 'Lockup SVGs use live Public Sans text. hosted/ supplies outlined SVG and PNG uploads.',
+    symbolFontRatio: symbol / wordmarkSize,
+    gapFontRatio: symbolGap / wordmarkSize,
     assets: lockups,
   },
   social: {

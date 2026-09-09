@@ -20,6 +20,8 @@ operational index.
 | Compact OS-responsive web UI | `open-e2ee-mark-adaptive-small.svg` |
 | Browser tab | `open-e2ee-favicon.svg` |
 
+See [hosted uploads](../docs/uploads.md) for logos and application icons.
+
 PNG exports cover 16, 24, 32, 48, 64, 128, 256, 512, and 1024 px in both modes.
 
 ## The variant rule

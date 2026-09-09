@@ -1,3 +1,4 @@
+import tokens from '@open-e2ee/design/tokens';
 import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import { SignatureDiagram } from "./signature-diagram";
@@ -47,13 +48,9 @@ export default function Home() {
     <>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="OpenE2EE Design home">
-          <Image
-            src="/brand/open-e2ee-mark-adaptive-small.svg"
-            alt=""
-            width={32}
-            height={32}
-            unoptimized
-          />
+          <svg className="brand-mark" viewBox={`${tokens.geometry.optical.construction.artwork.x} ${tokens.geometry.optical.construction.artwork.y} ${tokens.geometry.optical.construction.artwork.width} ${tokens.geometry.optical.construction.artwork.height}`} fill="currentColor" aria-hidden="true">
+            {[tokens.geometry.optical.carrierLeftPath, tokens.geometry.optical.carrierRightPath, tokens.geometry.optical.payloadPath].map((d) => <path key={d} d={d} />)}
+          </svg>
           <Wordmark />
           <small>Design</small>
         </a>

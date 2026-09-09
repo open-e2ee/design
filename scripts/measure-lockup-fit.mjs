@@ -73,8 +73,14 @@ function symbolBox(svg) {
     /<g transform="translate\(([-\d.]+) ([-\d.]+)\) scale\(([\d.]+)\)">/,
   );
   if (match === null) return null;
-  const size = 512 * number(match[3]);
-  return { x: number(match[1]), y: number(match[2]), width: size, height: size };
+  const bounds = geometry.full.construction.artwork;
+  const scale = number(match[3]);
+  return {
+    x: number(match[1]) + bounds.x * scale,
+    y: number(match[2]) + bounds.y * scale,
+    width: bounds.width * scale,
+    height: bounds.height * scale,
+  };
 }
 
 /** Every `<text>` in the file, with the weight and tracking of each run. */
@@ -183,12 +189,12 @@ function assertCapRatio(limit) {
     const fit = capRatioOf(lockup);
     if (fit === null) continue;
     const { lockup: name, mode } = lockup.asset;
-    if (fit.ratio > limit) {
+    if (fit.ratio > limit || fit.ratio < 1.09) {
       failed += 1;
       process.stdout.write(
         `FAIL ${name}-${mode} draws a ${round(lockup.symbol.height)}-unit symbol ` +
           `beside a ${round(fit.capHeight)}-unit cap height, a ratio of ` +
-          `${round(fit.ratio)} over the ${limit} the lockup allows\n`,
+          `${round(fit.ratio)} outside the allowed 1.09–${limit} range\n`,
       );
       continue;
     }
