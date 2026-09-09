@@ -1073,8 +1073,18 @@ const CARD = {
   footerBaseline: 556,
 };
 
+const wordmarkGlyphBounds = wordmarkOutlines.runs.flatMap((run) => run.glyphs.map((glyph) => glyph.bounds));
+const wordmarkInkTopRatio = Math.max(...wordmarkGlyphBounds.map((bounds) => bounds[3])) / wordmarkOutlines.unitsPerEm;
+const wordmarkInkBottomRatio = -Math.min(...wordmarkGlyphBounds.map((bounds) => bounds[1])) / wordmarkOutlines.unitsPerEm;
+
 function socialSvg({ title, product, description, plateRows, footer }) {
   const light = semantic.light;
+  const markSize = CARD.wordmarkSize * lockupSource.proportions.symbolFontSize;
+  const markBounds = geometry.full.construction.artwork;
+  const markScale = markSize / markBounds.height;
+  const markX = CARD.columnX - markBounds.x * markScale;
+  const markY = CARD.wordmarkBaseline + CARD.wordmarkSize * wordmarkInkBottomRatio - markSize - markBounds.y * markScale;
+  const wordmarkX = CARD.columnX + markSize * (1 + lockupSource.proportions.symbolGap);
   const labelLimit =
     CARD.carrier.x +
     CARD.carrier.width -
@@ -1157,11 +1167,11 @@ function socialSvg({ title, product, description, plateRows, footer }) {
     <path d="${slabPath(CARD.transit)}" fill="${light['diagram-ciphertext-fill']}"/>
     ${metadataTicks({ x: CARD.transit.x + 16, y: CARD.transit.y, count: CARD.transit.ticks, fill: light['diagram-boundary'] })}${plate}
   </g>
-  <g transform="translate(88 88) scale(0.1875)">
+  <g transform="translate(${markX} ${markY}) scale(${markScale})">
 ${markMarkup(light.foreground, 'full', '    ')}
   </g>
-  <text x="220" y="${CARD.wordmarkBaseline}" fill="${light.foreground}" font-family="${sansStack}" font-size="${CARD.wordmarkSize}">
-    <tspan font-weight="500" letter-spacing="-0.85">Open</tspan><tspan font-weight="800" letter-spacing="-1.28">E2EE</tspan>
+  <text x="${wordmarkX}" y="${CARD.wordmarkBaseline}" fill="${light.foreground}" font-family="${sansStack}" font-size="${CARD.wordmarkSize}">
+    <tspan font-weight="${lockupSource.wordmark.openWeight}" letter-spacing="-0.85">Open</tspan><tspan font-weight="800" letter-spacing="-1.28">E2EE</tspan>
   </text>${productLine}
   <rect x="${CARD.columnX}" y="${round2(ruleY)}" width="${CARD.columnWidth}" height="1" fill="${light.border}"/>${descriptionLines}
   <text x="${CARD.columnX}" y="${CARD.footerBaseline}" fill="${light.subtle}" font-family="${monoStack}" font-size="19">${escapeXml(footer)}</text>
@@ -1242,9 +1252,6 @@ await mkdir(lockupDirectory, { recursive: true });
 
 const symbol = lockupSource.symbolSize;
 const lockupPad = symbol * geometry.clearSpaceRatio;
-const wordmarkGlyphBounds = wordmarkOutlines.runs.flatMap((run) => run.glyphs.map((glyph) => glyph.bounds));
-const wordmarkInkTopRatio = Math.max(...wordmarkGlyphBounds.map((bounds) => bounds[3])) / wordmarkOutlines.unitsPerEm;
-const wordmarkInkBottomRatio = -Math.min(...wordmarkGlyphBounds.map((bounds) => bounds[1])) / wordmarkOutlines.unitsPerEm;
 const wordmarkSize = symbol / lockupSource.proportions.symbolFontSize;
 const wordmarkCap = wordmarkSize * capRatio;
 const symbolGap = symbol * lockupSource.proportions.symbolGap;

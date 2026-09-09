@@ -891,6 +891,15 @@ for (const card of socialSource.cards) {
 
   const file = `brand/generated/social/${card.slug}.svg`;
   const markup = await readFile(join(root, file), 'utf8');
+  const markTransform = markup.match(/<g transform="translate\(([-\d.]+) ([-\d.]+)\) scale\(([-\d.]+)\)">/);
+  assert.ok(markTransform, `${file} has no positioned brand mark`);
+  const [, , markY, markScale] = markTransform.map(Number);
+  const textPosition = markup.match(/<text x="[^"]+" y="([^"]+)"[^>]+font-size="85">/);
+  assert.ok(textPosition, `${file} has no wordmark`);
+  const artwork = geometry.full.construction.artwork;
+  assert.ok(Math.abs(artwork.height * markScale - 85 * 1.3) < 0.001, `${file} mark is not 130%`);
+  assert.ok(Math.abs(markY + (artwork.y + artwork.height) * markScale - (Number(textPosition[1]) + 85 * 0.161)) < 0.001, `${file} mark misses the p descender`);
+
   const [, , viewWidth, viewHeight] = markup
     .match(/viewBox="([\d.-]+) ([\d.-]+) ([\d.-]+) ([\d.-]+)"/)
     .slice(1)
