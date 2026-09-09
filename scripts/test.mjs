@@ -427,7 +427,26 @@ for (const variant of ['full', 'optical']) {
   assert.equal(shear, 0, `${variant} payload must be square (shear 0)`);
 }
 
-assert.equal(geometry.clearSpaceRatio, 0.125);
+assert.equal(geometry.lock.squareRatio, 0.68);
+assert.equal(geometry.lock.heightRatio, 0.6);
+for (const variant of ['full', 'optical']) {
+  const shape = geometry[variant];
+  const points = pathPoints(shape.payloadPath);
+  const width = Math.max(...points.map(({ x }) => x)) - Math.min(...points.map(({ x }) => x));
+  assert.ok(Math.abs(width / shape.construction.artwork.width - 0.68) < 1e-12);
+  const svg = await readFile(join(root, `brand/generated/svg/open-e2ee-mark-light${variant === 'optical' ? '-small' : ''}.svg`), 'utf8');
+  assert.ok(svg.includes(shape.payloadWithLockPath), 'Generated mark must contain the lock cutout');
+  assert.match(svg, /fill-rule="evenodd"/, 'The lock must remain transparent in either theme');
+  const canvas = /viewBox="([^"]+)"/.exec(svg)[1].split(' ').map(Number);
+  const artwork = shape.construction.artwork;
+  const padding = artwork.width * 0.07;
+  for (const actual of [artwork.x - canvas[0], artwork.y - canvas[1], canvas[0] + canvas[2] - artwork.x - artwork.width, canvas[1] + canvas[3] - artwork.y - artwork.height]) {
+    assert.ok(Math.abs(actual - padding) < 1e-6, 'Outer padding must equal inner clearance');
+  }
+
+}
+
+assert.equal(geometry.clearSpaceRatio, 0.07);
 assert.equal(geometry.minimumSize, 16);
 assert.equal(geometry.smallMaximumSize, 31);
 assert.equal(geometry.opticalCenterOffset, '0px');
@@ -872,6 +891,15 @@ for (const card of socialSource.cards) {
 
   const file = `brand/generated/social/${card.slug}.svg`;
   const markup = await readFile(join(root, file), 'utf8');
+  const markTransform = markup.match(/<g transform="translate\(([-\d.]+) ([-\d.]+)\) scale\(([-\d.]+)\)">/);
+  assert.ok(markTransform, `${file} has no positioned brand mark`);
+  const [, , markY, markScale] = markTransform.map(Number);
+  const textPosition = markup.match(/<text x="[^"]+" y="([^"]+)"[^>]+font-size="85">/);
+  assert.ok(textPosition, `${file} has no wordmark`);
+  const artwork = geometry.full.construction.artwork;
+  assert.ok(Math.abs(artwork.height * markScale - 85 * 1.3) < 0.001, `${file} mark is not 130%`);
+  assert.ok(Math.abs(markY + (artwork.y + artwork.height) * markScale - (Number(textPosition[1]) + 85 * 0.161)) < 0.001, `${file} mark misses the p descender`);
+
   const [, , viewWidth, viewHeight] = markup
     .match(/viewBox="([\d.-]+) ([\d.-]+) ([\d.-]+) ([\d.-]+)"/)
     .slice(1)
@@ -1038,9 +1066,9 @@ for (const family of ['social', 'lockup']) {
  */
 const lockupSource = await readJson(join(root, 'brand/source/lockups.json'));
 const symbolSize = manifest.lockups.symbolSize;
-assert.equal(lockupSource.proportions.symbolFontSize, 1.1);
-assert.equal(manifest.lockups.symbolFontRatio, 1.1);
-assert.equal(Number(manifest.lockups.symbolBaselineDropRatio.toFixed(3)), 0.264);
+assert.equal(lockupSource.proportions.symbolFontSize, 1.3);
+assert.equal(manifest.lockups.symbolFontRatio, 1.3);
+assert.equal(Number(manifest.lockups.symbolBaselineDropRatio.toFixed(3)), 0.161);
 assert.equal(
   manifest.lockups.symbolGap,
   Number((symbolSize * lockupSource.proportions.symbolGap).toFixed(2)),
@@ -1055,7 +1083,7 @@ assert.equal(
   manifest.lockups.productBaselineDrop,
   Number(
     (
-      (symbolSize / 1.1) * capRatio *
+      (symbolSize / 1.3) * capRatio *
       lockupSource.proportions.productBaseline
     ).toFixed(2),
   ),

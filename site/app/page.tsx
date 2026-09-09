@@ -50,7 +50,7 @@ export default function Home() {
       <header className="site-header">
         <a className="brand" href="#top" aria-label="OpenE2EE Design home">
           <svg className="brand-mark" viewBox={`${tokens.geometry.optical.construction.artwork.x} ${tokens.geometry.optical.construction.artwork.y} ${tokens.geometry.optical.construction.artwork.width} ${tokens.geometry.optical.construction.artwork.height}`} fill="currentColor" aria-hidden="true">
-            {[tokens.geometry.optical.carrierLeftPath, tokens.geometry.optical.carrierRightPath, tokens.geometry.optical.payloadPath].map((d) => <path key={d} d={d} />)}
+            {[tokens.geometry.optical.carrierLeftPath, tokens.geometry.optical.carrierRightPath, tokens.geometry.optical.payloadWithLockPath].map((d) => <path key={d} d={d} fillRule="evenodd" />)}
           </svg>
           <Wordmark />
           <small>Design</small>
@@ -169,11 +169,9 @@ export default function Home() {
             ))}
           </div>
           <p className="figure-note">
-            Two silhouettes exist. Below 32px the payload squares up and the
-            stems thicken, because the shear disintegrates at favicon scale;
-            from 32px the payload shears to read as cargo in transit. Selection
-            by size is a rule the build applies and the tests enforce, not a
-            judgment call. Nothing renders below 16px.
+            Both canvases use the same square and lock proportions. The optical
+            canvas gives the artwork more room below 32px. The build selects
+            the canvas by size. Nothing renders below 16px.
           </p>
         </section>
 

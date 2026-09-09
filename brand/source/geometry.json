@@ -1,6 +1,6 @@
 {
   "mark": "carrier",
-  "viewBox": "0 0 512 512",
+  "viewBox": "37.12 37.12 437.76 437.76",
   "full": {
     "construction": {
       "artwork": {
@@ -10,19 +10,21 @@
         "height": 384
       },
       "module": 32,
-      "thickness": 48,
-      "arm": 144,
+      "thickness": 34.56,
+      "arm": 138.24,
       "shear": 0
     },
-    "carrierLeftPath": "M64 64 H208 V112 H112 V400 H208 V448 H64 Z",
-    "carrierRightPath": "M448 64 H304 V112 H400 V400 H304 V448 H448 Z",
-    "payloadPath": "M152 152 H360 V360 H152 Z",
+    "carrierLeftPath": "M64 64 H202.24 V98.56 H98.56 V413.44 H202.24 V448 H64 Z",
+    "carrierRightPath": "M448 64 H309.76 V98.56 H413.44 V413.44 H309.76 V448 H448 Z",
+    "payloadPath": "M125.44 125.44 H386.56 V386.56 H125.44 Z",
     "payloadClearance": {
-      "left": 40,
-      "right": 40,
-      "top": 40,
-      "bottom": 40
-    }
+      "left": 26.88,
+      "right": 26.88,
+      "top": 26.88,
+      "bottom": 26.88
+    },
+    "payloadWithLockPath": "M125.44 125.44 H386.56 V386.56 H125.44 Z M193.3312 250.7776 Q193.3312 245.5552 198.5536 245.5552 H214.2208 V219.4432 A41.7792 41.7792 0 0 1 297.7792 219.4432 V245.5552 H313.4464 Q318.6688 245.5552 318.6688 250.7776 V329.1136 Q318.6688 334.336 313.4464 334.336 H198.5536 Q193.3312 334.336 193.3312 329.1136 Z M235.1104 245.5552 H276.8896 V219.4432 A20.8896 20.8896 0 0 0 235.1104 219.4432 Z",
+    "viewBox": "37.12 37.12 437.76 437.76"
   },
   "optical": {
     "construction": {
@@ -33,28 +35,30 @@
         "height": 400
       },
       "module": 32,
-      "thickness": 56,
-      "arm": 144,
+      "thickness": 36.0,
+      "arm": 144.0,
       "shear": 0
     },
-    "carrierLeftPath": "M56 56 H200 V112 H112 V400 H200 V456 H56 Z",
-    "carrierRightPath": "M456 56 H312 V112 H400 V400 H312 V456 H456 Z",
-    "payloadPath": "M152 152 H360 V360 H152 Z",
+    "carrierLeftPath": "M56 56 H200 V92 H92 V420 H200 V456 H56 Z",
+    "carrierRightPath": "M456 56 H312 V92 H420 V420 H312 V456 H456 Z",
+    "payloadPath": "M120 120 H392 V392 H120 Z",
     "payloadClearance": {
-      "left": 40,
-      "right": 40,
-      "top": 40,
-      "bottom": 40
-    }
+      "left": 28.0,
+      "right": 28.0,
+      "top": 28.0,
+      "bottom": 28.0
+    },
+    "payloadWithLockPath": "M120 120 H392 V392 H120 Z M190.72 250.56 Q190.72 245.12 196.16 245.12 H212.48 V217.92 A43.52 43.52 0 0 1 299.52 217.92 V245.12 H315.84 Q321.28 245.12 321.28 250.56 V332.16 Q321.28 337.6 315.84 337.6 H196.16 Q190.72 337.6 190.72 332.16 Z M234.24 245.12 H277.76 V217.92 A21.76 21.76 0 0 0 234.24 217.92 Z",
+    "viewBox": "28 28 456 456"
   },
   "opticalCenterOffset": "0px",
-  "clearSpaceRatio": 0.125,
+  "clearSpaceRatio": 0.07,
   "minimumSize": 16,
   "smallMaximumSize": 31,
   "rules": {
-    "variantBySize": "Use the optical variant from 16 to 31 px and the full mark from 32 px. Do not reproduce the mark below 16 px.",
-    "clearSpace": "Air on every side equal to 0.125 of the width of the generated file: 64 units on the 512-unit grid.",
-    "payloadContact": "The payload never touches a bracket. That clearance is the trust boundary and may never be tightened.",
+    "variantBySize": "Use the optical canvas from 16 to 31 px and the full canvas from 32 px. Both use the same approved proportions.",
+    "clearSpace": "Outer padding equals the inner clearance: 7% of visible artwork width on each side.",
+    "payloadContact": "The square remains separate from both brackets by 7% of artwork width.",
     "forbidden": [
       "rotation",
       "mirroring",
@@ -72,5 +76,12 @@
       "full-mark-below-32px",
       "optical-variant-above-31px"
     ]
+  },
+  "lock": {
+    "squareRatio": 0.68,
+    "heightRatio": 0.6,
+    "widthRatio": 0.8,
+    "bracketRatio": 0.09,
+    "description": "Custom filled lock with a transparent cutout, centered on its visible bounds."
   }
 }

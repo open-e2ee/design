@@ -165,11 +165,10 @@ function assertInkFit() {
   for (const { asset, symbol, lines } of lockups) {
     if (symbol === null || lines.length === 0) continue;
     const line = lines[0];
-    const top = line.y - line.size * inkTop;
     const bottom = line.y + line.size * inkBottom;
-    const heightError = Math.abs(symbol.height - line.size * 1.1);
+    const heightError = Math.abs(symbol.height - line.size * 1.3);
     const alignmentError = asset.lockup === 'stacked' ? 0 : Math.abs(
-      symbol.y + symbol.height / 2 - (top + bottom) / 2,
+      symbol.y + symbol.height - bottom,
     );
     const pass = heightError <= TOLERANCE && alignmentError <= TOLERANCE;
     if (!pass) failed += 1;

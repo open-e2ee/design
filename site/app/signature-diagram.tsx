@@ -157,7 +157,7 @@ export function SignatureDiagram() {
       >
         <path d={geometry.full.carrierLeftPath} />
         <path d={geometry.full.carrierRightPath} />
-        <path d={geometry.full.payloadPath} />
+        <path d={geometry.full.payloadWithLockPath} fillRule="evenodd" />
       </g>
       <text x={RELAY_X} y={262} className="diagram-label">
         relay · cannot read
