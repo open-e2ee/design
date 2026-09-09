@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
@@ -1697,3 +1698,26 @@ for (const file of proseFiles) {
 process.stdout.write(
   `Verified ${contrastPairs.length} contrast pairs, both mark variants, ${iconNames.length} icons, ${requiredFiles.length} package artifacts, ${proseFiles.length} files for American spelling, and the ${installTag} install instructions.\n`,
 );
+
+// Measure visible artwork instead of the SVG canvas.
+execFileSync(process.execPath, [join(root, 'scripts/measure-lockup-fit.mjs'), '--assert-cap-ratio', '1.15', '--assert-clear-space']);
+for (const mode of ['light', 'dark']) {
+  const svg = await readFile(join(root, `brand/generated/hosted/open-e2ee-logo-${mode}.svg`), 'utf8');
+  assert.doesNotMatch(svg, /<text\b|font-family=/, 'Hosted logos must not depend on installed fonts');
+  assert.equal((svg.match(/<path\b/g) ?? []).length, 11, 'Hosted logo contains three mark paths and eight letters');
+}
+const ico = await readFile(join(root, 'brand/generated/open-e2ee-favicon.ico'));
+assert.equal(ico.readUInt16LE(2), 1);
+assert.equal(ico.readUInt16LE(4), 3);
+for (const [index, size] of [16, 32, 48].entries()) {
+  const entry = 6 + index * 16;
+  assert.equal(ico[entry], size);
+  const offset = ico.readUInt32LE(entry + 12);
+  assert.equal(ico.readUInt32BE(offset + 16), size, 'ICO entry matches PNG width');
+  assert.equal(ico.readUInt32BE(offset + 20), size, 'ICO entry matches PNG height');
+}
+for (const size of [180, 192, 512]) {
+  const png = await readFile(join(root, `brand/generated/open-e2ee-app-icon-${size}.png`));
+  assert.equal(png.readUInt32BE(16), size);
+  assert.equal(png.readUInt32BE(20), size);
+}

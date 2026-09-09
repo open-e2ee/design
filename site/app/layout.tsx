@@ -21,7 +21,11 @@ export const metadata: Metadata = {
   description,
   metadataBase: new URL("https://design.open-e2ee.dev"),
   icons: {
-    icon: "/brand/open-e2ee-favicon.svg",
+    icon: [
+      { url: "/brand/open-e2ee-favicon.ico", sizes: "16x16 32x32 48x48" },
+      { url: "/brand/open-e2ee-favicon.svg", type: "image/svg+xml", sizes: "any" },
+    ],
+    apple: { url: "/brand/open-e2ee-app-icon-180.png", sizes: "180x180" },
   },
   openGraph: {
     type: "website",
