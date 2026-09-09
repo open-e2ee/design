@@ -87,7 +87,7 @@ Tailwind CSS v4:
 @import "@open-e2ee/design/tailwind.css";
 ```
 
-A product interface adds the role layer of `DESIGN.md` Part II:
+The website adds the role layer on top of the brand tokens:
 
 ```css
 @import "tailwindcss";
@@ -97,9 +97,13 @@ A product interface adds the role layer of `DESIGN.md` Part II:
 
 `roles.css` removes the stock Tailwind palette and radius scale, then re-adds
 the roles, `white`, `black`, `transparent`, and `current`. It declares each
-role once and picks the value with `light-dark()`, and it carries the one
-global focus ring. A component names a role such as `bg-ground-panel` or
+role once and picks the value with `light-dark()`, and it carries the
+website's focus ring. A component names a role such as `bg-ground-panel` or
 `text-text-3`. It names no ramp step and writes no hex value.
+
+The console does not read `roles.css`. It owns its product token sheet, and
+`DESIGN.md` Part II states what that sheet declares. From this package it
+reads the mark, the wordmark, the brand tokens, and the chrome measures.
 
 The build derives the four semantic tints instead of picking them.
 `tokens/tint-rule.json` states one lightness and one chroma ceiling per theme.

@@ -265,7 +265,8 @@ corrections that live text cannot express:
 ## Typography
 
 Three families, all SIL OFL 1.1, all self-hosted from package dependencies. No
-runtime third-party font request is made.
+runtime third-party font request is made. These are the faces of the identity
+and the website. The product interfaces set Geist, and Part II states them.
 
 **Public Sans Variable** — interface, wordmark, headings. A Libre Franklin
 derivative, and Libre Franklin is a Franklin Gothic revival, which puts the
@@ -285,7 +286,8 @@ line height 1.7, measure 68ch.
 **JetBrains Mono Variable** — code, identifiers, metadata. Code blocks 400 at
 13.5 px / 1.65; inline code at `0.92em` of its surrounding text; metadata,
 versions, fingerprints, and timestamps at 500 / 12 px / `+2%` tracking, never
-uppercase.
+uppercase. The one uppercase setting anywhere is the product's sidebar group
+label, which Part II states.
 
 Consumers import `@open-e2ee/design/fonts.css` or document a deliberate
 system-font exception. **Mono is for values only** — packages, versions,
@@ -545,7 +547,8 @@ actions.
 ## Layout and visual language
 
 - Base spacing follows a 4 px scale.
-- Default controls are at least 44 px tall.
+- Default controls on the website are at least 44 px tall. Part II states the
+  product control.
 - Radii are small and deliberate; nested surfaces do not accumulate unrelated
   corner values.
 - Shadows communicate elevation, not decoration.
@@ -669,7 +672,10 @@ See `docs/accessibility.md` for verification requirements.
 
 This repository owns identity, tokens, themes, shared assets, and stable design
 guidance. Application repositories own their product-specific layouts,
-information architecture, copy, and components.
+information architecture, copy, and components. The console also owns the
+product token sheet that Part II names, `src/styles/tokens.css`. This package
+supplies it the mark, the wordmark, the brand tokens, and the chrome measures.
+The website reads `roles.css` from this package for its role layer.
 
 Each application may keep a short local `DESIGN.md` recording the installed
 `@open-e2ee/design` version, the surface type and density, intentional
@@ -706,37 +712,69 @@ resolves, not a permanent one.
 
 ## Part II, product UI
 
-Part I governs identity. Part II governs the product interfaces. It covers the
-console, the documentation host, the website chrome, and the blog. It states
-the shell, the density, the display grammar, the interface states, and the
-interface voice. A product surface follows it and invents no local answer.
+Part I governs identity. Part II governs the product interfaces: the console
+and the documentation host it serves. The website and the blog are brand
+surfaces, and Part I governs them in full. Part II states the shell, the
+density, the display grammar, the interface states, and the interface voice.
+A product surface follows it and invents no local answer.
 
-The role token layer in `@open-e2ee/design` is the executable form of this
-part. A component reads a role. It never reads a ramp step, and it never
-writes a hex value.
+The product draws with the shadcn registry files in the `base-nova` style, as
+the registry writes them, over one token sheet the console owns at
+`src/styles/tokens.css`. That sheet is the executable form of this part. It
+declares the faces, the grounds, the rules, the text steps, the accent, the
+semantic roles, the scales, and the one focus ring, and it bridges every stock
+registry name onto one of those roles. This package supplies the mark, the
+wordmark, the brand tokens, and the chrome measures. A component reads a role.
+It never reads a ramp step, and it never writes a hex value.
 
 ### The laws
 
 These laws resolve an ambiguous interface decision:
 
-1. **One accent, four jobs.** `--oe-accent` marks the primary action, the
-   link, the focus ring, and the current item. Everything else is a neutral or
-   a semantic role. One accent per view.
-2. **Mono is the voice of data.** A machine value renders in mono, tabular,
-   and selectable. That covers the identifier, the key, the fingerprint, the
-   price, the count, the latency, and the timestamp. Body prose is never mono.
-3. **Borders are elevation.** Surfaces stack by ground plus a 1 px hairline. A
-   shadow belongs only above the page plane, on a popover, a dropdown, or a
-   dialog. Each shadow carries an inset 1 px ring.
-4. **Role-mapped neutrals.** A component names a ground, a border weight, and
-   a text step. The theme swaps the values under it.
-5. **Weight stops at 600. Tracking applies at 20 px and above.**
-6. **Dense tables, calm pages.** Density belongs inside a data surface. The
+1. **The registry is the default.** A primitive is the registry file as
+   written. Every deviation from the registry is listed in this part, and a
+   deviation this part does not list is a defect to remove.
+2. **One accent, four jobs.** The accent marks the primary action, the link,
+   the focus ring, and the current item. Everything else is a neutral or a
+   semantic role. One accent per view. The primary action is a solid accent
+   ground with the accent ink, never an inverted neutral.
+3. **Mono is the voice of the machine value.** An identifier, a key, a
+   fingerprint, a URL, and code render in mono and selectable. A count, a
+   price, a latency, and a timestamp render in the interface sans with tabular
+   figures. Body prose is never mono.
+4. **Borders are elevation.** Surfaces stack by ground plus a 1 px alpha
+   hairline. A shadow belongs only above the page plane, on a popover, a
+   dropdown, or a dialog.
+5. **Role-mapped neutrals.** A component names a ground, a rule weight, and a
+   text step. The theme swaps the values under it.
+6. **Weight stops at 600. Tracking applies at 20 px and above.**
+7. **Dense tables, calm pages.** Density belongs inside a data surface. The
    page chrome around it stays airy.
-7. **Color means state.** A colored pixel is interactive, or it reports a
+8. **Color means state.** A colored pixel is interactive, or it reports a
    condition. Decorative color does not exist.
-8. **The interface states the outcome.** It describes no mechanism of its own.
+9. **The interface states the outcome.** It describes no mechanism of its own.
    The voice rule below states this in full.
+
+### The faces
+
+The product sets **Geist** for interface text and **Geist Mono** for machine
+values, both self-hosted by the console at weights 400, 500, and 600. No
+runtime third-party font request is made. The wordmark keeps the Part I face
+through `wordmark.css`, so the lockup reads the same on every host.
+
+The text scale is the one the sheet declares. Each step carries its leading.
+
+| Step | Size and leading | Use |
+|---|---|---|
+| `xs` | 12 px / 16 px | A metadata line |
+| `sm` | 13 px / 18 px | A table cell, a chip, a help line |
+| `base` | 14 px / 20 px | Interface text, the body default |
+| `md` | 16 px / 24 px | A lead line |
+| `lg` | 20 px / 28 px | The page title |
+| `xl` | 24 px / 32 px | A section title on a reading surface |
+| `2xl` | 32 px / 38 px | A figure that is the point of the page |
+
+The `lg` step and above track `−1%`, and `2xl` tracks `−2%`.
 
 ### The shell
 
@@ -748,10 +786,13 @@ The console and the documentation host share one shell.
   label, and the current marker stays. The collapse state persists under
   `oe-nav-collapsed`.
 - A navigation item uses weight 500 text at 14 px. Its padding is 8 px and
-  12 px, and its radius is 6 px.
+  12 px, and its radius is 8 px.
 - The current item carries the `hover` ground, the `text-1` step, and a 2 px
   accent bar on its left edge. Another item carries `text-3` and moves to
   `text-2` on hover.
+- A group label sits above its items at 10 px, weight 500, uppercase, tracked
+  `0.08em`, in `text-4`. It is the one uppercase setting in the product, and
+  the collapsed rail drops it for a rule between groups.
 - Above the sheet breakpoint the console draws no top bar. The sidebar
   carries the whole chrome, top to bottom: the lockup at the header height,
   the Organization switcher, the search row, the sections, the account, and
@@ -771,8 +812,9 @@ The console and the documentation host share one shell.
 
 The website, the documentation host, and the console are three hosts. A reader
 crosses them in one session, so the chrome around the content is one set of
-measures and not three. Each measure is a `--oe-chrome-*` token. A host reads
-the token. It writes no literal of its own.
+measures and not three. Each measure is a `--oe-chrome-*` token in this
+package's `tokens.css`. A host reads the token. It writes no literal of its
+own.
 
 | Measure | Token | Value |
 |---|---|---|
@@ -786,47 +828,52 @@ the token. It writes no literal of its own.
 | Subsection | `--oe-chrome-subsection-size` | 18 px |
 | Minor heading | `--oe-chrome-minor-size` | 16 px |
 
-The header and the footer each carry a 1 px `border-1` rule against the page.
-The lockup size sets the wordmark. The mark sizes from it through the ratio in
-*Lockups*, so one token fixes the whole composition on every host.
+The header and the footer each carry a 1 px hairline against the page. The
+lockup size sets the wordmark. The mark sizes from it through the ratio in
+*Lockups*, so one token fixes the whole composition on every host. The four
+type steps are the editorial scale of the website and the documentation
+prose. The console shell renders no editorial heading, and its page title is
+the `lg` step of *The faces*.
 
-The focus ring and the spacing base are already single-valued. `roles.css`
-carries one `:focus-visible` rule for every host. The 4 px scale in
-`tokens.css` is the only spacing source. Neither needs a chrome token.
+The 4 px scale in `tokens.css` is the only spacing source. The focus ring is
+one rule per host: `roles.css` carries the website's, and the console sheet
+carries the product's, a 2 px accent ring at 40 percent over a 4 px ring at
+20 percent, with the outline removed. A control resets neither.
 
 ### The presentation
 
-The chrome measures fix the frame. These five fix the drawing inside it. A
-host reads the measure. It writes no literal of its own, and the role layer
-publishes each one so a component names it through a utility.
+The chrome measures fix the frame. The sheet fixes the drawing inside it. A
+component names the step, and the registry file already does.
 
-| Measure | Token | Utility | Value |
-|---|---|---|---|
-| Interface text size | `--oe-body-size` | `text-body` | 16 px |
-| Interface leading | `--oe-body-leading` | `leading-body` | 1.6 |
-| Rule weight | `--oe-rule-weight` | the `rule` family | 1 px |
-| Control height | `--oe-control-height` | `h-control` | 44 px |
-| Control radius | `--oe-control-radius` | `rounded-control` | 2 px |
+| Measure | Declaration | Value |
+|---|---|---|
+| Interface text | `--text-base` | 14 px / 20 px |
+| Rule | `--border-1`, `--border-2`, `--border-3` | 1 px at 6, 10, and 15 percent alpha |
+| Default control | the registry `h-8` | 32 px |
+| Small and extra-small controls | the registry `h-7` and `h-6` | 28 px and 24 px |
+| Control corner | `--radius-lg` | 12 px |
+| Small control corner | `--radius-md` | 8 px |
+| Panel and dialog corner | `--radius-xl` | 16 px |
+| Chip and key corner | `--radius-sm` | 6 px |
 
-The control height is the 44 px minimum that Part I sets for a default
-control. `--oe-control-height-sm` and `--oe-control-height-lg` remain. The
-first is the dense row of *Density* below. The second is a hero control.
-Neither is the default that this measure names.
+The bare `border` utility draws `border-2`, because the sheet colors every
+border in its base layer. A hairline between records is `border-1`, named
+where it is drawn. A shell edge, a header rule, and a footer rule are the
+bare utility.
 
-Tailwind writes a literal width into every border utility, so a rule drawn
-with `border-t` cannot follow a measure. The `rule` family carries the weight
-and the `border-1` role together, which is the whole drawing of a rule between
-two records. It holds `rule`, `rule-t`, `rule-b`, `rule-l`, `rule-r`,
-`rule-x`, and `rule-y`, one for each side that the border utilities cover. A
-direction that the family misses is a direction where a host writes the
-literal back.
+The grounds are neutral in both themes. Dark reads `#0a0a0a`, `#111111`,
+`#181818`, and `#202020` for canvas, panel, raised, and hover, and no dark
+ground carries more than 4 percent saturation. Light reads white, `#fafafa`,
+`#f4f4f5`, and `#ececee`. The accent is the OpenE2EE blue, `#4454cc` on light and
+`#5b6be0` on dark, and the ink on it is white in both themes.
 
 ### The page header
 
 Every page carries the same header. The title sits at 20 px and weight 600.
-One line of `text-3` description sits under it. The page's single primary
-action sits on the right. An optional tab row sits beneath. The current tab
-carries `text-1` and a 2 px accent underline. Pages carry no breadcrumb.
+Nothing sits above it: no eyebrow, no category label, no breadcrumb. It ends
+with no punctuation. One line of `text-3` description sits under it. The
+page's single primary action sits on the right. An optional tab row sits
+beneath. The current tab carries `text-1` and a 2 px accent underline.
 
 ### Density
 
@@ -835,35 +882,36 @@ Two modes exist. A surface picks one and improvises no third.
 - **Compact** governs a data surface. That covers the project table, the
   license table, the key table, the member table, and the invoice table.
 - A compact row is 40 px tall. Cell padding is 10 px and 16 px, and text is
-  13 px.
+  the `sm` step.
 - A hairline divides one row from the next. The hovered row takes the `hover`
   ground.
 - **Comfortable** governs a reading surface. That covers the overview, the
-  settings pages, the trust page, the documentation body, the blog, and every
-  interface state below.
-- A comfortable surface sets body text at 16 px and card padding at 24 px.
-  Sections sit 48 px apart.
+  settings pages, the trust page, the documentation body, and every interface
+  state below.
+- A comfortable surface sets interface text at the `base` step and card
+  padding at 24 px. Sections sit 48 px apart.
 
 A card holds a discrete object such as one project, one figure, or one key.
 Sequential content uses a flat section with a hairline divider instead.
 
-### The 44 px minimum and a dense row
+### The 44 px target and a dense row
 
-Part I sets a 44 px minimum height for a control. A 40 px compact row keeps
-that rule, because a table row is content and not a control. The rule binds
-the controls inside the row and beside it.
+Part I sets a 44 px minimum height for a website control. The product control
+is the registry's 32 px, so the product meets the reach rule by target and not
+by height.
 
 - A row that navigates carries one link across the whole row. The pointer
   target is the full 40 px band, and the keyboard target is one stop.
-- A control inside a row has a hit area of at least 44 px. It grows by padding
-  and an expanded target, so the visible icon stays inside the 40 px band.
-- A row that needs a second action moves both into a row menu behind one 44 px
+- A control inside a row is the registry icon size, 32 px. A row places at
+  most one, and its label reaches assistive technology through the control's
+  name.
+- A row that needs a second action moves both into a row menu behind one
   trigger.
 
 ### Data display
 
-- **Identifiers.** Mono at 13 px in a chip on the `raised` ground, with a
-  `border-1` edge and a 6 px radius. A copy control appears on hover.
+- **Identifiers.** Mono at the `sm` step in a chip on the `raised` ground,
+  with a `border-1` edge and a 6 px radius. A copy control appears on hover.
 - A truncated identifier shows its head and its tail. A copy takes the whole
   value and confirms it.
 - **Secrets.** A license key or an API key appears in full once. Creation
@@ -872,16 +920,16 @@ the controls inside the row and beside it.
   of a reveal.
 - **Fingerprints.** An identity key fingerprint and a safety number group into
   fixed blocks. A block never wraps in the middle.
-- **Prices.** Mono, tabular, and right-aligned in a table. A plan reads
+- **Prices.** Tabular sans, right-aligned in a table. A plan reads
   `$99 / month`, and an overage reads `$0.05 per Relay MAU`. An unknown price
   renders an em dash and never `$0`.
-- **Counts.** Exact below 10,000, and compact above it, such as `12.4k` and
-  `1.2M`. A count of zero renders `0` and never an em dash, because zero is a
-  measurement.
-- **Latency.** Milliseconds below one second, and seconds with two decimals
-  above it, such as `740ms` and `2.81s`.
-- **Timestamps.** A row shows relative time, such as `4m ago`, and carries the
-  absolute UTC value on the element.
+- **Counts.** Tabular sans. Exact below 10,000, and compact above it, such as
+  `12.4k` and `1.2M`. A count of zero renders `0` and never an em dash,
+  because zero is a measurement.
+- **Latency.** Tabular sans. Milliseconds below one second, and seconds with
+  two decimals above it, such as `740ms` and `2.81s`.
+- **Timestamps.** Tabular sans. A row shows relative time, such as `4m ago`,
+  and carries the absolute UTC value on the element.
 - A table under an active date filter shows the absolute value instead. A
   relative time inside a fixed range is noise.
 - **Status.** A dot and a label report liveness. A tinted pill reports a
