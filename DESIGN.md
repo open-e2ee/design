@@ -744,16 +744,22 @@ The console and the documentation host share one shell.
 
 - The **sidebar width** is 256 px. It carries the `panel` ground and a 1 px
   `border-1` right edge.
-- The **collapsed rail** is 56 px. It shows the icon and the current marker
-  only. The collapse state persists under `oe-nav-collapsed`.
+- The **collapsed rail** is 56 px. Each row keeps its icon and drops its
+  label, and the current marker stays. The collapse state persists under
+  `oe-nav-collapsed`.
 - A navigation item uses weight 500 text at 14 px. Its padding is 8 px and
   12 px, and its radius is 6 px.
 - The current item carries the `hover` ground, the `text-1` step, and a 2 px
   accent bar on its left edge. Another item carries `text-3` and moves to
   `text-2` on hover.
+- Above the sheet breakpoint the console draws no top bar. The sidebar
+  carries the whole chrome, top to bottom: the lockup at the header height,
+  the Organization switcher, the search row, the sections, the account, and
+  the collapse control. The account panel opens upward from its row.
 - The **sheet breakpoint** is 768 px. Below it the sidebar becomes a left
   sheet behind a 48 px top bar. That bar holds the menu trigger, the wordmark,
-  and the command trigger.
+  and the account. The sheet carries the switcher and the search row above
+  the sections.
 - The collapse state belongs to the wide layout. It never applies inside the
   sheet.
 - The content region is at most 1,200 px wide. Gutters are 32 px above the
