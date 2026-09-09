@@ -1059,7 +1059,7 @@ const lockupSource = await readJson(join(root, 'brand/source/lockups.json'));
 const symbolSize = manifest.lockups.symbolSize;
 assert.equal(lockupSource.proportions.symbolFontSize, 1.3);
 assert.equal(manifest.lockups.symbolFontRatio, 1.3);
-assert.equal(Number(manifest.lockups.symbolBaselineDropRatio.toFixed(3)), 0.364);
+assert.equal(Number(manifest.lockups.symbolBaselineDropRatio.toFixed(3)), 0.161);
 assert.equal(
   manifest.lockups.symbolGap,
   Number((symbolSize * lockupSource.proportions.symbolGap).toFixed(2)),

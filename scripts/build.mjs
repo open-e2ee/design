@@ -1301,7 +1301,7 @@ const lockupModes = {
 
 const horizontalRise = symbol / 2;
 const horizontalDrop = symbol / 2;
-const horizontalBaseline = lockupPad + symbol / 2 + wordmarkSize * (wordmarkInkTopRatio - wordmarkInkBottomRatio) / 2;
+const horizontalBaseline = lockupPad + symbol - wordmarkSize * wordmarkInkBottomRatio;
 
 const lockupGeometry = {
   symbol: {
@@ -1315,12 +1315,12 @@ const lockupGeometry = {
     width: lockupPad * 2 + symbol + symbolGap + wordmarkWidth,
     height: lockupPad * 2 + horizontalRise + horizontalDrop,
     description:
-      'The OpenE2EE symbol beside the wordmark, centered on each other vertically.',
+      'The OpenE2EE symbol beside the wordmark, with the mark bottom aligned to the wordmark descender.',
     body: (colors) =>
       `${symbolAt(lockupPad, lockupPad + horizontalRise - symbol / 2, colors.mark)}
   ${wordmarkText({
     x: lockupPad + symbol + symbolGap,
-    /* Center the mark on the full wordmark ink, including its descender. */
+    /* Align the mark bottom to the bottom of the wordmark descender. */
     y: horizontalBaseline,
     fill: colors.label,
     size: wordmarkSize,
@@ -1440,7 +1440,7 @@ const manifest = {
     productBaselineDrop: round2(productDrop),
     note: 'Lockup SVGs use live Public Sans text. hosted/ supplies outlined SVG and PNG uploads.',
     symbolFontRatio: symbol / wordmarkSize,
-    symbolBaselineDropRatio: (symbol / wordmarkSize - wordmarkInkTopRatio + wordmarkInkBottomRatio) / 2,
+    symbolBaselineDropRatio: wordmarkInkBottomRatio,
     wordmarkInkTopRatio,
     wordmarkInkBottomRatio,
     gapFontRatio: symbolGap / wordmarkSize,

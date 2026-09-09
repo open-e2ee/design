@@ -29,7 +29,7 @@
     "productBaselineDrop": 110.34,
     "note": "Lockup SVGs use live Public Sans text. hosted/ supplies outlined SVG and PNG uploads.",
     "symbolFontRatio": 1.3,
-    "symbolBaselineDropRatio": 0.36400000000000005,
+    "symbolBaselineDropRatio": 0.161,
     "wordmarkInkTopRatio": 0.733,
     "wordmarkInkBottomRatio": 0.161,
     "gapFontRatio": 0.48750000000000004,
@@ -102,21 +102,21 @@
         "mode": "light",
         "svg": "lockup/open-e2ee-lockup-product-light.svg",
         "width": 684.6,
-        "height": 234.16
+        "height": 254.14
       },
       {
         "lockup": "product",
         "mode": "dark",
         "svg": "lockup/open-e2ee-lockup-product-dark.svg",
         "width": 684.6,
-        "height": 234.16
+        "height": 254.14
       },
       {
         "lockup": "product",
         "mode": "mono",
         "svg": "lockup/open-e2ee-lockup-product-mono.svg",
         "width": 684.6,
-        "height": 234.16
+        "height": 254.14
       }
     ]
   },
@@ -157,7 +157,7 @@
       }
     ]
   },
-  "sha256": "7aba6387b2e8d90df315aaa28115f0cdb95304691480b0eca853c1548d7d258c",
+  "sha256": "5f5a498b627082553ccf00d7f7fe1d31f9d2ee47cf5ba2ec39d7512821abd50f",
   "files": [
     "hosted/open-e2ee-logo-dark.png",
     "hosted/open-e2ee-logo-dark.svg",
