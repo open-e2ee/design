@@ -201,7 +201,12 @@ with the mark.
 
 The generator extracts the glyph bounds from the pinned font. Tests require
 a 1.3-em symbol with its bottom aligned to the wordmark descender. In CSS,
-align the mark and wordmark baselines, then lower the mark by 0.161 em.
+align the mark and wordmark baselines, then lower the mark by 0.161 em. That
+drop is a transform, and the wordmark's line box runs 0.15 em below the
+baseline at a line height of 1, so the row's layout box is 0.15 em deeper
+than its ink. A host that centers the row in a bar lifts it 0.086 em, half
+the difference, so the bar centers the ink, as the generated assets center
+the mark on the canvas.
 All four lockups are generated into
 `brand/generated/lockup/` in light, dark, and mono from
 `brand/source/lockups.json` and real font metrics; use those rather than
