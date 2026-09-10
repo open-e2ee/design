@@ -784,7 +784,7 @@ The console and the documentation host share one shell.
   label, and the current marker stays. The collapse state persists under
   `oe-nav-collapsed`.
 - A navigation item uses weight 500 text at 14 px. Its padding is 8 px and
-  12 px, and its radius is 8 px.
+  12 px, and its radius is 2 px.
 - The current item carries the `hover` ground, the `text-1` step, and a 2 px
   accent bar on its left edge. Another item carries `text-3` and moves to
   `text-2` on hover.
@@ -849,10 +849,14 @@ component names the step, and the registry file already does.
 | Rule | `--border-1`, `--border-2`, `--border-3` | 1 px at 6, 10, and 15 percent alpha |
 | Default control | the registry `h-8` | 32 px |
 | Small and extra-small controls | the registry `h-7` and `h-6` | 28 px and 24 px |
-| Control corner | `--radius-lg` | 12 px |
-| Small control corner | `--radius-md` | 8 px |
-| Panel and dialog corner | `--radius-xl` | 16 px |
-| Chip and key corner | `--radius-sm` | 6 px |
+| Corner | `--radius-control` and every `--radius-*` step but `full` | 2 px |
+
+The product draws one corner. The brand's 2 px square sits on every control
+and every surface: button, input, chip, key, card, menu, dialog, and popover.
+The console sheet answers each stock step the registry files name with that
+corner, so a `rounded-lg` card and a `rounded-control` button meet at the
+same edge. Only `--radius-full` stays round, for a dot, an avatar, and a
+gauge track.
 
 The bare `border` utility draws `border-2`, because the sheet colors every
 border in its base layer. A hairline between records is `border-1`, named
