@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.22.0
+
+Changes copy only. Every 0.21.2 export, token, and asset geometry is
+unchanged; the three social cards carry new plate rows.
+
+### Changed
+
+- **Social card plate rows.** The Signal Protocol SDK card and the website
+  card read `MIT · Apache-2.0` where they read `AGPLv3 · commercial`. The
+  organization card reads `open source · Signal Protocol Relay` where it read
+  `open source · commercial licensing`. The SDK is dual-licensed under the MIT
+  License or the Apache License 2.0, and the hosted relay is named.
+- **Registered product descriptors.** DESIGN.md names the two products
+  `Signal Protocol SDK` and `Signal Protocol Relay`. The bare `Relay`
+  descriptor is retired.
+- **Positioning summary.** DESIGN.md states the SDK license as MIT or
+  Apache-2.0, at your option, and names the OpenE2EE Signal Protocol Relay as
+  the hosted relay built for the SDK. The Public Sans figure example reads
+  `Apache-2.0`.
+- **README package policy.** States the Apache-2.0 code license and the
+  reserved brand assets instead of a stale `UNLICENSED` claim.
+
 ## 0.20.0
 
 Adds the stacked button and its two type tokens. Purely additive: every

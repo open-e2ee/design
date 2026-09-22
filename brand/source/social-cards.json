@@ -35,7 +35,7 @@
       "plateRows": [
         "PQXDH · Double Ratchet · ML-KEM",
         "multi-device · groups · sealed sender",
-        "AGPLv3 · commercial"
+        "MIT · Apache-2.0"
       ],
       "footer": "@open-e2ee/signal-protocol-sdk"
     },
@@ -50,7 +50,7 @@
       "plateRows": [
         "expo · react native · browser · node",
         "PQXDH · Double Ratchet · ML-KEM",
-        "AGPLv3 · commercial"
+        "MIT · Apache-2.0"
       ],
       "footer": "open-e2ee.dev"
     },
@@ -65,7 +65,7 @@
       "plateRows": [
         "signal-protocol-sdk",
         "design · brand · tokens",
-        "open source · commercial licensing"
+        "open source · Signal Protocol Relay"
       ],
       "footer": "github.com/open-e2ee"
     }

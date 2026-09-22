@@ -92,10 +92,12 @@ distinctive.
 - **Organization:** OpenE2EE — the only thing that ever gets a drawn mark.
 - **Product family:** the `@open-e2ee/*` namespace. The organization is
   deliberately positioned as a family, not as a single product.
-- **Products:** **Signal Protocol SDK** and **Relay** — typeset descriptors set
-  beside the organization identity. A product never gets its own symbol, never
-  gets its own color, and never appears on a first-impression surface without
-  `OpenE2EE`. Relay remains unpublished until its launch reaches REL1.
+- **Products:** **Signal Protocol SDK** and **Signal Protocol Relay** — typeset
+  descriptors set beside the organization identity. A product never gets its
+  own symbol, never gets its own color, and never appears on a first-impression
+  surface without `OpenE2EE`. The Signal Protocol Relay is the hosted relay
+  built for the Signal Protocol SDK, and it remains unpublished until its
+  launch reaches REL1.
 - **Surfaces:** OpenE2EE Docs, OpenE2EE Console.
 - **Legal entity:** OpenE2EE LLC, used only where legal identification is
   required.
@@ -187,8 +189,9 @@ put to him in writing.)
 | Stacked lockup | mark above `OpenE2EE` | Square and portrait crops, print, conference |
 | Product lockup | horizontal lockup + a registered product descriptor on a second line | Product hero, SDK README, npm, docs product switcher |
 
-Registered descriptors are `Signal Protocol SDK` and `Relay`. A future product
-adds a descriptor to the generator; it does not add a mark or color.
+Registered descriptors are `Signal Protocol SDK` and `Signal Protocol Relay`. A
+future product adds a descriptor to the generator; it does not add a mark or
+color.
 
 With symbol height `S`, the visible mark is 1.3 wordmark em tall. Its bottom
 aligns with the bottom of the `p` descender. The extra height extends above
@@ -275,7 +278,7 @@ and the website. The product interfaces set Geist, and Part II states them.
 derivative, and Libre Franklin is a Franklin Gothic revival, which puts the
 American civic and postal lineage in the typeface by descent rather than by
 pastiche. Practically: sturdy caps and figures, which the interface needs for
-`E2EE`, `PQXDH`, `ML-KEM`, and `AGPLv3`. Weights 400 body, 500 emphasis and
+`E2EE`, `PQXDH`, `ML-KEM`, and `Apache-2.0`. Weights 400 body, 500 emphasis and
 labels, 600 subheads, 700 headings, 800 wordmark. Headings track `−1.5%` at
 24 px and above, `0` below.
 
@@ -595,8 +598,9 @@ Full canon lives with the verbal identity; the binding summary:
 
 - **Positioning.** OpenE2EE builds open-source, protocol-level end-to-end
   encryption SDKs for TypeScript developers — pure TypeScript that runs where
-  apps actually run: Expo and React Native, browsers, and Node. AGPLv3 for open
-  source, commercial licenses for proprietary products.
+  apps actually run: Expo and React Native, browsers, and Node. The SDK is open
+  source under the MIT License or the Apache License 2.0, at your option. The
+  OpenE2EE Signal Protocol Relay is the hosted relay built for it.
 - **Promise.** Opaque to the relay, open to inspection.
 - **Taglines.** Product hero — **approved 2026-08-09**: *"The Signal Protocol,
   where your app actually runs."* Primary — proposed, pending founder
