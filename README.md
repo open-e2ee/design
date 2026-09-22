@@ -58,13 +58,13 @@ npm run dev --prefix site
 from a GitHub release tag and pin it:
 
 ```sh
-npm install github:open-e2ee/design#v0.21.2
+npm install github:open-e2ee/design#v0.22.0
 ```
 
 or, equivalently, from the tag tarball:
 
 ```sh
-npm install https://github.com/open-e2ee/design/archive/refs/tags/v0.21.2.tar.gz
+npm install https://github.com/open-e2ee/design/archive/refs/tags/v0.22.0.tar.gz
 ```
 
 Pin an exact tag rather than a branch. The generated distribution is committed,
@@ -144,6 +144,6 @@ Application-specific marketing, documentation, and console components remain
 with their applications. A future `@open-e2ee/ui` package should be introduced
 only for stable components shared by multiple interactive products.
 
-The repository is public, but no software, asset, or trademark license has
-been selected yet. Until that decision is documented, `package.json` uses
-`UNLICENSED`.
+The code in this repository is licensed under the Apache License 2.0, and
+`package.json` declares `Apache-2.0`. See [LICENSE](LICENSE). The brand assets
+are not open source; [LICENSE-BRAND.md](LICENSE-BRAND.md) reserves them.
