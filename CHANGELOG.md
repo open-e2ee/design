@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.23.0
+
+Adds one chrome token and rewrites the Part II shell to the console layout.
+This release changes no 0.22.0 export. The website and the documentation host
+need no change.
+
+### Added
+
+- **`--oe-chrome-console-header-height`, 56 px.** The height of the console
+  top bar at every width. The shared 64 px and 48 px header heights still
+  serve the website and the documentation host.
+- **Part II cards and lists.** Part II states the settings, danger,
+  overview, and checklist cards. It also states the 48 px list row and the
+  filter chip.
+
+### Changed
+
+- **The shell.** The sidebar stays 256 px and loses the collapsed rail. A
+  56 px top bar holds the scope switcher, the current destination, and the
+  documentation link at every width. Below 1,000 px the sidebar opens as an
+  overlay drawer. Navigation rows are 36 px, and a rule divides the groups in
+  place of a visible label. The console draws no page footer.
+- **Law 2.** The accent has three jobs: the primary action, the link, and the
+  focus ring. The current item takes the `hover` ground and `text-1`, with no
+  accent bar.
+- **The page header.** The title is 24 px at weight 600, the `xl` step. The
+  top bar sits above it, and no tab row sits under it.
+- **Density.** Compact governs an operator table. A customer list is
+  comfortable, with 48 px rows.
+- **The empty result.** A centered icon, one line at weight 500, one
+  `text-3` line, and at most one button.
+- **Identifier chip.** It takes the 2 px corner the console draws, where it
+  read 6 px.
+- **DC-V02.** The condition asked for the collapsed rail and the sheet
+  breakpoint. It now asks for the sidebar width, the top bar height, the
+  drawer breakpoint, and the new token.
+
 ## 0.22.0
 
 Changes copy only. Every 0.21.2 export, token, and asset geometry is
