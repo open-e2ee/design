@@ -741,10 +741,11 @@ These laws resolve an ambiguous interface decision:
 1. **The registry is the default.** A primitive is the registry file as
    written. Every deviation from the registry is listed in this part, and a
    deviation this part does not list is a defect to remove.
-2. **One accent, four jobs.** The accent marks the primary action, the link,
-   the focus ring, and the current item. Everything else is a neutral or a
-   semantic role. One accent per view. The primary action is a solid accent
-   ground with the accent ink, never an inverted neutral.
+2. **One accent, three jobs.** The accent marks the primary action, the
+   link, and the focus ring. The current item is a neutral: a filled ground
+   and the strongest text step. Everything else is a neutral or a semantic
+   role. One accent per view. The primary action is a solid accent ground
+   with the accent ink, never an inverted neutral.
 3. **Mono is the voice of the machine value.** An identifier, a key, a
    fingerprint, a URL, and code render in mono and selectable. A count, a
    price, a latency, and a timestamp render in the interface sans with tabular
@@ -777,41 +778,56 @@ The text scale is the one the sheet declares. Each step carries its leading.
 | `sm` | 13 px / 18 px | A table cell, a chip, a help line |
 | `base` | 14 px / 20 px | Interface text, the body default |
 | `md` | 16 px / 24 px | A lead line |
-| `lg` | 20 px / 28 px | The page title |
-| `xl` | 24 px / 32 px | A section title on a reading surface |
+| `lg` | 20 px / 28 px | A settings card title |
+| `xl` | 24 px / 32 px | The page title, and a section title on a reading surface |
 | `2xl` | 32 px / 38 px | A figure that is the point of the page |
 
 The `lg` step and above track `−1%`, and `2xl` tracks `−2%`.
 
 ### The shell
 
-The console and the documentation host share one shell.
+The shell is the signed-in console's. The documentation host keeps its own
+layout and reads the measures in *The chrome*.
 
-- The **sidebar width** is 256 px. It carries the `panel` ground and a 1 px
-  `border-1` right edge.
-- The **collapsed rail** is 56 px. Each row keeps its icon and drops its
-  label, and the current marker stays. The collapse state persists under
-  `oe-nav-collapsed`.
-- A navigation item uses weight 500 text at 14 px. Its padding is 8 px and
-  12 px, and its radius is 2 px.
-- The current item carries the `hover` ground, the `text-1` step, and a 2 px
-  accent bar on its left edge. Another item carries `text-3` and moves to
-  `text-2` on hover.
-- A group label sits above its items at 10 px, weight 500, uppercase, tracked
-  `0.08em`, in `text-4`. It is the one uppercase setting in the product, and
-  the collapsed rail drops it for a rule between groups.
-- Above the sheet breakpoint the console draws no top bar. The sidebar
-  carries the whole chrome, top to bottom: the lockup at the header height,
-  the Organization switcher, the search row, the sections, the account, and
-  the collapse control. The account panel opens upward from its row.
-- The **sheet breakpoint** is 768 px. Below it the sidebar becomes a left
-  sheet behind a 48 px top bar. That bar holds the menu trigger, the wordmark,
-  and the account. The sheet carries the switcher and the search row above
-  the sections.
-- The collapse state belongs to the wide layout. It never applies inside the
-  sheet.
-- The content region is at most 1,200 px wide. Gutters are 32 px above the
-  sheet breakpoint and 16 px below it.
+- The **sidebar width** is 256 px, and it includes a 1 px `border-1` right
+  edge. The sidebar carries the `panel` ground. The console draws no rail and
+  no collapse control.
+- The sidebar holds, top to bottom, the header row, the Find row, the
+  navigation groups, and the account row.
+- The header row holds the brand mark, the Organization name, the reader's
+  role as a badge, and the switcher trigger. The name links to the
+  Organization overview. Only the trigger opens the Organization switcher.
+- The Find row is 36 px tall and shows the `⌘K` hint. It opens the one
+  command palette.
+- A navigation row is 36 px tall. It carries a 16 px icon and weight 500 text
+  at 14 px. Its padding is 8 px and 12 px, and its radius is 2 px. A row that
+  opens a submenu or a settings list ends in `›`.
+- The current row carries the `hover` ground and the `text-1` step, and no
+  accent. Another row carries `text-3` and moves to `text-2` on hover.
+- A 1 px `border-1` rule divides one navigation group from the next. A group
+  shows no label. Its name stays in the navigation data and is the group's
+  accessible name.
+- On a settings page, the settings list replaces the navigation groups under
+  a back row that reads `‹ Settings`.
+- The account row sits at the sidebar foot. It holds the avatar, the name,
+  and a `…` menu. The menu opens upward and holds the theme control and the
+  account actions.
+- The **top bar height** is 56 px at every width, and
+  `--oe-chrome-console-header-height` sets it. The bar sits above the content,
+  beside the sidebar.
+- The top bar holds three items. The scope switcher sits at the start. The
+  current destination sits in the center at 14 px and weight 500. `Docs ↗`
+  sits at the end.
+- The scope switcher reads `All projects` at Organization scope and the
+  project name at project scope. Its popover finds a project, lists the
+  projects, and creates a Relay project when the reader may.
+- The **drawer breakpoint** is 1,000 px. Below it the sidebar leaves the
+  layout. A toggle at the start of the top bar opens the sidebar as an
+  overlay drawer with the same content.
+- The content region fills the width beside the sidebar, with a 24 px gutter
+  at every width. A settings column is `min(100%, 962px)` wide, and that width
+  includes its gutters.
+- The console draws no page footer.
 - A **skip link** is the first focusable element on every page. It stays
   offscreen until focus reaches it, then it moves focus to the main region.
 
@@ -826,7 +842,8 @@ own.
 | Measure | Token | Value |
 |---|---|---|
 | Header height | `--oe-chrome-header-height` | 64 px |
-| Header height below the sheet breakpoint | `--oe-chrome-header-height-compact` | 48 px |
+| Header height below a host's sheet breakpoint | `--oe-chrome-header-height-compact` | 48 px |
+| Console top bar height | `--oe-chrome-console-header-height` | 56 px |
 | Footer space above | `--oe-chrome-footer-padding-block-start` | 48 px |
 | Footer space below | `--oe-chrome-footer-padding-block-end` | 32 px |
 | Lockup size | `--oe-chrome-lockup-size` | 20 px |
@@ -835,12 +852,15 @@ own.
 | Subsection | `--oe-chrome-subsection-size` | 18 px |
 | Minor heading | `--oe-chrome-minor-size` | 16 px |
 
+The website and the documentation host read the two header heights. The
+console top bar reads its own token at every width.
+
 The header and the footer each carry a 1 px hairline against the page. The
 lockup size sets the wordmark. The mark sizes from it through the ratio in
 *Lockups*, so one token fixes the whole composition on every host. The four
 type steps are the editorial scale of the website and the documentation
 prose. The console shell renders no editorial heading, and its page title is
-the `lg` step of *The faces*.
+the `xl` step of *The faces*.
 
 The 4 px scale in `tokens.css` is the only spacing source. The focus ring is
 one rule per host: `roles.css` carries the website's, and the console sheet
@@ -856,9 +876,13 @@ component names the step, and the registry file already does.
 |---|---|---|
 | Interface text | `--text-base` | 14 px / 20 px |
 | Rule | `--border-1`, `--border-2`, `--border-3` | 1 px at 6, 10, and 15 percent alpha |
+| Large control | the registry `h-9` | 36 px |
 | Default control | the registry `h-8` | 32 px |
 | Small and extra-small controls | the registry `h-7` and `h-6` | 28 px and 24 px |
 | Corner | `--radius-control` and every `--radius-*` step but `full` | 2 px |
+
+A toolbar action, the Find row, and a switcher take the large control. A
+card footer action takes the default control.
 
 The product draws one corner. The brand's 2 px square sits on every control
 and every surface: button, input, chip, key, card, menu, dialog, and popover.
@@ -880,30 +904,60 @@ and `#5b6be0` on dark, and the ink on it is white in both themes.
 
 ### The page header
 
-Every page carries the same header. The title sits at 20 px and weight 600.
-Nothing sits above it: no eyebrow, no category label, no breadcrumb. It ends
-with no punctuation. One line of `text-3` description sits under it. The
-page's single primary action sits on the right. An optional tab row sits
-beneath. The current tab carries `text-1` and a 2 px accent underline.
+Every page carries the same header under the top bar. The title sits at 24 px
+and weight 600, the `xl` step with its tracking. The top bar carries the
+location, so nothing sits above the title: no eyebrow, no category label, no
+breadcrumb. The title ends with no punctuation. One line of `text-3`
+description sits under it.
+
+The page's single primary action sits on the right, and a page control such
+as an environment switcher sits beside it. No tab row sits beneath the
+header. A view that needs its own address is a
+path and a sidebar row.
 
 ### Density
 
 Two modes exist. A surface picks one and improvises no third.
 
-- **Compact** governs a data surface. That covers the project table, the
-  license table, the key table, the member table, and the invoice table.
+- **Compact** governs an operator table, a data table on the operator
+  pages.
 - A compact row is 40 px tall. Cell padding is 10 px and 16 px, and text is
   the `sm` step.
 - A hairline divides one row from the next. The hovered row takes the `hover`
   ground.
-- **Comfortable** governs a reading surface. That covers the overview, the
-  settings pages, the contact page, the documentation body, and every interface
-  state below.
+- **Comfortable** governs a reading surface, a customer list, and every
+  interface state below. A reading surface is the overview, a settings page,
+  the contact page, or the documentation body.
 - A comfortable surface sets interface text at the `base` step and card
   padding at 24 px. Sections sit 48 px apart.
 
-A card holds a discrete object such as one project, one figure, or one key.
-Sequential content uses a flat section with a hairline divider instead.
+A card holds a discrete object such as one project, one figure, one key, or
+one setting. Sequential content uses a flat section with a hairline divider
+instead. A card draws a 1 px `border-1` edge and no shadow, by law 4.
+
+- A **settings card** holds one setting. Its title is the `lg` step, and one
+  `text-3` line at the `base` step describes it. The body follows.
+- A settings card footer sits on the `panel` ground. It carries a
+  `Learn more ↗` link at the start and one Save at the end. Save stays
+  disabled until the value changes.
+- Settings cards stack in the settings column. A **danger card** comes last.
+  Its edge takes the `danger` role, its footer takes the `danger-tint`
+  ground, and its button takes the `danger` ground.
+- A danger card action asks for confirmation in an alert dialog before it
+  runs.
+- An **overview card** holds the summary of one object on its overview page.
+  Its header carries the title, the one primary action, and a `…` menu. Its
+  body is a definition list of facts the page already reads.
+- A checklist card lists the steps of a setup. The card marks each finished
+  step as done.
+- A **list row** is 48 px tall. A customer list is one container with a
+  `border-1` edge and list semantics. A `border-1` hairline divides its rows,
+  and the hovered row takes the `hover` ground.
+- A list row starts with a status dot. Then the name at weight 500, its
+  badges, its mono chips, and a relative time follow. One `…` row menu ends
+  the row.
+- A full-width `Load More` control ends a long list. It shows the next 20 rows
+  of the list the page already read.
 
 ### The 44 px target and a dense row
 
@@ -912,7 +966,8 @@ is the registry's 32 px, so the product meets the reach rule by target and not
 by height.
 
 - A row that navigates carries one link across the whole row. The pointer
-  target is the full 40 px band, and the keyboard target is one stop.
+  target is the full row band, 40 px in a table and 48 px in a list. The
+  keyboard target is one stop.
 - A control inside a row is the registry icon size, 32 px. A row places at
   most one, and its label reaches assistive technology through the control's
   name.
@@ -922,7 +977,8 @@ by height.
 ### Data display
 
 - **Identifiers.** Mono at the `sm` step in a chip on the `raised` ground,
-  with a `border-1` edge and a 6 px radius. A copy control appears on hover.
+  with a `border-1` edge and the 2 px corner. A copy control appears on
+  hover.
 - A truncated identifier shows its head and its tail. A copy takes the whole
   value and confirms it.
 - **Secrets.** A license key or an API key appears in full once. Creation
@@ -945,6 +1001,10 @@ by height.
   relative time inside a fixed range is noise.
 - **Status.** A dot and a label report liveness. A tinted pill reports a
   lifecycle state. One vocabulary serves every page.
+- **Filters.** A filter chip is a default control with the 2 px corner. An
+  applied chip names the field and the value, and it removes its filter.
+- The `Add Filter` chip opens a popover that finds a field and then a value.
+  The URL search parameters hold every filter, so a filtered list is a link.
 
 ### The five interface states
 
@@ -957,7 +1017,8 @@ to a blank region, and a blank region tells a reader nothing.
 2. **Failed read.** The state names what did not load. It carries the retry
    control and the identifier a support request needs. A failed read never
    renders as an empty result.
-3. **Empty result.** One sentence naming what would appear here, and one
+3. **Empty result.** A centered icon, one line at weight 500 that names what
+   would appear here, and one `text-3` line. At most one button follows, the
    primary action that creates the first one. A mono snippet joins it when a
    command is the fix.
 4. **Precondition unmet.** Something else has to happen before this surface

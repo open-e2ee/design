@@ -51,12 +51,19 @@ dc_v01() {
   grep -qE '^## Part I\b' "$DESIGN" && grep -qE '^## Part II\b' "$DESIGN"
 }
 
+# CV0.1 of the console Vercel UX plan re-pinned this condition on 2026-09-24.
+# The shell dropped the collapsed rail and the 768 px sheet for a 56 px top
+# bar at every width and a drawer below 1,000 px. The old condition asked for
+# 'sidebar width', 'collapsed rail', and 'sheet breakpoint'. This one asks for
+# the sidebar width, the top bar height, the drawer breakpoint, and the token
+# that sets the top bar, so the prose and the package name the same measure.
 dc_v02() {
   part_two_exists || return 1
   local body; body="$(sed -n '/^## Part II/,$p' "$DESIGN")"
   grep -q 'sidebar width' <<<"$body" &&
-    grep -q 'collapsed rail' <<<"$body" &&
-    grep -q 'sheet breakpoint' <<<"$body"
+    grep -q 'top bar height' <<<"$body" &&
+    grep -q 'drawer breakpoint' <<<"$body" &&
+    grep -q -- '--oe-chrome-console-header-height' <<<"$body"
 }
 
 dc_v03() {
@@ -260,7 +267,7 @@ if ! self_readme; then
 fi
 
 check DC-V01 'UIR1.1  DESIGN.md carries a Part I heading and a Part II heading' dc_v01
-check DC-V02 'UIR1.1  Part II states the sidebar, rail, and sheet measures' dc_v02
+check DC-V02 'UIR1.1  Part II states the sidebar, top bar, and drawer measures' dc_v02
 check DC-V03 'UIR1.1  Part II names two density modes and their surfaces' dc_v03
 check DC-V04 'UIR1.1  Part II states the display grammar for six value kinds' dc_v04
 check DC-V05 'UIR1.1  Part II names the five interface states' dc_v05

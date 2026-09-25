@@ -1,6 +1,6 @@
 {
   "package": "@open-e2ee/design",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "mark": "carrier",
   "variants": {
     "rule": "Use the optical canvas from 16 to 31 px and the full canvas from 32 px. Both use the same approved proportions.",
@@ -157,7 +157,7 @@
       }
     ]
   },
-  "sha256": "153cdd11ac7ea21cf06eb2092bd93b9d76debfb8d84107630b3addf8caf8898a",
+  "sha256": "87f15161f57f574add79ab686532bdedfc13b836c992280f0677460d0a2216aa",
   "files": [
     "hosted/open-e2ee-logo-dark.png",
     "hosted/open-e2ee-logo-dark.svg",
