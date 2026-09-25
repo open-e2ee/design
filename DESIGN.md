@@ -821,7 +821,7 @@ layout and reads the measures in *The chrome*.
 - The scope switcher reads `All projects` at Organization scope and the
   project name at project scope. Its popover finds a project, lists the
   projects, and creates a Relay project when the reader may.
-- The **drawer breakpoint** is 1,000 px. Below it the sidebar leaves the
+- The **drawer breakpoint** is 961 px. Below it the sidebar leaves the
   layout. A toggle at the start of the top bar opens the sidebar as an
   overlay drawer with the same content.
 - The content region fills the width beside the sidebar, with a 24 px gutter

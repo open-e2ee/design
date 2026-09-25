@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.24.0
+
+Moves the console drawer breakpoint to 961 px. This release changes no token
+and no 0.23.0 export. The website and the documentation host need no change.
+
+### Changed
+
+- **Drawer breakpoint.** The console sidebar sits in the layout at 961 px and
+  wider. Below 961 px it opens as an overlay drawer. The breakpoint read
+  1,000 px.
+
 ## 0.23.0
 
 Adds one chrome token and rewrites the Part II shell to the console layout.

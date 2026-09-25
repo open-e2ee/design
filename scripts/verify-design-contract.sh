@@ -53,7 +53,7 @@ dc_v01() {
 
 # CV0.1 of the console Vercel UX plan re-pinned this condition on 2026-09-24.
 # The shell dropped the collapsed rail and the 768 px sheet for a 56 px top
-# bar at every width and a drawer below 1,000 px. The old condition asked for
+# bar at every width and a drawer below 961 px. The old condition asked for
 # 'sidebar width', 'collapsed rail', and 'sheet breakpoint'. This one asks for
 # the sidebar width, the top bar height, the drawer breakpoint, and the token
 # that sets the top bar, so the prose and the package name the same measure.
