@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@open-e2ee/design": "file:..",
-    "next": "^16.2.11",
+    "next": "16.4.1",
     "react": "19.2.6",
     "react-dom": "19.2.6"
   },
@@ -29,7 +29,7 @@
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.4.1",
     "react-server-dom-webpack": "19.2.6",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
@@ -39,10 +39,12 @@
   },
   "overrides": {
     "next": {
-      "postcss": "8.5.22"
+      "postcss": "8.5.23"
     },
     "nanoid": "3.3.18",
-    "sharp": "0.35.4"
+    "baseline-browser-mapping": "2.11.0",
+    "source-map-js": "1.2.2",
+    "sharp": "0.35.5"
   },
   "type": "module"
 }
