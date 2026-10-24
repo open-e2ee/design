@@ -99,7 +99,7 @@ distinctive.
   built for the Signal Protocol SDK, and it remains unpublished until its
   launch reaches REL1.
 - **Surfaces:** OpenE2EE Docs, OpenE2EE Console.
-- **Legal entity:** OpenE2EE LLC, used only where legal identification is
+- **Legal entity:** OpenE2EE, Inc., used only where legal identification is
   required.
 
 A future protocol package (MLS, for instance) slots into the same second line
