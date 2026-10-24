@@ -25,9 +25,9 @@ a competent adult holding production responsibilities.
 - **Mono is for values only** — packages, versions, identifiers, fingerprints,
   field names. Never for prose, never for emphasis.
 - **Maturity is the version number** wherever maturity is relevant:
-  `<major>.<minor>.x — public APIs and persisted formats may change before
-  1.0.`, composed from the shipped release's own version rather than typed. No
-  stage adjective — not alpha, beta, early access, or preview.
+  `<major>.<minor>.x`, the release line with no caveat, composed from the
+  shipped release's own version rather than typed. No stage adjective — not
+  alpha, beta, early access, or preview.
 - **The relay formula is fixed:** "the relay never needs message plaintext or
   device private keys." Do not paraphrase it into an absolute.
 
