@@ -790,7 +790,7 @@ The `lg` step and above track `−1%`, and `2xl` tracks `−2%`.
 The shell is the signed-in console's. The documentation host keeps its own
 layout and reads the measures in *The chrome*.
 
-- The **sidebar width** is 256 px, and it includes a 1 px `border-1` right
+- The **sidebar width** is 256 px, and it includes a 1 px `border-2` right
   edge. The sidebar carries the `panel` ground.
 - The **collapsed sidebar width** is 64 px. A collapsed sidebar shows icons
   only. A tooltip on the right shows each row's label, and the label stays the
