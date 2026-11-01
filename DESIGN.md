@@ -914,11 +914,11 @@ and `#5b6be0` on dark, and the ink on it is white in both themes.
 
 ### The registry deviations
 
-Three changes apply to every registry file and need no row. An import follows
-the console's paths. A corner class names `rounded-control`, or a stock step
-the sheet answers at 2 px. A class that reads the stock hover name reads the
-`hover` ground and `text-1` instead, because the accent keeps its name. The
-table lists every other change.
+Two changes apply to every registry file and need no row. A corner class names
+`rounded-control`, or a stock step the sheet answers at 2 px. A class that reads
+the stock hover name reads the `hover` ground and `text-1` instead, because the
+accent keeps its name. A primitive keeps the import that the registry CLI writes,
+including `import { cn } from "cn"`. The table lists every other change.
 
 | Part | Deviation | Reason |
 |---|---|---|
