@@ -928,6 +928,7 @@ including `import { cn } from "cn"`. The table lists every other change.
 | `card` | `variant` adds `settings`, `danger`, and `overview`. | *Density* states these three cards. |
 | `chart` | The part is a local file on `@tanstack/react-charts`. | The registry file requires Recharts. |
 | `command` | `CommandInput` takes `children`, which sit at the end of the field. | A picker shows a control beside its find field. |
+| `empty` | The frame takes a 1 px `border-1` edge and the `panel` ground. The icon variant of `EmptyMedia` is a 40 px square with a `border-1` edge on the `raised` ground, and its icon is 20 px. The title and the description sit at the `base` step, and the title has no tracking. | Law 4 makes a rule the elevation of a surface, law 6 limits tracking, and `base` is interface text. |
 | `dropdown-menu` | The item `danger` variant replaces `destructive`, and `DropdownMenuLinkItem` is added. | The role is named `danger`, and a menu destination is a real link. |
 | `dropdown-menu` | The radio group takes a `segments` variant, and its item takes `segment`. | The theme control is three icon segments. |
 | `select` | The item selector reads the `danger` variant name. | The role is named `danger`. |
