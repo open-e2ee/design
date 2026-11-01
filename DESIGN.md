@@ -729,17 +729,19 @@ the registry writes them, over one token sheet the console owns at
 `src/styles/tokens.css`. That sheet is the executable form of this part. It
 declares the faces, the grounds, the rules, the text steps, the accent, the
 semantic roles, the scales, and the one focus ring, and it bridges every stock
-registry name onto one of those roles. This package supplies the mark, the
-wordmark, the brand tokens, and the chrome measures. A component reads a role.
-It never reads a ramp step, and it never writes a hex value.
+registry name onto one of those roles. The OpenE2EE accent keeps the name
+`accent`, so the stock name for a hover ground is not bridged. This package
+supplies the mark, the wordmark, the brand tokens, and the chrome measures. A
+component reads a role. It never reads a ramp step, and it never writes a hex
+value.
 
 ### The laws
 
 These laws resolve an ambiguous interface decision:
 
 1. **The registry is the default.** A primitive is the registry file as
-   written. Every deviation from the registry is listed in this part, and a
-   deviation this part does not list is a defect to remove.
+   written. *The registry deviations* lists every deviation from the registry,
+   and a deviation that table does not list is a defect to remove.
 2. **One accent, three jobs.** The accent marks the primary action, the
    link, and the focus ring. The current item is a neutral: a filled ground
    and the strongest text step. Everything else is a neutral or a semantic
@@ -789,40 +791,49 @@ The shell is the signed-in console's. The documentation host keeps its own
 layout and reads the measures in *The chrome*.
 
 - The **sidebar width** is 256 px, and it includes a 1 px `border-1` right
-  edge. The sidebar carries the `panel` ground. The console draws no rail and
-  no collapse control.
-- The sidebar holds, top to bottom, the header row, the Find row, the
-  navigation groups, and the account row.
-- The header row holds the brand mark, the Organization name, the reader's
-  role as a badge, and the switcher trigger. The name links to the
-  Organization overview. Only the trigger opens the Organization switcher.
-- The Find row is 36 px tall and shows the `⌘K` hint. It opens the one
-  command palette.
+  edge. The sidebar carries the `panel` ground.
+- The **collapsed sidebar width** is 64 px. A collapsed sidebar shows icons
+  only. A tooltip on the right shows each row's label, and the label stays the
+  row's accessible name.
+- The sidebar holds, top to bottom, the sidebar head, the navigation tree, and
+  the Organization switcher. The tree scrolls in its own box, and the head and
+  the switcher stay fixed.
+- The sidebar head holds the brand mark and the collapse control. The mark
+  links to `/`. The collapse control and the `[` key collapse and expand the
+  sidebar. The `[` key does nothing while focus is in a field or an editable
+  region.
+- One tree holds every destination, so the sidebar draws no back row.
 - A navigation row is 36 px tall. It carries a 16 px icon and weight 500 text
-  at 14 px. Its padding is 8 px and 12 px, and its radius is 2 px. A row that
-  opens a submenu or a settings list ends in `›`.
+  at 14 px. Its padding is 8 px and 12 px, and its radius is 2 px.
 - The current row carries the `hover` ground and the `text-1` step, and no
   accent. Another row carries `text-3` and moves to `text-2` on hover.
-- A 1 px `border-1` rule divides one navigation group from the next. A group
-  shows no label. Its name stays in the navigation data and is the group's
-  accessible name.
-- On a settings page, the settings list replaces the navigation groups under
-  a back row that reads `‹ Settings`.
-- The account row sits at the sidebar foot. It holds the avatar, the name,
-  and a `…` menu. The menu opens upward and holds the theme control and the
-  account actions.
+- A navigation group shows a visible label above its rows, and the label is
+  the group's accessible name. The label is uppercase, at the `xs` step and
+  weight 500 in `text-3`. A row that stands alone sits outside a group and has
+  no label.
+- A project page is a child row, indented under the Signal Protocol Relay row.
+  Child rows show only inside a project, and a child row stays 36 px tall. A
+  collapsed sidebar shows each child as an icon in its one column.
+- The Organization switcher sits at the sidebar foot. It stays available in a
+  collapsed sidebar.
 - The **top bar height** is 56 px at every width, and
   `--oe-chrome-console-header-height` sets it. The bar sits above the content,
   beside the sidebar.
-- The top bar holds three items. The scope switcher sits at the start. The
-  current destination sits in the center at 14 px and weight 500. `Docs ↗`
-  sits at the end.
-- The scope switcher reads `All projects` at Organization scope and the
+- The top bar starts with the project switcher and the environment switcher.
+  It ends with Find, Docs, and the account menu. It draws no centered
+  destination name, because the page title names the page.
+- The project switcher reads `All projects` at Organization scope and the
   project name at project scope. Its popover finds a project, lists the
   projects, and creates a Relay project when the reader may.
-- The **drawer breakpoint** is 961 px. Below it the sidebar leaves the
-  layout. A toggle at the start of the top bar opens the sidebar as an
-  overlay drawer with the same content.
+- The environment switcher is a top bar control. A page that applies to the
+  whole project turns it off, and it reads `All environments`.
+- Find shows the `⌘K` hint and opens the one command palette. `Docs ↗` opens
+  the documentation host.
+- The account menu holds the theme control and the account actions.
+- At phone width, Find is an icon and Docs moves to the account menu.
+- The **drawer breakpoint** is 961 px. Below it the sidebar leaves the layout.
+  A toggle before the project switcher opens the sidebar as an overlay drawer
+  with the same content. The drawer is always expanded.
 - The content region fills the width beside the sidebar, with a 24 px gutter
   at every width. A settings column is `min(100%, 962px)` wide, and that width
   includes its gutters.
@@ -880,8 +891,8 @@ component names the step, and the registry file already does.
 | Small and extra-small controls | the registry `h-7` and `h-6` | 28 px and 24 px |
 | Corner | `--radius-control` and every `--radius-*` step but `full` | 2 px |
 
-A toolbar action, the Find row, and a switcher take the large control. A
-card footer action takes the default control.
+A toolbar action, Find, and a switcher take the large control. A card footer
+action takes the default control.
 
 The product draws one corner. The brand's 2 px square sits on every control
 and every surface: button, input, chip, key, card, menu, dialog, and popover.
@@ -901,18 +912,45 @@ ground carries more than 4 percent saturation. Light reads white, `#fafafa`,
 `#f4f4f5`, and `#ececee`. The accent is the OpenE2EE blue, `#4454cc` on light
 and `#5b6be0` on dark, and the ink on it is white in both themes.
 
+### The registry deviations
+
+Three changes apply to every registry file and need no row. An import follows
+the console's paths. A corner class names `rounded-control`, or a stock step
+the sheet answers at 2 px. A class that reads the stock hover name reads the
+`hover` ground and `text-1` instead, because the accent keeps its name. The
+table lists every other change.
+
+| Part | Deviation | Reason |
+|---|---|---|
+| `button` | The `danger` variant replaces `destructive`. It is a solid `danger` ground with the `danger` ink. | A danger button is solid, and the role is named `danger`. |
+| `button` | The base class also dims a control and stops its pointer events under `aria-disabled`. | A link button and a focusable disabled control carry `aria-disabled` and not `disabled`. |
+| `card` | A 1 px `border-1` edge replaces the stock ring. | Law 4 makes a rule the elevation of a surface. |
+| `card` | `variant` adds `settings`, `danger`, and `overview`. | *Density* states these three cards. |
+| `chart` | The part is a local file on `@tanstack/react-charts`. | The registry file requires Recharts. |
+| `command` | `CommandInput` takes `children`, which sit at the end of the field. | A picker shows a control beside its find field. |
+| `dropdown-menu` | The item `danger` variant replaces `destructive`, and `DropdownMenuLinkItem` is added. | The role is named `danger`, and a menu destination is a real link. |
+| `dropdown-menu` | The radio group takes a `segments` variant, and its item takes `segment`. | The theme control is three icon segments. |
+| `select` | The item selector reads the `danger` variant name. | The role is named `danger`. |
+| `sidebar` | The drawer breakpoint is 961 px, the collapse key is `[`, and rows and group labels take the measures and colors in *The shell*. | *The shell* states these values. |
+| `table` | A cell takes the measures in *Density*. | *Density* states the compact row. |
+
 ### The page header
 
 Every page carries the same header under the top bar. The title sits at 24 px
-and weight 600, the `xl` step with its tracking. The top bar carries the
-location, so nothing sits above the title: no eyebrow, no category label, no
-breadcrumb. The title ends with no punctuation. One line of `text-3`
-description sits under it.
+and weight 600, the `xl` step with its tracking. The title ends with no
+punctuation. One line of `text-3` description sits under it.
 
-The page's single primary action sits on the right, and a page control such
-as an environment switcher sits beside it. No tab row sits beneath the
-header. A view that needs its own address is a
-path and a sidebar row.
+The console has six page templates: Overview, List, Detail, Settings, Form, and
+Monitor. A Detail page and a Form page may show a breadcrumb above the title.
+Each parent is a link, and the last entry names the current page. No other
+template draws anything above the title. No template draws an eyebrow or a
+category label.
+
+The page's single primary action sits on the right. The environment switcher
+stays out of this area, because it is a top bar control.
+
+A tab row may sit under the page header when one resource has sibling views.
+Each tab is a route with its own address.
 
 ### Density
 

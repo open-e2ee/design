@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.25.0
+
+Rewrites the Part II shell to one sidebar and a top bar that starts with the
+project and environment switchers, and bridges the stock sidebar names in
+`roles.css`. This release changes no token value and no 0.24.0 export. The
+website and the documentation host need no change. The console sheet owns its
+own bridge, so a console change must follow Part II.
+
+### Added
+
+- **Sidebar bridge.** `roles.css` resolves the eight stock `sidebar` color names
+  to existing roles. It also declares `--sidebar-accent` and `--sidebar-border`,
+  because the stock sidebar reads them through `var()`.
+- **Part II registry deviations.** A new table lists every change from the
+  registry files, as law 1 requires.
+- **Collapsed sidebar.** The collapsed sidebar is 64 px wide and shows icons
+  only. The sidebar head holds the collapse control.
+- **Tab row and breadcrumb.** A tab row may sit under the page header, and each
+  tab is a route with its own address. A Detail page and a Form page may show a
+  breadcrumb above the title.
+
+### Changed
+
+- **Sidebar.** A navigation group shows a visible uppercase label. Project pages
+  are indented child rows under the Signal Protocol Relay row. The Organization
+  switcher sits at the sidebar foot. The sidebar draws no back row.
+- **Top bar.** The top bar starts with the project switcher and the environment
+  switcher, and ends with Find, Docs, and the account menu. It draws no centered
+  destination name. The environment switcher leaves the page header.
+- **Maturity line.** The line is the release line with no caveat and no stage
+  adjective.
+- **Naming guidance.** The guidance uses OpenE2EE, Inc.
+
 ## 0.24.0
 
 Moves the console drawer breakpoint to 961 px. This release changes no token

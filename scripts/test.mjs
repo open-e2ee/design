@@ -1313,6 +1313,14 @@ for (const [name, role] of [
   ['border', 'border-1'],
   ['input', 'border-1'],
   ['ring', 'accent'],
+  ['sidebar', 'ground-panel'],
+  ['sidebar-foreground', 'text-1'],
+  ['sidebar-primary', 'accent'],
+  ['sidebar-primary-foreground', 'accent-ink'],
+  ['sidebar-accent', 'ground-hover'],
+  ['sidebar-accent-foreground', 'text-1'],
+  ['sidebar-border', 'border-1'],
+  ['sidebar-ring', 'accent'],
 ]) {
   assert.equal(
     bridge.get(name),
@@ -1322,6 +1330,17 @@ for (const [name, role] of [
   assert.ok(
     roleCss.includes(`--oe-${role}: light-dark(`),
     `The shadcn name ${name} resolves to ${role}, which no role declares`,
+  );
+}
+
+/*
+ * The registry sidebar reads these two names through var(). A theme entry
+ * publishes no variable, so an absent declaration drops its hairline silently.
+ */
+for (const name of ['sidebar-accent', 'sidebar-border']) {
+  assert.ok(
+    roleCss.includes(`\n  --${name}: var(--oe-${bridge.get(name)});`),
+    `The variable --${name} does not answer to the role ${bridge.get(name)}`,
   );
 }
 
