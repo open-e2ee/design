@@ -193,8 +193,9 @@ ${declarations(semanticShadows)}
 /*
  * The shadcn bridge. A registry file names a semantic Tailwind color that the
  * OpenE2EE role layer does not declare, so a generated component renders with
- * no color until each name resolves to a role. The map is the whole vocabulary
- * base-nova writes.
+ * no color until each name resolves to a role. The map covers every color name
+ * a base-nova part writes, except the chart series names: the product chart is
+ * a local part.
  *
  * One name collides. shadcn spells a subtle hover ground "accent", and
  * OpenE2EE spells the brand blue "accent". The role wins the name, because the
@@ -222,7 +223,21 @@ const shadcnBridge = [
   ['border', 'border-1'],
   ['input', 'border-1'],
   ['ring', 'accent'],
+  ['sidebar', 'ground-panel'],
+  ['sidebar-foreground', 'text-1'],
+  ['sidebar-primary', 'accent'],
+  ['sidebar-primary-foreground', 'accent-ink'],
+  ['sidebar-accent', 'ground-hover'],
+  ['sidebar-accent-foreground', 'text-1'],
+  ['sidebar-border', 'border-1'],
+  ['sidebar-ring', 'accent'],
 ];
+
+/*
+ * The registry sidebar also reads two names through var() and not through a
+ * utility. A theme entry publishes no such variable, so the layer declares them.
+ */
+const shadcnVariables = ['sidebar-accent', 'sidebar-border'];
 
 function roleCss() {
   const roleEntries = Object.entries(roles).flatMap(([group, members]) =>
@@ -239,6 +254,10 @@ function roleCss() {
   const bridgeEntries = shadcnBridge.map(
     ([name, role]) => `  --color-${name}: var(--oe-${role});`,
   );
+
+  const bridgeVariables = shadcnBridge
+    .filter(([name]) => shadcnVariables.includes(name))
+    .map(([name, role]) => `  --${name}: var(--oe-${role});`);
 
   const radii = flatten(primitives.radius).map(
     ([name]) => `  --radius-${name}: var(--oe-radius-${name});`,
@@ -293,6 +312,15 @@ ${themeEntries.join('\n')}
  */
 @theme inline {
 ${bridgeEntries.join('\n')}
+}
+
+/*
+ * The bridge names a registry file reads through var(). Each one answers to the
+ * role its theme entry above names.
+ */
+:root,
+:root.dark {
+${bridgeVariables.join('\n')}
 }
 
 /*

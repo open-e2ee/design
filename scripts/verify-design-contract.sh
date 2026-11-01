@@ -51,16 +51,15 @@ dc_v01() {
   grep -qE '^## Part I\b' "$DESIGN" && grep -qE '^## Part II\b' "$DESIGN"
 }
 
-# CV0.1 of the console Vercel UX plan re-pinned this condition on 2026-09-24.
-# The shell dropped the collapsed rail and the 768 px sheet for a 56 px top
-# bar at every width and a drawer below 961 px. The old condition asked for
-# 'sidebar width', 'collapsed rail', and 'sheet breakpoint'. This one asks for
-# the sidebar width, the top bar height, the drawer breakpoint, and the token
-# that sets the top bar, so the prose and the package name the same measure.
+# The shell states the sidebar width and the collapsed sidebar width, a 56 px
+# top bar at every width, and a drawer below 961 px. This condition asks for each
+# of those measures and for the token that sets the top bar, so the prose and the
+# package name the same measure.
 dc_v02() {
   part_two_exists || return 1
   local body; body="$(sed -n '/^## Part II/,$p' "$DESIGN")"
   grep -q 'sidebar width' <<<"$body" &&
+    grep -q 'collapsed sidebar width' <<<"$body" &&
     grep -q 'top bar height' <<<"$body" &&
     grep -q 'drawer breakpoint' <<<"$body" &&
     grep -q -- '--oe-chrome-console-header-height' <<<"$body"

@@ -120,6 +120,24 @@
   --color-border: var(--oe-border-1);
   --color-input: var(--oe-border-1);
   --color-ring: var(--oe-accent);
+  --color-sidebar: var(--oe-ground-panel);
+  --color-sidebar-foreground: var(--oe-text-1);
+  --color-sidebar-primary: var(--oe-accent);
+  --color-sidebar-primary-foreground: var(--oe-accent-ink);
+  --color-sidebar-accent: var(--oe-ground-hover);
+  --color-sidebar-accent-foreground: var(--oe-text-1);
+  --color-sidebar-border: var(--oe-border-1);
+  --color-sidebar-ring: var(--oe-accent);
+}
+
+/*
+ * The bridge names a registry file reads through var(). Each one answers to the
+ * role its theme entry above names.
+ */
+:root,
+:root.dark {
+  --sidebar-accent: var(--oe-ground-hover);
+  --sidebar-border: var(--oe-border-1);
 }
 
 /*
