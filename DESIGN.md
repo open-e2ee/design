@@ -778,9 +778,9 @@ The text scale is the one the sheet declares. Each step carries its leading.
 | `xs` | 12 px / 16 px | A metadata line |
 | `sm` | 13 px / 18 px | A table cell, a chip, a help line |
 | `base` | 14 px / 20 px | Interface text, the body default |
-| `md` | 16 px / 24 px | A lead line |
+| `md` | 16 px / 24 px | A lead line, and a section title on a Console page |
 | `lg` | 20 px / 28 px | A settings card title |
-| `xl` | 24 px / 32 px | The page title, and a section title on a reading surface |
+| `xl` | 24 px / 32 px | The page title, and a section title in the documentation body |
 | `2xl` | 32 px / 38 px | A figure that is the point of the page |
 
 The `lg` step and above track `−1%`, and `2xl` tracks `−2%`.
@@ -821,7 +821,7 @@ layout and reads the measures in *The chrome*.
   rows show only inside a project, and a child row stays 36 px tall. A
   collapsed sidebar shows each child as an icon in its one column, with no
   indent.
-- The Status row follows the Contact row, and it stands alone in operator
+- The Status row follows the Support row, and it stands alone in operator
   scope. It links to `https://status.open-e2ee.dev/` in a new tab and ends in
   the external glyph. It is never the current row, and the command palette
   does not offer it. A collapsed sidebar shows it as an icon with a tooltip.
@@ -970,15 +970,14 @@ Each tab is a route with its own address.
 
 Two modes exist. A surface picks one and improvises no third.
 
-- **Compact** governs an operator table, a data table on the operator
-  pages.
+- **Compact** governs a data table, on an operator page or a customer page.
 - A compact row is 40 px tall. Cell padding is 10 px and 16 px, and text is
   the `sm` step.
 - A hairline divides one row from the next. The hovered row takes the `hover`
   ground.
 - **Comfortable** governs a reading surface, a customer list, and every
   interface state below. A reading surface is the overview, a settings page,
-  the contact page, or the documentation body.
+  the Support page, or the documentation body.
 - A comfortable surface sets interface text at the `base` step and card
   padding at 24 px. Sections sit 48 px apart.
 
@@ -1001,9 +1000,10 @@ instead. A card draws a 1 px `border-1` edge and no shadow, by law 4.
   body is a definition list of facts the page already reads.
 - A checklist card lists the steps of a setup. The card marks each finished
   step as done.
-- A **list row** is 48 px tall. A customer list is one container with a
-  `border-1` edge and list semantics. A `border-1` hairline divides its rows,
-  and the hovered row takes the `hover` ground.
+- A **list row** is 48 px tall. In a list narrower than 896 px, a row with a
+  long detail, a badge, or a chip wraps and grows. A customer list is one
+  container with a `border-1` edge and list semantics. A `border-1` hairline
+  divides its rows, and the hovered row takes the `hover` ground.
 - A list row starts with a status dot. Then the name at weight 500, its
   badges, its mono chips, and a relative time follow. One `…` row menu ends
   the row.
