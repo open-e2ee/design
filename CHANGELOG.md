@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.26.0
+
+States the sidebar the console builds on the stock parts, and lists the two
+registry parts that carry it. This release changes no token value and no 0.25.0
+export. The website and the documentation host need no change.
+
+### Added
+
+- **Status row.** A row follows the Contact row and links to
+  `https://status.open-e2ee.dev/` in a new tab. It stands alone in operator
+  scope.
+- **`use-mobile` deviation.** The hook reads `useSyncExternalStore`, and its
+  breakpoint is the drawer breakpoint, 961 px.
+
+### Changed
+
+- **Sidebar head.** The first line of the head holds the lockup and the collapse
+  control. A collapsed sidebar shows the brand mark alone. The lockup and the
+  mark are one link to `/`.
+- **Navigation rows.** A row has 16 px inline padding, and its block sits inset
+  8 px from each sidebar edge. The current row is a filled block on the `hover`
+  ground. A child row keeps that inset, and its contents sit 16 px further in.
+- **Drawer.** The drawer has the sidebar width and no collapse control.
+- **`sidebar` deviation.** The row lists every change from the registry file.
+
 ## 0.25.0
 
 Rewrites the Part II shell to one sidebar and a top bar that starts with the
