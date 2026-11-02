@@ -1074,6 +1074,11 @@ to a blank region, and a blank region tells a reader nothing.
    over an empty page. The skeleton holds the row height of its surface, so
    the page does not jump when the data arrives. A control that started a
    navigation may hold a spinner in its own box until the skeleton draws.
+
+   A query change on a list keeps the old rows in place and marks their
+   region busy. The region dims after 100 ms, so a fast answer does not
+   flicker. The control that made the change holds the spinner. Old rows
+   never read as the new result.
 2. **Failed read.** The state names what did not load. It carries the retry
    control and the identifier a support request needs. A failed read never
    renders as an empty result.
