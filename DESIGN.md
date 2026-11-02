@@ -798,22 +798,33 @@ layout and reads the measures in *The chrome*.
 - The sidebar holds, top to bottom, the sidebar head, the navigation tree, and
   the Organization switcher. The tree scrolls in its own box, and the head and
   the switcher stay fixed.
-- The sidebar head holds the brand mark and the collapse control. The mark
-  links to `/`. The collapse control and the `[` key collapse and expand the
-  sidebar. The `[` key does nothing while focus is in a field or an editable
-  region.
+- The first line of the sidebar head is as tall as the top bar. It holds the
+  lockup and the collapse control. In a collapsed sidebar the brand mark alone
+  takes the place of the lockup. The lockup and the mark are one link to `/`,
+  with one accessible name. The collapse control and the `[` key collapse and
+  expand the sidebar. The `[` key does nothing while focus is in a field or an
+  editable region.
 - One tree holds every destination, so the sidebar draws no back row.
 - A navigation row is 36 px tall. It carries a 16 px icon and weight 500 text
-  at 14 px. Its padding is 8 px and 12 px, and its radius is 2 px.
-- The current row carries the `hover` ground and the `text-1` step, and no
-  accent. Another row carries `text-3` and moves to `text-2` on hover.
+  at 14 px. Its padding is 8 px block and 16 px inline, and its radius is 2 px.
+  The row block sits inset 8 px from each sidebar edge.
+- The current row is a filled block on the `hover` ground with the `text-1`
+  step, and no accent, and it keeps `text-1` on hover. Another row carries
+  `text-3`, and on hover it draws the same block with `text-2`. The content
+  starts at the sidebar edge, with no margin and no floating panel.
 - A navigation group shows a visible label above its rows, and the label is
   the group's accessible name. The label is uppercase, at the `xs` step and
   weight 500 in `text-3`. A row that stands alone sits outside a group and has
   no label.
-- A project page is a child row, indented under the Signal Protocol Relay row.
-  Child rows show only inside a project, and a child row stays 36 px tall. A
-  collapsed sidebar shows each child as an icon in its one column.
+- A project page is a child row under the Signal Protocol Relay row. Its block
+  keeps the inset of every row, and its contents sit 16 px further in. Child
+  rows show only inside a project, and a child row stays 36 px tall. A
+  collapsed sidebar shows each child as an icon in its one column, with no
+  indent.
+- The Status row follows the Contact row, and it stands alone in operator
+  scope. It links to `https://status.open-e2ee.dev/` in a new tab and ends in
+  the external glyph. It is never the current row, and the command palette
+  does not offer it. A collapsed sidebar shows it as an icon with a tooltip.
 - The Organization switcher sits at the sidebar foot. It stays available in a
   collapsed sidebar.
 - The **top bar height** is 56 px at every width, and
@@ -833,7 +844,8 @@ layout and reads the measures in *The chrome*.
 - At phone width, Find is an icon and Docs moves to the account menu.
 - The **drawer breakpoint** is 961 px. Below it the sidebar leaves the layout.
   A toggle before the project switcher opens the sidebar as an overlay drawer
-  with the same content. The drawer is always expanded.
+  with the same content. The drawer is always expanded, it has the sidebar
+  width, and it has no collapse control.
 - The content region fills the width beside the sidebar, with a 24 px gutter
   at every width. A settings column is `min(100%, 962px)` wide, and that width
   includes its gutters.
@@ -932,7 +944,8 @@ including `import { cn } from "cn"`. The table lists every other change.
 | `dropdown-menu` | The item `danger` variant replaces `destructive`, and `DropdownMenuLinkItem` is added. | The role is named `danger`, and a menu destination is a real link. |
 | `dropdown-menu` | The radio group takes a `segments` variant, and its item takes `segment`. | The theme control is three icon segments. |
 | `select` | The item selector reads the `danger` variant name. | The role is named `danger`. |
-| `sidebar` | The drawer breakpoint is 961 px, the collapse key is `[`, and rows and group labels take the measures and colors in *The shell*. | *The shell* states these values. |
+| `sidebar` | The drawer breakpoint is 961 px, and the drawer width is the sidebar width, 256 px. The collapse key is `[`, the stock `⌘B` shortcut is gone, and the stock cookie write is gone, because the viewer's width lives in `localStorage`. `SidebarTrigger` takes `children` and a `placement` variant for the head. The rows, group labels, badge, action, head, content, foot, and groups take the measures and colors in *The shell*. A row block sits inset 8 px from each sidebar edge, so the stock icon size override is gone. At the collapsed width, a 6 px filled dot at the top-right corner of the row takes the place of the row figure, clear of the icon, and it shows only when the count is above 0. `SidebarMenuSub` indents the row contents by padding, with no left rule, and stays visible at the collapsed width with no indent. The section list scrolls at the collapsed width. A row tooltip is `disabled`, not `hidden`, when it cannot show, so it never takes Escape. | *The shell* states these values. The console states that it uses essential cookies. |
+| `use-mobile` | The hook reads `useSyncExternalStore`, and its breakpoint is the drawer breakpoint, 961 px. | The stock hook sets state in an effect, which fails `react-hooks/set-state-in-effect`. |
 | `table` | A cell takes the measures in *Density*. | *Density* states the compact row. |
 
 ### The page header
