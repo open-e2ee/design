@@ -821,27 +821,35 @@ layout and reads the measures in *The chrome*.
   rows show only inside a project, and a child row stays 36 px tall. A
   collapsed sidebar shows each child as an icon in its one column, with no
   indent.
-- The Status row follows the Support row, and it stands alone in operator
-  scope. It links to `https://status.open-e2ee.dev/` in a new tab and ends in
-  the external glyph. It is never the current row, and the command palette
-  does not offer it. A collapsed sidebar shows it as an icon with a tooltip.
 - The Organization switcher sits at the sidebar foot. It stays available in a
   collapsed sidebar.
 - The **top bar height** is 56 px at every width, and
   `--oe-chrome-console-header-height` sets it. The bar sits above the content,
   beside the sidebar.
-- The top bar starts with the project switcher and the environment switcher.
-  It ends with Find, Docs, and the account menu. It draws no centered
-  destination name, because the page title names the page.
+- The top bar starts with the project switcher, a slash, and the environment
+  switcher. It ends with Find, the help links, and the account menu. It draws
+  no centered destination name, because the page title names the page.
 - The project switcher reads `All projects` at Organization scope and the
   project name at project scope. Its popover finds a project, lists the
   projects, and creates a Relay project when the reader may.
+- The slash is a 16 px glyph in the third border step, and it has no accessible
+  name. It says the second switcher narrows the first. Both sides are controls
+  and neither is a page, so it is no breadcrumb.
 - The environment switcher is a top bar control. A page that applies to the
-  whole project turns it off, and it reads `All environments`.
-- Find shows the `⌘K` hint and opens the one command palette. `Docs ↗` opens
-  the documentation host.
+  whole project turns it off, and it reads `All environments`. A glyph tells
+  the environments apart. Production that serves is a solid outline in the
+  success role. Sandbox is a dashed outline in `text-3`. Production before its
+  activation is a solid outline in `text-3`.
+- Find shows the `⌘K` hint and opens the one command palette.
+- The help links are Docs, Support, and Status, in that order. Each is a 16 px
+  glyph in a 36 px icon control with a tooltip and no visible label. Docs opens
+  the documentation host in a new tab. Status opens
+  `https://status.open-e2ee.dev/` in a new tab. Support stays in the product.
+- The command palette offers Support, and it does not offer Docs or Status. No
+  help link has a sidebar row.
 - The account menu holds the theme control and the account actions.
-- At phone width, Find is an icon and Docs moves to the account menu.
+- At phone width, Find is an icon, the slash leaves, and the help links move to
+  the account menu.
 - The **drawer breakpoint** is 961 px. Below it the sidebar leaves the layout.
   A toggle before the project switcher opens the sidebar as an overlay drawer
   with the same content. The drawer is always expanded, it has the sidebar
@@ -1064,7 +1072,8 @@ to a blank region, and a blank region tells a reader nothing.
 
 1. **Loading.** A skeleton in the shape of the result, and never a spinner
    over an empty page. The skeleton holds the row height of its surface, so
-   the page does not jump when the data arrives.
+   the page does not jump when the data arrives. A control that started a
+   navigation may hold a spinner in its own box until the skeleton draws.
 2. **Failed read.** The state names what did not load. It carries the retry
    control and the identifier a support request needs. A failed read never
    renders as an empty result.
