@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.27.0
+
+States what the console draws for a section title, a data table, and a narrow
+list. This release changes no token value and no 0.26.0 export. The website and
+the documentation host need no change.
+
+### Changed
+
+- **Section title.** A section title on a Console page is the `md` step. A
+  section title in the documentation body stays the `xl` step.
+- **Density.** Compact governs every data table, on an operator page or a
+  customer page.
+- **List row.** In a list narrower than 896 px, a row with a long detail, a
+  badge, or a chip wraps and grows.
+- **Support.** Part II names the Support row and the Support page.
+
 ## 0.26.0
 
 States the sidebar the console builds on the stock parts, and lists the two
